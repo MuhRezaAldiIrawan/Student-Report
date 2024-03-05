@@ -77,11 +77,13 @@
                             <p class="text-base font-bold leading-normal text-white-dark">Enter your email and password to
                                 register</p>
                         </div>
-                        <form class="space-y-5 dark:text-white" @submit.prevent="window.location='index.html'">
+
+                        <form class="space-y-5 dark:text-white" action="{{ route('register') }}" method="POST">
+                            @csrf
                             <div>
                                 <label for="Name">Name</label>
                                 <div class="relative text-white-dark">
-                                    <input id="Name" type="text" placeholder="Enter Name"
+                                    <input id="Name" type="text" placeholder="Enter Name" name="name"
                                         class="form-input ps-10 placeholder:text-white-dark" />
                                     <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -96,7 +98,7 @@
                             <div>
                                 <label for="Email">Email</label>
                                 <div class="relative text-white-dark">
-                                    <input id="Email" type="email" placeholder="Enter Email"
+                                    <input id="Email" type="email" placeholder="Enter Email" name="email"
                                         class="form-input ps-10 placeholder:text-white-dark" />
                                     <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -113,7 +115,7 @@
                             <div>
                                 <label for="Password">Password</label>
                                 <div class="relative text-white-dark">
-                                    <input id="Password" type="password" placeholder="Enter Password"
+                                    <input id="Password" type="password" placeholder="Enter Password" name="password"
                                         class="form-input ps-10 placeholder:text-white-dark" />
                                     <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -135,12 +137,6 @@
                                         </svg>
                                     </span>
                                 </div>
-                            </div>
-                            <div>
-                                <label class="flex cursor-pointer items-center">
-                                    <input type="checkbox" class="form-checkbox bg-white dark:bg-black" />
-                                    <span class="text-white-dark">Subscribe to weekly newsletter</span>
-                                </label>
                             </div>
                             <button type="submit"
                                 class="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
