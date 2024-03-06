@@ -15,13 +15,19 @@ class AuthSociliateContoller extends Controller
 {
     public function redirectToProvider($provider)
     {
-        return Socialite::driver($provider)->redirect();
+        return Socialite::driver($provider)->setHttpClient(new \GuzzleHttp\Client(['verify' => false]))->redirect();
     }
 
     public function handleProvideCallback($provider)
     {
-            $socialUser = Socialite::driver($provider)->user();
-            dd($socialUser);
+
+
+        try {
+            $user = Socialite::driver($provider)->User();
+            dd($user);
+        } catch (Exception $e) {
+            dd($e->getMessage());
+        }
 
     }
 

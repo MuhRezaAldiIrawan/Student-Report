@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthSociliateContoller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\HomeController;
 
 /*
@@ -27,6 +28,13 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
  * socialite auth
  */
 Route::get('/auth/{provider}', [AuthSociliateContoller::class, 'redirectToProvider']);
-Route::get('/auth/{provider}/callback', [AuthSociliateContoller::class, 'handleProvideCallback']);
+
+Route::get('/auth/{provider}/callback', function () {
+    $user = Socialite::driver('google')->stateless()->user();
+    dd($user);
+
+    return redirect('/home');
+});
+// Route::get('/auth/{provider}/callback', [AuthSociliateContoller::class, 'handleProvideCallback']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
