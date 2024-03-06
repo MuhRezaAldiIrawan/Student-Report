@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthSociliateContoller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -19,7 +20,13 @@ use App\Http\Controllers\HomeController;
 Route::get('/', [AuthController::class, 'index']);
 Route::get('/register', [AuthController::class, 'register']);
 Route::post('/register', [AuthController::class, 'register_action'])->name('register');
+Route::post('/login', [AuthController::class, 'login_action'])->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+/**
+ * socialite auth
+ */
+Route::get('/auth/{provider}', [AuthSociliateContoller::class, 'redirectToProvider']);
+Route::get('/auth/{provider}/callback', [AuthSociliateContoller::class, 'handleProvideCallback']);
 
-
-Route::get('/home', [DashboardController::class, 'index'])->name('home');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');

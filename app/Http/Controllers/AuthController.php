@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use App\Models\User;
 
 
 class AuthController extends Controller
@@ -36,12 +38,36 @@ class AuthController extends Controller
         ]);
         $validatedData['password'] = Hash::make($validatedData['password']);
 
-
-        // dd($request);
         User::create($validatedData);
-        Alert::toast('You\'ve Successfully Registered', 'success');
+        toast('You\'ve Successfully Registered','success')->background('#00a65a');
         return redirect('/');
     }
 
+
+    public function login_action(Request $request)
+    {
+
+        $login = $request->validate([
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+
+        if (Auth::attempt($login)) {
+            $request->session()->regenerate();
+            toast('You\'ve Successfully Login','success')->background('#00a65a');
+            return redirect()->intended('/dashboard');
+        }
+        return back()->with('loginError', 'Login Failed');
+    }
+
+
+    public function logout(Request $request) : RedirectResponse
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        toast('You\'ve Successfully Logout','success')->background('#00a65a');
+        return redirect('/');
+    }
 
 }
