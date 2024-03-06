@@ -29,12 +29,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
  */
 Route::get('/auth/{provider}', [AuthSociliateContoller::class, 'redirectToProvider']);
 
-Route::get('/auth/{provider}/callback', function () {
-    $user = Socialite::driver('google')->stateless()->user();
-    dd($user);
-
-    return redirect('/home');
-});
-// Route::get('/auth/{provider}/callback', [AuthSociliateContoller::class, 'handleProvideCallback']);
+Route::get('/auth/{provider}/callback', [AuthSociliateContoller::class, 'handleProvideCallback']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
