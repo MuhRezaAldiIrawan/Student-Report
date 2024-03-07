@@ -19,7 +19,7 @@ class AuthSociliateContoller extends Controller
 
     public function handleProvideCallback()
     {
-        $user = Socialite::driver('google')->user();
+        $user = Socialite::driver('google')->stateless()->user();
         dd($user);
     }
 
