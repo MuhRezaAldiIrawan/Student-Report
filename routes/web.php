@@ -27,8 +27,14 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 /**
  * socialite auth
  */
-Route::get('/auth/{provider}', [AuthSociliateContoller::class, 'redirectToProvider']);
+// Route::get('/auth/{provider}', [AuthSociliateContoller::class, 'redirectToProvider']);
 
-Route::get('/auth/{provider}/callback', [AuthSociliateContoller::class, 'handleProvideCallback']);
+// Route::get('/auth/{provider}/callback', [AuthSociliateContoller::class, 'handleProvideCallback']);
+
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/auth/{provider}', [AuthSociliateContoller::class, 'redirectToProvider']);
+    Route::get('/auth/{provider}/callback', [AuthSociliateContoller::class, 'handleProvideCallback']);
+});
+
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');

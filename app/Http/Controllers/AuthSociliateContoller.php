@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
 
 
 
@@ -12,15 +13,16 @@ use Laravel\Socialite\Facades\Socialite;
 class AuthSociliateContoller extends Controller
 {
 
-    public function redirectToProvider()
+    public function redirectToProvider($provider)
     {
-        return Socialite::driver('github')->redirect();
+        return Socialite::driver($provider)->redirect();
     }
 
-    public function handleProvideCallback()
+    public function handleProvideCallback($provider)
     {
-        $user = Socialite::driver('google')->user();
+        $user = Socialite::driver($provider)->user();
         dd($user);
+
     }
 
 }
