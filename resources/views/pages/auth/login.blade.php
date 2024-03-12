@@ -138,7 +138,6 @@
                             <div class="mb-10 md:mb-[60px]">
                                 <ul class="flex justify-center gap-3.5">
                                     <li>
-
                                             <a href="/auth/github"
                                                 class="inline-flex h-8 w-8 items-center justify-center rounded-full p-0 transition hover:scale-110">
                                                 @csrf

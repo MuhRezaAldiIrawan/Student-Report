@@ -1,11 +1,14 @@
 <?php
 
-use App\Http\Controllers\AuthSociliateContoller;
+use App\Http\Controllers\Auth\Api\AuthContoller;
+use App\Http\Controllers\Auth\AuthSociliateContoller;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Dashboard\DashboardController;
+
+
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use Laravel\Socialite\Facades\Socialite;
-use App\Http\Controllers\HomeController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,12 +27,6 @@ Route::post('/register', [AuthController::class, 'register_action'])->name('regi
 Route::post('/login', [AuthController::class, 'login_action'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-/**
- * socialite auth
- */
-// Route::get('/auth/{provider}', [AuthSociliateContoller::class, 'redirectToProvider']);
-
-// Route::get('/auth/{provider}/callback', [AuthSociliateContoller::class, 'handleProvideCallback']);
 
 Route::group(['middleware' => ['web']], function () {
     Route::get('/auth/{provider}', [AuthSociliateContoller::class, 'redirectToProvider']);

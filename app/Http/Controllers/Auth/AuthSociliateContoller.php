@@ -7,8 +7,7 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use App\Models\SocialAccount;
 use Exception;
-
-
+use Illuminate\Support\Facades\Auth;
 
 
 class AuthSociliateContoller extends Controller
@@ -29,6 +28,8 @@ class AuthSociliateContoller extends Controller
                 $user = Socialite::driver($provider)->userFromToken($github_client_token);
             } elseif ($provider == 'google') {
                 $user = Socialite::driver($provider)->user();
+            } elseif ($provider == 'twitter') {
+                dd($user = Socialite::driver($provider)->user());
             }
         } catch (Exception $e) {
 
@@ -37,8 +38,8 @@ class AuthSociliateContoller extends Controller
 
         $authUser = $this->findOrCreateUser($user, $provider);
 
+        Auth::login($authUser, true);
 
-        Auth()->login($authUser, true);
 
         return redirect()->route('dashboard');
     }

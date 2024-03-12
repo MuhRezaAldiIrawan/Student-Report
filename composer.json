@@ -11,6 +11,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/socialite": "^5.12",
         "laravel/tinker": "^2.7",
+        "php-open-source-saver/jwt-auth": "^2.1",
         "realrashid/sweet-alert": "^7.1"
     },
     "require-dev": {
