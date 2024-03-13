@@ -1,7 +1,7 @@
 @extends('layout.auth')
 
 @section('content')
-    <div x-data="auth">
+    <div>
         <div class="absolute inset-0">
             <img src="{{ asset('') }}images/auth/bg-gradient.png" alt="image" class="h-full w-full object-cover" />
         </div>

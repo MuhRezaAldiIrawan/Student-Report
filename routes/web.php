@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [AuthController::class, 'index']);
+Route::get('/', [AuthController::class, 'index'])->name('default');
 Route::get('/register', [AuthController::class, 'register']);
 Route::post('/register', [AuthController::class, 'register_action'])->name('register');
 Route::post('/login', [AuthController::class, 'login_action'])->name('login');
@@ -31,7 +31,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/forgotpassword', [PasswordResetController::class, 'forgotpassword'])->name('forgotpassword');
 Route::post('/forgotpassword', [PasswordResetController::class, 'forgotpassword_action'])->name('password.email');
 Route::get('reset-password/{token}', [PasswordResetController::class, 'create'])->name('password.reset');
-
+Route::post('reset-password', [PasswordResetController::class, 'store'])->name('password.store');
 
 Route::group(['middleware' => ['web']], function () {
     Route::get('/auth/{provider}', [AuthSociliateController::class, 'redirectToProvider']);

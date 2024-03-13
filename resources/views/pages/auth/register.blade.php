@@ -1,7 +1,7 @@
 @extends('layout.auth')
 
 @section('content')
-    <div x-data="auth">
+    <div>
         <div class="absolute inset-0">
             <img src="{{ asset('images/auth/bg-gradient.png')}}" alt="image" class="h-full w-full object-cover" />
         </div>
@@ -55,7 +55,7 @@
                             </a>
                             <ul x-cloak x-show="open" x-transition x-transition.duration.300ms
                                 class="top-11 grid w-[280px] grid-cols-2 gap-y-2 !px-2 font-semibold text-dark ltr:-right-14 rtl:-left-14 dark:text-white-dark dark:text-white-light/90 sm:ltr:-right-2 sm:rtl:-left-2">
-                                <template x-for="item in languages">
+                                <template>
                                     <li>
                                         <a href="javascript:;" class="hover:text-primary"
                                             @click="$store.app.toggleLocale(item.value),toggle()"

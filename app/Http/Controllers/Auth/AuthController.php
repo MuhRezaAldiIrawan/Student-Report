@@ -68,30 +68,6 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    public function forgotpassword()
-    {
-        $title = "Forgot Password Page";
-        return view('pages.auth.resetpassword', compact('title'));
-    }
 
-    public function forgotpassword_action(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'email' => 'required|email',
-        ]);
-
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
-
-        if ($status == Password::RESET_LINK_SENT) {
-            return back()->with('status', __($status));
-        }
-
-        throw ValidationException::withMessages([
-            'email' => [trans($status)],
-        ]);
-
-    }
 
 }
