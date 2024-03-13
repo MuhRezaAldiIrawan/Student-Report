@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Auth\Api\AuthContoller;
-use App\Http\Controllers\Auth\AuthSociliateContoller;
+use App\Http\Controllers\Auth\AuthSociliateController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Auth\PasswordResetController;
 
 
 use Illuminate\Support\Facades\Route;
@@ -28,10 +28,15 @@ Route::post('/login', [AuthController::class, 'login_action'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
+Route::get('/forgotpassword', [PasswordResetController::class, 'forgotpassword'])->name('forgotpassword');
+Route::post('/forgotpassword', [PasswordResetController::class, 'forgotpassword_action'])->name('password.email');
+Route::get('reset-password/{token}', [PasswordResetController::class, 'create'])->name('password.reset');
+
+
 Route::group(['middleware' => ['web']], function () {
-    Route::get('/auth/{provider}', [AuthSociliateContoller::class, 'redirectToProvider']);
-    Route::get('/auth/{provider}/callback', [AuthSociliateContoller::class, 'handleProvideCallback']);
+    Route::get('/auth/{provider}', [AuthSociliateController::class, 'redirectToProvider']);
+    Route::get('/auth/{provider}/callback', [AuthSociliateController::class, 'handleProvideCallback']);
 });
 
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

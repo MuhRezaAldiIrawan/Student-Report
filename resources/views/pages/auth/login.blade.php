@@ -172,11 +172,15 @@
                                 </ul>
                             </div>
                         </form>
-                        <div class="text-center dark:text-white">
+                        <div class="text-center dark:text-white mt-3">
                             Don't have an account ?
                             <a href="/register"
                                 class="uppercase text-primary underline transition hover:text-black dark:hover:text-white">SIGN
                                 UP</a>
+                        </div>
+                        <div class="text-center dark:text-white mt-3">
+                            <a href="/forgotpassword"
+                                class="text-primary underline transition hover:text-black dark:hover:text-white">Forgot your Password ?</a>
                         </div>
                     </div>
                     <p class="absolute bottom-6 w-full text-center dark:text-white">

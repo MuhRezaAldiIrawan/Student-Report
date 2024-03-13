@@ -30,6 +30,18 @@ class ApiAuthController extends Controller
             'password' => 'required|string|min:6|max:255',
         ]);
 
+        // check if user exist
+
+        $user = User::where('email', $request['email'])->first();
+        if($user) {
+            return response()->json([
+                'message' => 'User already exist!',
+                'data' => [],
+            ]);
+        }
+
+
+
         // if the request valid, create user
 
         $user = $this->user::create([

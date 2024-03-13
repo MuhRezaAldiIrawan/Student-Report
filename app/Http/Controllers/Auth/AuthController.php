@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\ValidationException;
+
 use App\Models\User;
 
 class AuthController extends Controller
@@ -65,6 +66,32 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         toast('You\'ve Successfully Logout','success')->background('#00a65a');
         return redirect('/');
+    }
+
+    public function forgotpassword()
+    {
+        $title = "Forgot Password Page";
+        return view('pages.auth.resetpassword', compact('title'));
+    }
+
+    public function forgotpassword_action(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        if ($status == Password::RESET_LINK_SENT) {
+            return back()->with('status', __($status));
+        }
+
+        throw ValidationException::withMessages([
+            'email' => [trans($status)],
+        ]);
+
     }
 
 }

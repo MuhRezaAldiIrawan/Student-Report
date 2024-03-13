@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use App\Models\SocialAccount;
@@ -10,7 +12,7 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 
 
-class AuthSociliateContoller extends Controller
+class AuthSociliateController extends Controller
 {
 
     public function redirectToProvider($provider)
@@ -26,10 +28,8 @@ class AuthSociliateContoller extends Controller
             if ($provider == 'github') {
 
                 $user = Socialite::driver($provider)->userFromToken($github_client_token);
-            } elseif ($provider == 'google') {
+            } else {
                 $user = Socialite::driver($provider)->user();
-            } elseif ($provider == 'twitter') {
-                dd($user = Socialite::driver($provider)->user());
             }
         } catch (Exception $e) {
 
