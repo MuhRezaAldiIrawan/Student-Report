@@ -78,8 +78,10 @@
                                     <div>
                                         <label for="gender">Gender</label>
                                         <select id="gender" class="form-select text-white-dark" name="gender">
-                                            <option value="male">Male</option>
-                                            <option value="female" selected="">Female</option>
+                                            <option value="male" {{ auth()->user()->gender !== 'male' ?: 'selected' }}>Male
+                                            </option>
+                                            <option value="female" {{ auth()->user()->gender !== 'female' ?: 'selected' }}>Female
+                                            </option>
                                         </select>
                                     </div>
 
