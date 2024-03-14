@@ -38,7 +38,7 @@
                 </ul>
                 <div>
                     <div>
-                        <form action="{{ route('user-update') }}" method="POST" class="mb-5 rounded-md border border-[#ebedf2] bg-white p-4 dark:border-[#191e3a] dark:bg-[#0e1726]">
+                        <form action="{{ route('user-update') }}" enctype="multipart/form-data" method="POST" class="mb-5 rounded-md border border-[#ebedf2] bg-white p-4 dark:border-[#191e3a] dark:bg-[#0e1726]">
                             @csrf
                             <h6 class="mb-5 text-lg font-bold">General Information</h6>
                             <div class="flex flex-col sm:flex-row">
@@ -63,7 +63,7 @@
                                     </div>
                                     <div>
                                         <label for="address">Address</label>
-                                        <input id="address" type="text" value="New York" class="form-input"  value="{{auth()->user()->address ?? 'Not Set'}}" name="address"/>
+                                        <input id="address" type="text" class="form-input"  value="{{auth()->user()->address ?? 'Not Set'}}" name="address"/>
                                     </div>
                                     <div>
                                         <label for="phone">Phone</label>
@@ -83,9 +83,12 @@
                                         </select>
                                     </div>
 
-                                    <div>
-                                        <div class="custom-file-container"  data-upload-id="myFirstImage"></div>
-                                    </div>
+                                    <input
+                                        id="ctnFile"
+                                        type="file"
+                                        class=" form-input p-0 file:border-0 file:bg-primary/90 file:py-2 file:px-4 file:font-semibold file:text-white file:hover:bg-primary ltr:file:mr-5"
+                                        required name="avatar"
+                                    />
 
                                     <div class="sm:col-span-2">
                                         <button type="submit" class="btn btn-primary">Save</button>
@@ -102,15 +105,4 @@
 
 @endsection
 
-@section('scripts')
-<script>
-    // single image upload
-    new FileUploadWithPreview.FileUploadWithPreview('myFirstImage', {
-        images: {
-            baseImage: {{ asset('images/file-preview.svg')}},
-            backgroundImage: '',
-        },
 
-    });
-</script>
-@endsection

@@ -59,7 +59,7 @@ Route::controller(UserController::class)->group(function () {
 
     Route::get('/user-profile', 'index')->name('user');
     Route::get('/user-setting', 'userSetting')->name('user-setting');
-    Route::get('/user-update', 'userUpdate')->name('user-update');
+    Route::post('/user-update', 'userUpdate')->name('user-update');
 
 
 });
