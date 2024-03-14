@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reset_passwords', function (Blueprint $table) {
+        Schema::create('social_media', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reset_passwords');
+        Schema::dropIfExists('social_media');
     }
 };

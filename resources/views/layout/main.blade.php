@@ -16,6 +16,20 @@
         <script defer src="{{ asset('js/popper.min.js')}}"></script>
         <script defer src="{{ asset('js/tippy-bundle.umd.min.js')}}"></script>
         <script defer src="{{ asset('js/sweetalert.min.js')}}"></script>
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/file-upload-with-preview.min.css')}}" />
+
+        <link rel="stylesheet" href="{{ asset('css/highlight.min.css') }}">
+        <script src="{{ asset('js/highlight.min.js')}}"></script>
+        <script src="{{ asset('js/file-upload-with-preview.iife.js')}}"></script>
+
+        <style>
+            .custom-file-container .image-preview{
+                height: 186px;
+                width: 103%;
+                margin-top: 20px;
+                margin-bottom: 20px
+            }
+        </style>
     </head>
 
     <body x-data="main" class="relative overflow-x-hidden font-nunito text-sm font-normal antialiased" :class="[ $store.app.sidebar ? 'toggle-sidebar' : '', $store.app.theme === 'dark' || $store.app.isDarkMode ?  'dark' : '', $store.app.menu, $store.app.layout,$store.app.rtlClass]">
@@ -1023,5 +1037,47 @@
                 }));
             });
         </script>
+
+<script>
+    // single image upload
+    new FileUploadWithPreview.FileUploadWithPreview('myFirstImage', {
+        images: {
+            baseImage: "/assets/images/file-preview.svg",
+            backgroundImage: '',
+        },
+    });
+
+    // multiple image upload
+    new FileUploadWithPreview.FileUploadWithPreview('mySecondImage', {
+        images: {
+            baseImage: "/assets/images/file-preview.svg",
+            backgroundImage: '',
+        },
+        multiple: true,
+    });
+    document.addEventListener("alpine:init", () => {
+        Alpine.data("form", () => ({
+
+            // highlightjs
+            codeArr: [],
+            toggleCode(name) {
+                if (this.codeArr.includes(name)) {
+                    this.codeArr = this.codeArr.filter((d) => d != name);
+                } else {
+                    this.codeArr.push(name);
+
+                    setTimeout(() => {
+                        document.querySelectorAll('pre.code').forEach(el => {
+                            hljs.highlightElement(el);
+                        });
+                    });
+                }
+            }
+
+        }));
+    });
+</script>
+
+        @yield('scripts')
     </body>
 </html>
