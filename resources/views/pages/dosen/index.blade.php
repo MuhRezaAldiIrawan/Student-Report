@@ -34,10 +34,12 @@
             <table class="data-table" style="width: 100%">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Date</th>
-                        <th>Sale</th>
-                        <th class="text-center">Status</th>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>Alamat</th>
+                        <th>Hp</th>
+                        <th>Jenis kelamin</th>
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>

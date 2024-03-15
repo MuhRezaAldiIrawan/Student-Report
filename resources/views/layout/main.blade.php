@@ -419,6 +419,9 @@
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
                     {data: 'email', name: 'email'},
+                    {data: 'address', name: 'address'},
+                    {data: 'phone', name: 'phone'},
+                    {data: 'gender', name: 'gender'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                     ],
 
