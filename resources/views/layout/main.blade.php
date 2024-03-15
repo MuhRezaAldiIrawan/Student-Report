@@ -25,7 +25,7 @@
         <div x-cloak class="fixed inset-0 z-50 bg-[black]/60 lg:hidden" :class="{'hidden' : !$store.app.sidebar}" @click="$store.app.toggleSidebar()"></div>
 
         <!-- screen loader -->
-        <div class="screen_loader animate__animated fixed inset-0 z-[60] grid place-content-center bg-[#fafafa] dark:bg-[#060818]">
+        {{-- <div class="screen_loader animate__animated fixed inset-0 z-[60] grid place-content-center bg-[#fafafa] dark:bg-[#060818]">
             <svg width="64" height="64" viewBox="0 0 135 135" xmlns="http://www.w3.org/2000/svg" fill="#4361ee">
                 <path
                     d="M67.447 58c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm9.448 9.447c0 5.523 4.477 10 10 10 5.522 0 10-4.477 10-10s-4.478-10-10-10c-5.523 0-10 4.477-10 10zm-9.448 9.448c-5.523 0-10 4.477-10 10 0 5.522 4.477 10 10 10s10-4.478 10-10c0-5.523-4.477-10-10-10zM58 67.447c0-5.523-4.477-10-10-10s-10 4.477-10 10 4.477 10 10 10 10-4.477 10-10z"
@@ -38,7 +38,7 @@
                     <animateTransform attributeName="transform" type="rotate" from="0 67 67" to="360 67 67" dur="8s" repeatCount="indefinite" />
                 </path>
             </svg>
-        </div>
+        </div> --}}
 
         <!-- scroll to top button -->
         <div class="fixed bottom-6 z-50 ltr:right-6 rtl:left-6" x-data="scrollToTop">
@@ -391,6 +391,42 @@
         <script defer src="{{ asset('js/alpine.min.js')}}"></script>
         <script src="{{ asset('js/custom.js')}}"></script>
         <script defer src="{{ asset('js/apexcharts.js')}}"></script>
+
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+
+        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+
+        <script type="text/javascript">
+
+            $(function () {
+
+            var table = $('.data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "/dosen",
+                columns: [
+                    {data: 'id', name: 'id'},
+                    {data: 'name', name: 'name'},
+                    {data: 'email', name: 'email'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                    ],
+
+            });
+
+            });
+
+        </script>
 
         <script>
             document.addEventListener('alpine:init', () => {
@@ -1025,45 +1061,6 @@
             });
         </script>
 
-<script>
-    // single image upload
-    new FileUploadWithPreview.FileUploadWithPreview('myFirstImage', {
-        images: {
-            baseImage: "/assets/images/file-preview.svg",
-            backgroundImage: '',
-        },
-    });
-
-    // multiple image upload
-    new FileUploadWithPreview.FileUploadWithPreview('mySecondImage', {
-        images: {
-            baseImage: "/assets/images/file-preview.svg",
-            backgroundImage: '',
-        },
-        multiple: true,
-    });
-    document.addEventListener("alpine:init", () => {
-        Alpine.data("form", () => ({
-
-            // highlightjs
-            codeArr: [],
-            toggleCode(name) {
-                if (this.codeArr.includes(name)) {
-                    this.codeArr = this.codeArr.filter((d) => d != name);
-                } else {
-                    this.codeArr.push(name);
-
-                    setTimeout(() => {
-                        document.querySelectorAll('pre.code').forEach(el => {
-                            hljs.highlightElement(el);
-                        });
-                    });
-                }
-            }
-
-        }));
-    });
-</script>
 
         @yield('scripts')
     </body>

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('gender')->nullable();
             $table->string('avatar')->nullable();
-            $table->string('status')->nullable();
+            $table->enum('role', ['Mahasiswa', 'Dosen', 'Admin'])->nullable();
             $table->string('password')->nullable();
             $table->rememberToken()->nullable();
             $table->timestamps();

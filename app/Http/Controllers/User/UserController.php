@@ -25,7 +25,7 @@ class UserController extends Controller
         $updateuser = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email',
-            'status' => 'required',
+            'role' => 'required',
             'phone' => 'required|max:255',
             'address' => 'required|max:255',
             'gender' => 'required',

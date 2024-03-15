@@ -57,9 +57,12 @@
                                             class="form-input" />
                                     </div>
                                     <div>
-                                        <label for="status">Status</label>
-                                        <input id="status" type="text" value="{{auth()->user()->status ?? 'Not Set'}}" name="status"
-                                            class="form-input" />
+                                        <label for="role">Role</label>
+                                        <select id="role" class="form-select text-white-dark" name="role">
+                                            <option value="Admin" {{ auth()->user()->role !== 'Admin' ?: 'selected' }}>Administrator</option>
+                                            <option value="Dosen" {{ auth()->user()->role !== 'Dosen' ?: 'selected' }}>Dosen</option>
+                                            <option value="Mahasiswa" {{ auth()->user()->role !== 'Mahasiswa' ?: 'selected' }}>Mahasiswa</option>
+                                        </select>
                                     </div>
                                     <div>
                                         <label for="address">Address</label>

@@ -211,24 +211,33 @@
                 </div>
                 <div class="dropdown flex-shrink-0" x-data="dropdown" @click.outside="open = false">
                     <a href="javascript:;" class="group relative" @click="toggle()">
-                        <span><img class="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100"
-                                src="{{ asset('') }}images/user-profile.jpeg" alt="image" /></span>
+                        <span>
+                            @if (auth()->user()->avatar)
+                            <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="" class="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100" name="avatar" >
+                            @else
+                                <img src="{{ asset('images/profile-34.jpeg')}}" alt=""
+                                class="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100">
+                            @endif
                     </a>
                     <ul x-cloak x-show="open" x-transition x-transition.duration.300ms
                         class="top-11 w-[230px] !py-0 font-semibold text-dark ltr:right-0 rtl:left-0 dark:text-white-dark dark:text-white-light/90">
                         <li>
                             <div class="flex items-center px-4 py-4">
                                 <div class="flex-none">
-                                    <img class="h-10 w-10 rounded-md object-cover"
-                                        src="{{ asset('') }}images/user-profile.jpeg" alt="image" />
+                                    @if (auth()->user()->avatar)
+                                    <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="" class="h-10 w-10 rounded-md object-cover" name="avatar" >
+                                    @else
+                                        <img src="{{ asset('images/profile-34.jpeg')}}" alt=""
+                                        class="h-10 w-10 rounded-md object-cover">
+                                    @endif
                                 </div>
                                 <div class="truncate ltr:pl-4 rtl:pr-4">
                                     <h4 class="text-base">
-                                        John Doe<span
-                                            class="rounded bg-success-light px-1 text-xs text-success ltr:ml-2 rtl:ml-2">Pro</span>
+                                        {{auth()->user()->name}}<span
+                                            class="rounded bg-success-light px-1 text-xs text-success ltr:ml-2 rtl:ml-2">{{auth()->user()->role}}</span>
                                     </h4>
                                     <a class="text-black/60 hover:text-primary dark:text-dark-light/60 dark:hover:text-white"
-                                        href="javascript:;">johndoe@gmail.com</a>
+                                        href="javascript:;">{{auth()->user()->email}}</a>
                                 </div>
                             </div>
                         </li>
