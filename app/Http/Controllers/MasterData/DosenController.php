@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Http\Controllers\MasterData;
 
 use App\Http\Controllers\Controller;
-// use App\DataTables\DosenDataTable;
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 
 class DosenController extends Controller
 {

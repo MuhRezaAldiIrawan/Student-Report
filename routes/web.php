@@ -1,6 +1,7 @@
 <?php
 
 use App\DosenController;
+use App\Http\Controllers\MasterData\DosenController;
 use App\Http\Controllers\Auth\AuthSociliateController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Dashboard\DashboardController;
