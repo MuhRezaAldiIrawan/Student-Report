@@ -3,7 +3,7 @@
         class="sidebar fixed bottom-0 top-0 z-50 h-full min-h-screen w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-all duration-300">
         <div class="h-full bg-white dark:bg-[#0e1726]">
             <div class="flex items-center justify-between px-4 py-3">
-                <a href="index.html" class="main-logo flex shrink-0 items-center">
+                <a href="index.html" class="main-logo flex shrink-0 items-center" style="text-decoration: none; color:black">
                     <img class="ml-[5px] w-8 flex-none" src="{{ asset('images/logo.svg') }}" alt="image" />
                     <span
                         class="align-middle text-2xl font-semibold ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light lg:inline">VRISTO</span>
@@ -47,7 +47,7 @@
                         fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
-                    <span>Apps</span>
+                    <span>Master Data</span>
                 </h6>
 
                 <li class="nav-item">

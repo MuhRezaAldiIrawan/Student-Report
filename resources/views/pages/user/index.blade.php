@@ -63,7 +63,7 @@
                                         stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                                         stroke-linejoin="round" />
                                 </svg>
-                                {{ auth()->user()->status ?? 'Not Set' }}
+                                {{ auth()->user()->role ?? 'Not Set' }}
                             </li>
                             <li class="flex items-center gap-2">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"

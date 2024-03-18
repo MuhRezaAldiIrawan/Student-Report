@@ -81,9 +81,9 @@
                                     <div>
                                         <label for="gender">Gender</label>
                                         <select id="gender" class="form-select text-white-dark" name="gender">
-                                            <option value="male" {{ auth()->user()->gender !== 'male' ?: 'selected' }}>Male
+                                            <option value="Pria" {{ auth()->user()->gender !== 'Pria' ?: 'selected' }}>Pria
                                             </option>
-                                            <option value="female" {{ auth()->user()->gender !== 'female' ?: 'selected' }}>Female
+                                            <option value="Wanita" {{ auth()->user()->gender !== 'Wanita' ?: 'selected' }}>Wanita
                                             </option>
                                         </select>
                                     </div>
@@ -92,7 +92,7 @@
                                         id="ctnFile"
                                         type="file"
                                         class=" form-input p-0 file:border-0 file:bg-primary/90 file:py-2 file:px-4 file:font-semibold file:text-white file:hover:bg-primary ltr:file:mr-5"
-                                        required name="avatar"
+                                        name="avatar"
                                     />
 
                                     <div class="sm:col-span-2">

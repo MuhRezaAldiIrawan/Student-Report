@@ -17,6 +17,8 @@
         <script defer src="{{ asset('js/tippy-bundle.umd.min.js')}}"></script>
         <script defer src="{{ asset('js/sweetalert.min.js')}}"></script>
 
+        @stack('styles')
+
     </head>
 
     <body x-data="main" class="relative overflow-x-hidden font-nunito text-sm font-normal antialiased" :class="[ $store.app.sidebar ? 'toggle-sidebar' : '', $store.app.theme === 'dark' || $store.app.isDarkMode ?  'dark' : '', $store.app.menu, $store.app.layout,$store.app.rtlClass]">
@@ -393,7 +395,7 @@
         <script defer src="{{ asset('js/apexcharts.js')}}"></script>
 
 
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet">
+        {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet">
 
         <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 
@@ -405,9 +407,9 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-        <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script> --}}
 
-        <script type="text/javascript">
+        {{-- <script type="text/javascript">
 
             $(function () {
 
@@ -429,7 +431,7 @@
 
             });
 
-        </script>
+        </script> --}}
 
         <script>
             document.addEventListener('alpine:init', () => {
@@ -1065,6 +1067,6 @@
         </script>
 
 
-        @yield('scripts')
+        @stack('scripts')
     </body>
 </html>

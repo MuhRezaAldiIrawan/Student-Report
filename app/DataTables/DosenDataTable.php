@@ -79,6 +79,7 @@ class DosenDataTable extends DataTable
             Column::make('email'),
             Column::make('address'),
             Column::make('phone'),
+            Column::make('gender'),
             Column::make('created_at'),
             Column::make('updated_at'),
         ];
