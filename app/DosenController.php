@@ -65,10 +65,7 @@ class DosenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        dd("test") ;
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -78,7 +75,7 @@ class DosenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

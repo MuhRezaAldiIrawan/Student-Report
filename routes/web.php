@@ -68,7 +68,7 @@ Route::controller(UserController::class)->group(function () {
 Route::controller(DosenController::class)->group(function () {
 
     Route::get('/dosen' , 'index')->name('dosen');
-    Route::post('/dosen' , 'create')->name('dosen-ajax');
+    Route::post('/dosen' , 'store')->name('dosen.store');
 });
 
 
