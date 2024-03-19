@@ -71,6 +71,7 @@ Route::controller(DosenController::class)->group(function () {
     Route::get('/dosen' , 'index')->name('dosen');
     Route::post('/dosen' , 'store')->name('dosen.store');
     Route::get('/delete-dosen/{id}' , 'destroy')->name('dosen.destroy');
+    Route::get('/edit-dosen/{id}' , 'show')->name('dosen.show');
 });
 
 Route::controller(MahasiswaController::class)->group(function () {

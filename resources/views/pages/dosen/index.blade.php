@@ -55,44 +55,6 @@
 });
 </script>
 
-<script>
-    $(document).on("click",".btn-outlet-delete",function(){
-		let id = $(this).data("id");
-        let url = "/delete-dosen";
-        swal({
-            title: "Are you sure ??",
-            text: "This outlet will delete",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-          if (willDelete) {
-            $.ajax({
-                url,
-                data: {id},
-                type: "POST",
-                dataType: "JSON",
-                success: function(data)
-                {
-                    swal(data.message, {
-                      icon: "success",
-                    });
-                    reloadTable();
-                },
-                error: function(error)
-                {
-                    console.log(error);
-                    swal(data.message, {
-                      icon: "warning",
-                    });
-                }
-            })
-          }
-        });
-	});
-</script>
-
 
 @endpush
 
