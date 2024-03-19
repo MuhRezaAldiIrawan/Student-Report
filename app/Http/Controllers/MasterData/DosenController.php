@@ -21,6 +21,7 @@ class DosenController extends Controller
     public function index(Request $request)
     {
         $title = 'Dosen Data Page';
+
         if ($request->ajax()) {
             $data = User::where('role', 'dosen')->latest()->get();
             return Datatables::of($data)
