@@ -1,11 +1,11 @@
 <?php
 
-use App\DosenController;
 use App\Http\Controllers\MasterData\DosenController;
 use App\Http\Controllers\Auth\AuthSociliateController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\MasterData\MahasiswaController;
 use App\Http\Controllers\User\UserController;
 
 
@@ -70,16 +70,14 @@ Route::controller(DosenController::class)->group(function () {
 
     Route::get('/dosen' , 'index')->name('dosen');
     Route::post('/dosen' , 'store')->name('dosen.store');
+    Route::get('/delete-dosen/{id}' , 'destroy')->name('dosen.destroy');
 });
 
+Route::controller(MahasiswaController::class)->group(function () {
 
-
-
-
-
-
-
-
+    Route::get('/mahasiswa' , 'index')->name('mahasiswa');
+    Route::post('/mahasiswa' , 'store')->name('mahasiswa.store');
+});
 
 
 

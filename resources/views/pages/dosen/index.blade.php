@@ -3,7 +3,7 @@
 @section('content')
 <div class="panel">
     <div class="flex items-center justify-end mb-3 ">
-        @include('components.add-dosen-modal')
+        @include('components.modal-master-data.add-dosen')
     </div>
     <div class="mb-5">
         <div class="table-responsive ">
@@ -29,8 +29,6 @@
 
 @endsection
 
-{{-- @component('components.add-dosen-modal')@endcomponent --}}
-
 @component('components.asset-datatables') @endcomponent
 
 @push('scripts')
@@ -50,14 +48,12 @@
             {data: 'phone', name: 'phone'},
             {data: 'gender', name: 'gender'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
-            ],
-
-
-    });
+        ]
 
     });
+
+});
 </script>
-
 
 @endpush
 

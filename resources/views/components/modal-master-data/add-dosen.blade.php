@@ -18,39 +18,39 @@
                         @csrf
                         <div>
                             <label for="nama">Nama</label>
-                            <input id="nama" type="text" placeholder="Nama dosen" class="form-input" name="name" required />
+                            <input id="nama" type="text" placeholder="Nama" class="form-input" name="name" required />
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label for="email">Email</label>
-                                <input id="email" type="email" placeholder="Enter Email" class="form-input" name="email" />
+                                <input id="email" type="email" placeholder="Enter Email" class="form-input" name="email" required/>
                             </div>
                             <div>
                                 <label for="password">Password</label>
-                                <input id="password" type="Password" placeholder="Enter Password" class="form-input" name="password" />
+                                <input id="password" type="Password" placeholder="Enter Password" class="form-input" name="password" required />
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label for="address">Alamat</label>
-                                <input id="address" type="text" placeholder="alamat" class="form-input" name="address"/>
+                                <input id="address" type="text" placeholder="alamat" class="form-input" name="address"required />
                             </div>
                             <div>
                                 <label for="phone">Nomor HP</label>
-                                <input id="phone" type="text" placeholder="nomor HP" class="form-input" name="phone" />
+                                <input id="phone" type="        " placeholder="nomor HP" class="form-input" name="phone" required/>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label for="role">Role</label>
-                                <select id="role" class="form-select text-white-dark" name="role">
-                                    <option value="Dosen">Dosen</option>
+                                <select id="role" class="form-select text-white-dark" name="role" required>
+                                        <option value="Dosen" selected readonly>Dosen</option>
                                 </select>
                             </div>
                             <div>
                                 <label for="gender">Jenis Kelamin</label>
-                                <select id="gender" class="form-select text-white-dark" name="gender">
+                                <select id="gender" class="form-select text-white-dark" name="gender" required>
                                     <option value="Pria">Pria</option>
                                     <option value="">Wanita</option>
                                 </select>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="flex justify-end items-center mt-8">
                             <button type="button" class="btn btn-outline-danger" @click="toggle">Discard</button>
-                            <button type="submit" class="btn btn-primary ltr:ml-4 rtl:mr-4" @click="toggle">Save</button>
+                            <button type="submit"  class="btn btn-primary ltr:ml-4 rtl:mr-4" @click="toggle">Save</button>
                         </div>
                     </form>
                 </div>
@@ -71,3 +71,5 @@
         </div>
     </div>
 </div>
+
+
