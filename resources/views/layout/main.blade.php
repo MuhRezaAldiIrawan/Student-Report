@@ -12,6 +12,10 @@
     <link href="{{asset('css/app.min.css')}}" rel="stylesheet">
 
 
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+
+
+
     @stack('css')
 
 </head>
