@@ -3,25 +3,23 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
-    public function index()
+    public function profile()
     {
-        $title = 'User Page';
-        return view('pages.user.index', compact('title'));
+        return view('pages.user.profile');
     }
+
     public function userSetting()
     {
-        $title = 'User Setting Page';
-        return view('pages.user.users-settings', compact('title'));
+        return view('pages.user.setting');
     }
 
-    public function userUpdate(Request $request) {
+    public function userUpdate(Request $request){
 
-        // dd(auth()->user()->id);
         $updateuser = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email',
@@ -39,6 +37,5 @@ class UserController extends Controller
         User::where('id', auth()->user()->id)->update($updateuser);
 
         return redirect('/user-profile');
-
     }
 }

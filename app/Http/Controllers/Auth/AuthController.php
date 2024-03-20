@@ -37,7 +37,7 @@ class AuthController extends Controller
         $validatedData['password'] = Hash::make($validatedData['password']);
 
         User::create($validatedData);
-        toast('You\'ve Successfully Registered','success')->background('#00a65a');
+        toast('You\'ve Successfully Registered','success');
         return redirect('/');
     }
 
@@ -52,7 +52,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($login)) {
             $request->session()->regenerate();
-            toast('You\'ve Successfully Login','success')->background('#00a65a');
+            toast('You\'ve Successfully Login','success');
             return redirect()->intended('/dashboard');
         }
         return back()->with('loginError', 'Login Failed');
@@ -64,7 +64,7 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        toast('You\'ve Successfully Logout','success')->background('#00a65a');
+        toast('You\'ve Successfully Logout','success');
         return redirect('/');
     }
 

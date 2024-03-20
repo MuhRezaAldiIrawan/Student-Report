@@ -15,10 +15,10 @@ use Illuminate\Validation\ValidationException;
 
 class PasswordResetController extends Controller
 {
-    public function forgotpassword()
+    public function forgetpassword()
     {
         $title = "Forgot Password Page";
-        return view('pages.auth.reset-password', compact('title'));
+        return view('pages.auth.forget-password', compact('title'));
     }
 
     public function forgotpassword_action(Request $request): RedirectResponse
@@ -32,12 +32,11 @@ class PasswordResetController extends Controller
         );
 
         if ($status == Password::RESET_LINK_SENT) {
-            toast('We have e-mailed your password reset link!', 'success')->background('#00a65a');
+            toast('We have e-mailed your password reset link!', 'success');
             return back()->with('status', __($status));
         }
 
         throw ValidationException::withMessages([
-            'email' => [trans($status)],
         ]);
 
     }
@@ -46,8 +45,10 @@ class PasswordResetController extends Controller
     {
         $title = "Create Password Page";
         $token = $request->route()->parameter('token');
-        return view('pages.auth.forgot-password', compact('title', 'token'));
+        $email = $request->route()->parameter('email');
+        return view('pages.auth.reset-password', compact('title', 'token', 'email'));
     }
+
 
     public function store(Request $request): RedirectResponse
     {

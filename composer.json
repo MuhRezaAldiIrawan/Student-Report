@@ -13,6 +13,7 @@
         "laravel/tinker": "^2.7",
         "php-open-source-saver/jwt-auth": "^2.1",
         "realrashid/sweet-alert": "^7.1",
+        "select2/select2": "^4.0",
         "yajra/laravel-datatables": "^9.0",
         "yajra/laravel-datatables-oracle": "^10.3.1"
     },
