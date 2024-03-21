@@ -2,7 +2,7 @@
 <div class="side-nav">
     <div class="side-nav-inner">
         <ul class="side-nav-menu scrollable">
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown mt-3">
                 <a href="/dashboard">
                     <span class="icon-holder">
                         <i class="anticon anticon-dashboard"></i>

@@ -22,21 +22,29 @@ class DosenController extends Controller
     {
         $title = 'Dosen Data Page';
 
+        $title = 'Delete User!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
+
+
         if ($request->ajax()) {
             $data = User::where('role', 'dosen')->latest()->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
                             $btn =
-                            '<button class="btn btn-icon btn-success" data-toggle="tooltip" data-placement="top" title="detail">
-                                <i class="fas fa-eye"></i>
+                            '<button class="btn-outlet-delete btn btn-icon btn-success" data-toggle="tooltip" data-placement="top" title="detail">
+                                    <i class="fas fa-eye"></i>
                             </button>
                             <button class="btn btn-icon btn-primary" data-toggle="tooltip" data-placement="top" title="edit">
                                 <i class="far fa-edit"></i>
                             </button>
-                            <button class="btn btn-icon btn-danger"  data-toggle="tooltip" data-placement="top" title="edit">
-                                <i class="far fa-trash-alt"></i>
-                            </button>';
+
+                            <a href="/delete-dosen/'.$row->id.'" data-confirm-delete="true">
+                                <button class="btn btn-icon btn-danger"  data-toggle="tooltip" data-placement="top" title="delete" data-confirm-delete="true">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </a>';
                             return $btn;
                     })
                     ->rawColumns(['action'])
@@ -61,6 +69,10 @@ class DosenController extends Controller
      */
     public function store(Request $request)
     {
+
+        // if (!$request->ajax()) {
+        //     redirect('/dashboard');
+		// }
 
         $validatedData = $request->validate([
             'name' => 'required',

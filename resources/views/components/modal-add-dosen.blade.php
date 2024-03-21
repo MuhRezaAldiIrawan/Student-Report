@@ -55,10 +55,8 @@
                         <label for="role">Role</label>
                         <input type="text" class="form-control" id="role"  name="role" value="Dosen">
                     </div>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-primary" >Simpan</button>
                 </form>
-
-
             </div>
         </div>
     </div>
