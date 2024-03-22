@@ -7,7 +7,6 @@
                     <i class="anticon anticon-close"></i>
                 </button>
             </div>
-            
             <div class="modal-body">
                 <h1>{{$detail->name}}</h1>
             </div>
