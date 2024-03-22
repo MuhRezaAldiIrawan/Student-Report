@@ -1,18 +1,18 @@
-<div class="modal fade bd-example-modal-xl">
+<div class="modal fade bd-example-modal-edit" id="modaledit" style="display:none;">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title h4">Tambah Dosen</h5>
+                <h5 class="modal-title h4">Edit Dosen</h5>
                 <button type="button" class="close" data-dismiss="modal">
                     <i class="anticon anticon-close"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{route('dosen.store')}}" method="POST" enctype="multipart/form-data">
+                <form>
                     @csrf
                     <div class="form-group">
                         <label for="inputAddress">Nama</label>
-                        <input type="text" class="form-control" id="inputAddress" placeholder="Nama" name="name">
+                        <input type="text" class="form-control" id="dosenNama" placeholder="Nama" detailName="name">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">

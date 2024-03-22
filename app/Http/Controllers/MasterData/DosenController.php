@@ -36,8 +36,9 @@ class DosenController extends Controller
                             '<button class="btn-outlet-delete btn btn-icon btn-success" data-toggle="tooltip" data-placement="top" title="detail">
                                     <i class="fas fa-eye"></i>
                             </button>
-                            <button class="btn btn-icon btn-primary" data-toggle="tooltip" data-placement="top" title="edit">
-                                <i class="far fa-edit"></i>
+
+                            <button class="btn btn-icon btn-primary btn-outlet-edit" data-id="'.$row->id.'" data-toggle="modal" data-target=".bd-example-modal-edit">
+                                    <i class="far fa-edit"></i>
                             </button>
 
                             <a href="/delete-dosen/'.$row->id.'" data-confirm-delete="true">
@@ -105,8 +106,12 @@ class DosenController extends Controller
      */
     public function show($id)
     {
+        $detail = User::find($id);
 
-        dd($id);
+        // echo json_encode($detail);
+        // die;
+
+        return view('pages.dosen.edit', compact('detail'));
     }
 
     /**
@@ -129,7 +134,7 @@ class DosenController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request->all());
     }
 
     /**

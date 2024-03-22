@@ -29,9 +29,11 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @include('components.modal-add-dosen')
+@include('components.modal-edit-dosen')
 
 @push('js')
     <!-- page js -->
@@ -79,6 +81,32 @@
 
         });
     </script>
+
+<script>
+    $(document).on('click', '.btn-outlet-edit', function(e){
+        e.preventDefault();
+        let id = $(this).data('id');
+        let url = "/modal-edit/" + id;
+        $(this).prop('disabled', true)
+        $.ajax({
+            url,
+            data:{id},
+            type: "GET",
+            dataType: "HTML",
+            success: function(data)
+            {
+                $('#editmodal').html(data);
+                $('.btn-outlet-edit').prop('disabled', false);
+            },
+            error: function(error)
+            {
+                console.error(error);
+                $('.btn-outlet-edit').prop('disabled', false);
+                $('.btn-outlet-edit').html('Edit');
+            }
+        })
+    })
+</script>
 
 @endpush
 
