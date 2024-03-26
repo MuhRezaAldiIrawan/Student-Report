@@ -33,10 +33,7 @@ class DosenController extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
                             $btn =
-                            '<button class="btn-outlet-delete btn btn-icon btn-success" data-toggle="tooltip" data-placement="top" title="detail">
-                                    <i class="fas fa-eye"></i>
-                            </button>
-
+                            '
                             <button class="btn btn-icon btn-primary btn-outlet-edit" data-id="'.$row->id.'" type="button" role="button">
                                     <i class="far fa-edit"></i>
                             </button>
@@ -45,7 +42,8 @@ class DosenController extends Controller
                                 <button class="btn btn-icon btn-danger"  data-toggle="tooltip" data-placement="top" title="delete" data-confirm-delete="true">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
-                            </a>';
+                            </a>
+                            ';
                             return $btn;
                     })
                     ->rawColumns(['action'])
