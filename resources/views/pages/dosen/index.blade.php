@@ -11,7 +11,7 @@
             </div>
             <div class="m-t-25">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover data-table">
+                    <table class="table table-bordered table-hover data-table" id="data-table">
                         <thead>
                             <tr>
                                 <th scope="col" style="text-align: center">No</th>
@@ -30,25 +30,41 @@
         </div>
     </div>
 
+    <div class="modal fade bd-example-modal-edit" style="display: none;" id="editmodal" tabindex="-1" role="dialog"
+        aria-labelledby="editModalLabel" aria-hidden="true"></div>
+
+    </div>
 @endsection
 
 @include('components.modal-add-dosen')
-@include('components.modal-edit-dosen')
 
 @push('js')
-    <!-- page js -->
     <script src="{{ asset('vendors/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('vendors/datatables/dataTables.bootstrap.min.js') }}"></script>
 
-    <script type="text/javascript">
-        $(function() {
+    <script>
+        $(document).on('click', '#cancelbtn', function(e) {
+            console.log('button ditekan');
+            e.preventDefault();
+            $('#editmodal').modal('hide');
+        })
+    </script>
 
-            var table = $('.data-table').DataTable({
+    <script>
+        $(document).ready(function() {
+            getDosen();
+        });
+    </script>
+
+    <script type="text/javascript">
+        function getDosen() {
+
+            let table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('dosen') }}",
                 lengthMenu: [
-                    5,10
+                    5, 10
                 ],
                 columns: [{
                         data: 'DT_RowIndex',
@@ -79,35 +95,69 @@
                 ]
             });
 
-        });
+        }
     </script>
 
-<script>
-    $(document).on('click', '.btn-outlet-edit', function(e){
-        e.preventDefault();
-        let id = $(this).data('id');
-        let url = "/modal-edit/" + id;
-        $(this).prop('disabled', true)
-        $.ajax({
-            url,
-            data:{id},
-            type: "GET",
-            dataType: "HTML",
-            success: function(data)
-            {
-                $('#editmodal').html(data);
-                $('.btn-outlet-edit').prop('disabled', false);
-            },
-            error: function(error)
-            {
-                console.error(error);
-                $('.btn-outlet-edit').prop('disabled', false);
-                $('.btn-outlet-edit').html('Edit');
-            }
+    <script>
+        $(document).on('click', '.btn-outlet-edit', function(e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            let url = "/modal-edit/" + id;
+            $(this).prop('disabled', true)
+            $(this).html('Loading...')
+            $.ajax({
+                url,
+                data: {
+                    id
+                },
+                type: "GET",
+                dataType: "HTML",
+                success: function(data) {
+                    $('#editmodal').html(data);
+                    $('#editmodal').modal('show');
+                    $('.btn-outlet-edit').prop('disabled', false);
+                    $('.btn-outlet-edit').html('<i class="far fa-edit"></i>');
+                },
+                error: function(error) {
+                    console.error(error);
+                    $('.btn-outlet-edit').prop('disabled', false);
+                    $('.btn-outlet-edit').html('<i class="far fa-edit"></i>');
+                }
+            })
         })
-    })
-</script>
+    </script>
 
+    <script>
+        $(document).on('submit', '#editform', function(e) {
+            e.preventDefault();
+            let data = $(this).serialize();
+            let url = "{{ route('dosen.update') }}";
+            $('#saveform').prop("disabled", true);
+            $('#saveform').html("Loading...");
+            $.ajax({
+                url,
+                data,
+                type: "POST",
+                dataType: "JSON",
+                success: function(data) {
+                    $('#editmodal').modal('hide');
+                    $('#saveform').prop("disabled", false);
+                    reloadTable();
+                },
+                error: function(error) {
+                    console.error(error);
+                    $('#saveform').prop("disabled", false);
+                }
+            })
+        })
+    </script>
+
+    <script>
+        function reloadTable() {
+            $('#data-table').DataTable().clear().destroy();
+            getDosen();
+        }
+    </script>
 @endpush
 
 @push('css')

@@ -8,7 +8,7 @@ use Yajra\DataTables\DataTables;
 use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
-
+use Namshi\JOSE\Signer\OpenSSL\RSA;
 
 class DosenController extends Controller
 {
@@ -37,7 +37,7 @@ class DosenController extends Controller
                                     <i class="fas fa-eye"></i>
                             </button>
 
-                            <button class="btn btn-icon btn-primary btn-outlet-edit" data-id="'.$row->id.'" data-toggle="modal" data-target=".bd-example-modal-edit">
+                            <button class="btn btn-icon btn-primary btn-outlet-edit" data-id="'.$row->id.'" type="button" role="button">
                                     <i class="far fa-edit"></i>
                             </button>
 
@@ -104,12 +104,13 @@ class DosenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
-        $detail = User::find($id);
 
-        // echo json_encode($detail);
-        // die;
+        if (!$request->ajax()) {
+            redirect('/dashboard');
+		}
+        $detail = User::find($id);
 
         return view('pages.dosen.edit', compact('detail'));
     }
