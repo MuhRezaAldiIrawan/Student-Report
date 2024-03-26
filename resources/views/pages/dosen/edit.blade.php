@@ -7,9 +7,10 @@
             <div class="modal-body">
                 <form id="editform">
                     @csrf
+                    <input type="text" value="{{$detail->id}}" name="id" hidden>
                     <div class="form-group">
                         <label for="inputAddress">Nama</label>
-                        <input type="text" class="form-control" id="dosenNama" placeholder="Nama" detailName="name" value="{{$detail->name}}">
+                        <input type="text" class="form-control" id="name" placeholder="Nama" detailName="name" name="name" value="{{$detail->name}}">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -46,7 +47,7 @@
                         </div>
                     </div>
                     <button class="btn btn-default" type="reset" id="cancelbtn">Close</button>
-                    <button type="submit" class="btn btn-primary" id="saveform" >Simpan</button>
+                    <button class="btn btn-primary" id="saveform" >Simpan</button>
                 </form>
             </div>
         </div>

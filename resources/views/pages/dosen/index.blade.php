@@ -130,7 +130,7 @@
     <script>
         $(document).on('submit', '#editform', function(e) {
             e.preventDefault();
-            let data = $(this).serialize();
+            let data = $('#editform').serialize();
             let url = "{{ route('dosen.update') }}";
             $('#saveform').prop("disabled", true);
             $('#saveform').html("Loading...");

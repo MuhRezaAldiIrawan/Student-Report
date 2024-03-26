@@ -133,9 +133,26 @@ class DosenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        dd($request->all());
+
+        $updateuser = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required',
+            'address' => 'required|max:255',
+            'phone' => 'required|max:255',
+            'gender' => 'required',
+            'avatar' => 'image|file',
+        ]);
+
+        if ($request->file('avatar')) {
+            $updateuser['avatar'] = $request->file('avatar')->store('users-avatar');
+        }
+
+
+        User::where('id', $request->id)->update($updateuser);
+
+        return redirect('/dosen');
     }
 
     /**
