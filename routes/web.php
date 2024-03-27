@@ -69,6 +69,7 @@ Route::controller(UserController::class)->group(function () {
 Route::controller(DosenController::class)->group(function () {
 
     Route::get('/dosen' , 'index')->name('dosen');
+    Route::get('/modal-get', 'modalAdd')->name('modal-add');
     Route::post('/dosen' , 'store')->name('dosen.store');
     Route::get('/delete-dosen/{id}' , 'destroy')->name('dosen.destroy');
     Route::get('/modal-edit/{id}' , 'show')->name('dosen.edit');

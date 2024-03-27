@@ -34,15 +34,13 @@ class DosenController extends Controller
                     ->addColumn('action', function($row){
                             $btn =
                             '
-                            <button class="btn btn-icon btn-primary btn-outlet-edit" data-id="'.$row->id.'" type="button" role="button">
+                            <button class="btn btn-icon btn-primary btn-dosen-edit" data-id="'.$row->id.'" type="button" role="button">
                                     <i class="far fa-edit"></i>
                             </button>
 
-                            <a href="/delete-dosen/'.$row->id.'" data-confirm-delete="true">
-                                <button class="btn btn-icon btn-danger"  data-toggle="tooltip" data-placement="top" title="delete" data-confirm-delete="true">
-                                    <i class="far fa-trash-alt"></i>
-                                </button>
-                            </a>
+                            <button class="btn btn-icon btn-danger btn-dosen-delete" data-id="'.$row->id.'" type="button" role="button">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
                             ';
                             return $btn;
                     })
@@ -68,11 +66,6 @@ class DosenController extends Controller
      */
     public function store(Request $request)
     {
-
-        // if (!$request->ajax()) {
-        //     redirect('/dashboard');
-		// }
-
         $validatedData = $request->validate([
             'name' => 'required',
             'email' => 'required',
@@ -108,9 +101,14 @@ class DosenController extends Controller
         if (!$request->ajax()) {
             redirect('/dashboard');
 		}
+
+        $title = "Edit Dosen";
+
+        $idform = "editform";
+
         $detail = User::find($id);
 
-        return view('pages.dosen.edit', compact('detail'));
+        return view('components.dosen.modal_dosen', compact('detail', 'title', 'idform'));
     }
 
     /**
@@ -119,9 +117,17 @@ class DosenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function modalAdd(Request $request)
     {
-        //
+        if (!$request->ajax()) {
+            redirect('/dashboard');
+		}
+
+        $title = "Tambah Dosen";
+
+        $idform = "adddosen";
+
+        return view('components.dosen.modal_dosen', compact('title', 'title', 'idform'));
     }
 
     /**

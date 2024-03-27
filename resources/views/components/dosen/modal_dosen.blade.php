@@ -1,43 +1,41 @@
-<div class="modal fade bd-example-modal-xl">
+
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title h4">Tambah Dosen</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <i class="anticon anticon-close"></i>
-                </button>
+                <h5 class="modal-title h4">{{$title}}</h5>
             </div>
             <div class="modal-body">
-                <form action="{{route('dosen.store')}}" method="POST" enctype="multipart/form-data">
+                <form id="{{$idform}}">
                     @csrf
+                    <input type="text" value="{{isset($detail) ? $detail->id : ''}}" name="id" hidden>
                     <div class="form-group">
                         <label for="inputAddress">Nama</label>
-                        <input type="text" class="form-control" id="inputAddress" placeholder="Nama" name="name">
+                        <input type="text" class="form-control" id="name" placeholder="Nama" name="name" value="{{isset($detail) ? $detail->name : ''}}">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">Email</label>
-                            <input type="email" class="form-control" id="inputEmail4" placeholder="Email" name="email">
+                            <input type="email" class="form-control" id="inputEmail4" placeholder="Email" name="email" value="{{isset($detail) ? $detail->email : ''}}">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputPassword4">Password</label>
-                            <input type="password" class="form-control" id="inputPassword4" placeholder="Password" name="password">
+                            <input type="text" class="form-control" id="inputPassword4" placeholder="Password" name="password" value="{{isset($detail) ? $detail->password : ''}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputAddress2">Alamat</label>
-                        <input type="text" class="form-control" id="inputAddress2" placeholder="rumah, apartement atau lantai tempat tinggal" name="address">
+                        <input type="text" class="form-control" id="inputAddress2" placeholder="rumah, apartement atau lantai tempat tinggal" name="address" value="{{isset($detail) ? $detail->email : ''}}">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputNumber">No. HP</label>
-                            <input type="text" class="form-control" id="inputNumber" name="phone">
+                            <input type="text" class="form-control" id="inputNumber" name="phone" value="{{isset($detail) ? $detail->phone : ''}}">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputState">Jenis Kelamin</label>
                                 <select id="inputGender" class="form-control" name="gender">
-                                    <option value="Pria">Pria</option>
-                                    <option value="Wanita">Wanita</option>
+                                    <option value="Pria" {{ isset($detail->gender) ? ($detail->gender == 'Pria' ? 'selected' : '') : '' }}>Pria</option>
+                                    <option value="Wanita" {{ isset($detail->gender) ? ($detail->gender == 'Wanita' ? 'selected' : '') : '' }}>Wanita</option>
                                 </select>
                         </div>
                     </div>
@@ -48,14 +46,14 @@
                             <label class="custom-file-label" for="customFile">Choose file</label>
                         </div>
                     </div>
-
                     <div class="form-group" hidden>
                         <label for="role">Role</label>
-                        <input type="text" class="form-control" id="role"  name="role" value="Dosen">
+                        <input type="text" class="form-control" id="role"  name="role" value="{{isset($detail) ? $detail->role : 'Dosen'}}">
                     </div>
-                    <button type="submit" class="btn btn-primary" >Simpan</button>
+                    <button class="btn btn-default" type="reset" id="cancelbtn">Close</button>
+                    <button class="btn btn-primary" id="saveform" >Simpan</button>
                 </form>
             </div>
         </div>
     </div>
-</div>
+

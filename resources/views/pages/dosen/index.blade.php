@@ -5,7 +5,8 @@
         <div class="card-body">
             <div class="d-flex align-items-center justify-content-between">
                 <h4>Dosen</h4>
-                <button class="btn btn-icon btn-primary btn-tone" data-toggle="modal" data-target=".bd-example-modal-xl">
+                <button class="btn btn-icon btn-primary btn-tone btn-dosen-add" id="btn-dosen-add" type="button"
+                    role="button">
                     <i class="fas fa-user-plus"></i>
                 </button>
             </div>
@@ -30,17 +31,24 @@
         </div>
     </div>
 
-    <div class="modal fade bd-example-modal-edit" style="display: none;" id="editmodal" tabindex="-1" role="dialog"
-        aria-labelledby="editModalLabel" aria-hidden="true"></div>
 
+    {{-- Modal Components --}}
+    <div class="modal fade bd-example-modal-edit" style="display: none;" id="editmodal" tabindex="-1" role="dialog"
+        aria-labelledby="editModalLabel" aria-hidden="true">
     </div>
 @endsection
 
-@include('components.modal-add-dosen')
 
 @push('js')
     <script src="{{ asset('vendors/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('vendors/datatables/dataTables.bootstrap.min.js') }}"></script>
+
+    <script>
+        function reloadTable() {
+            $('#data-table').DataTable().clear().destroy();
+            getDosen();
+        }
+    </script>
 
     <script>
         $(document).on('click', '#cancelbtn', function(e) {
@@ -64,7 +72,7 @@
                 serverSide: true,
                 ajax: "{{ route('dosen') }}",
                 lengthMenu: [
-                    5, 10
+                    10, 20
                 ],
                 columns: [{
                         data: 'DT_RowIndex',
@@ -99,12 +107,11 @@
     </script>
 
     <script>
-        $(document).on('click', '.btn-outlet-edit', function(e) {
+        $(document).on('click', '.btn-dosen-edit', function(e) {
             e.preventDefault();
             let id = $(this).data('id');
             let url = "/modal-edit/" + id;
             $(this).prop('disabled', true)
-            $(this).html('Loading...')
             $.ajax({
                 url,
                 data: {
@@ -115,13 +122,72 @@
                 success: function(data) {
                     $('#editmodal').html(data);
                     $('#editmodal').modal('show');
-                    $('.btn-outlet-edit').prop('disabled', false);
-                    $('.btn-outlet-edit').html('<i class="far fa-edit"></i>');
+                    $('.btn-dosen-edit').prop('disabled', false);
+                    $('.btn-dosen-edit').html('<i class="far fa-edit"></i>');
                 },
                 error: function(error) {
                     console.error(error);
-                    $('.btn-outlet-edit').prop('disabled', false);
-                    $('.btn-outlet-edit').html('<i class="far fa-edit"></i>');
+                    $('.btn-dosen-edit').prop('disabled', false);
+                    $('.btn-dosen-edit').html('<i class="far fa-edit"></i>');
+                }
+            })
+        })
+    </script>
+
+    <script>
+    $(document).on('click', '.btn-dosen-delete', function(e) {
+        e.preventDefault();
+        let id = $(this).data('id');
+        let url = "/delete-dosen/" + id;
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url,
+                    type: "GET",
+                    dataType: "HTML",
+                    success: function(data) {
+                        reloadTable();
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Your file has been deleted.',
+                            icon: 'success',
+                            timer: 2000
+
+                        })
+                    }
+                })
+            }
+        })
+    })
+    </script>
+
+    <script>
+        $(document).on('click', '.btn-dosen-add', function(e) {
+            e.preventDefault();
+            let url = "/modal-get";
+            $(this).prop('disabled', true)
+            $.ajax({
+                url,
+                type: "GET",
+                dataType: "HTML",
+                success: function(data) {
+                    $('#editmodal').html(data);
+                    $('#editmodal').modal('show');
+                    $('.btn-dosen-add').prop("disabled", false);
+                    $('.btn-dosen-add').html('<i class="fas fa-user-plus"></i>');
+                },
+                error: function(error) {
+                    console.error(error);
+                    $('.btn-dosen-add').prop('disabled', false);
+                    $('.btn-dosen-add').html('<i class="fas fa-user-plus"></i>');
                 }
             })
         })
@@ -153,14 +219,42 @@
     </script>
 
     <script>
-        function reloadTable() {
-            $('#data-table').DataTable().clear().destroy();
-            getDosen();
-        }
+        $(document).on('submit', '#adddosen', function(e) {
+            e.preventDefault();
+            let data = $(this).serialize();
+            let url = "{{ route('dosen.store') }}";
+            $('#saveform').html("Uploading");
+            $('#saveform').prop("disabled", true);
+            $.ajax({
+                url,
+                data,
+                type: "POST",
+                dataType: "JSON",
+                success: function(data) {
+                    if ($.isEmptyObject(data.error)) {
+                        $('#saveform').prop("disabled", false);
+                        $('#saveform').html('Save');
+                        $('#editmodal').modal('hide');
+                        reloadTable();
+                    } else {
+                        swal(
+                            data.error, {
+                                icon: "error",
+                            });
+                        $('#savefile').prop("disabled", false);
+                        $('#savefile').html('Save');
+                    }
+                },
+                error: function(error) {
+                    console.error(error);
+                    $('#savefile').prop("disabled", false);
+                    $('#savefile').html('Save');
+                }
+            })
+        })
     </script>
 @endpush
 
 @push('css')
-    <!-- page css -->
     <link href="{{ asset('vendors/datatables/dataTables.bootstrap.min.css') }}" rel="stylesheet">
 @endpush

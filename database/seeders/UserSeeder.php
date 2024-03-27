@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(20)->create();
+        User::factory(20)->create();
         // $users = [
         //         [
         //             'name' => 'Administrator',
