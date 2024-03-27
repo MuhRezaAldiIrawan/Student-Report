@@ -135,38 +135,38 @@
     </script>
 
     <script>
-    $(document).on('click', '.btn-dosen-delete', function(e) {
-        e.preventDefault();
-        let id = $(this).data('id');
-        let url = "/delete-dosen/" + id;
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url,
-                    type: "GET",
-                    dataType: "HTML",
-                    success: function(data) {
-                        reloadTable();
-                        Swal.fire({
-                            title: 'Deleted!',
-                            text: 'Your file has been deleted.',
-                            icon: 'success',
-                            timer: 2000
+        $(document).on('click', '.btn-dosen-delete', function(e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            let url = "/delete-dosen/" + id;
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url,
+                        type: "GET",
+                        dataType: "HTML",
+                        success: function(data) {
+                            reloadTable();
+                            Swal.fire({
+                                title: 'Deleted!',
+                                text: 'Your file has been deleted.',
+                                icon: 'success',
+                                timer: 2000
 
-                        })
-                    }
-                })
-            }
+                            })
+                        }
+                    })
+                }
+            })
         })
-    })
     </script>
 
     <script>
@@ -206,6 +206,12 @@
                 type: "POST",
                 dataType: "JSON",
                 success: function(data) {
+                    Swal.fire({
+                            title: 'Success',
+                            text: data.success,
+                            icon: "success",
+                            timer: 2000
+                        });
                     $('#editmodal').modal('hide');
                     $('#saveform').prop("disabled", false);
                     reloadTable();
@@ -230,8 +236,24 @@
                 data,
                 type: "POST",
                 dataType: "JSON",
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Loading...',
+                        html: 'Please wait while we are uploading your data.',
+                        icon: "info",
+                        buttons: false,
+                        dangerMode: true,
+                        showConfirmButton: false
+                    });
+                },
                 success: function(data) {
                     if ($.isEmptyObject(data.error)) {
+                        Swal.fire({
+                            title: 'Success',
+                            text: data.success,
+                            icon: "success",
+                            timer: 2000
+                        });
                         $('#saveform').prop("disabled", false);
                         $('#saveform').html('Save');
                         $('#editmodal').modal('hide');
