@@ -21,7 +21,7 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a href="">
+                <a href="{{route('mahasiswa')}}">
                     <span class="icon-holder">
                         <i class="fas fa-user-graduate"></i>
                     </span>

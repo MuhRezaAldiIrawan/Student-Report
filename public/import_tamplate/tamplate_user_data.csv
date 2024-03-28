@@ -1,0 +1,4 @@
+﻿name,email,phone,address,gender,role,password
+Peradaban,peradaban@gmail.com,82393169811,Jl. Perintis Kemeredekaan VII,Pria,Dosen,Dosen
+Bertaut,bertaut@gmail.com,82393169812,Jl. Perintis Kemerdekaan V,Wanita,Mahasiswa,Mahasiswa
+SuperAdmin,SuperAdmin@gmail.com,82393169823,Jl.Damai,Pria,Admin,SuperAdmin

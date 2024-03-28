@@ -3,10 +3,13 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <div class="d-flex align-items-center justify-content-between">
-                <h4>Dosen</h4>
-                <button class="btn btn-icon btn-primary btn-tone btn-dosen-add" id="btn-dosen-add" type="button"
-                    role="button">
+            <div class="d-flex align-items-center">
+                <h4 class="mr-auto">Dosen</h4>
+                <button class="btn btn-default btn-success btn-tone  btn-import" id="btn-import" type="button" role="button">
+                    <i class="far fa-file-excel mr-1"></i>
+                    <span>Import</span>
+                </button>
+                <button class="btn btn-icon btn-primary btn-tone ml-3 btn-dosen-add" id="btn-dosen-add" type="button" role="button">
                     <i class="fas fa-user-plus"></i>
                 </button>
             </div>
@@ -32,17 +35,25 @@
     </div>
 
 
-    {{-- Modal Components --}}
+    <!-- Modal Components -->
     <div class="modal fade bd-example-modal-edit" style="display: none;" id="editmodal" tabindex="-1" role="dialog"
         aria-labelledby="editModalLabel" aria-hidden="true">
     </div>
+
+        <!-- Modal Import Components -->
+    <div class="modal fade bd-example-modal-import" style="display: none;" id="importmodal" tabindex="-1" role="dialog"
+        aria-labelledby="importModalLabel" aria-hidden="true">
+    </div>
+
+
+
+
 @endsection
+
+@component('components.aset_datatable.aset_datatable')@endcomponent
 
 
 @push('js')
-    <script src="{{ asset('vendors/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('vendors/datatables/dataTables.bootstrap.min.js') }}"></script>
-
     <script>
         function reloadTable() {
             $('#data-table').DataTable().clear().destroy();
@@ -64,7 +75,7 @@
         });
     </script>
 
-    <script type="text/javascript">
+    <script>
         function getDosen() {
 
             let table = $('.data-table').DataTable({
@@ -100,9 +111,13 @@
                         orderable: false,
                         searchable: false
                     },
-                ]
+                ],
+                layout: {
+                    topStart: {
+                        buttons: ['copy', 'excel', 'pdf', 'colvis']
+                    }
+                }
             });
-
         }
     </script>
 
@@ -194,6 +209,94 @@
     </script>
 
     <script>
+        $(document).on('click', '.btn-import', function(e) {
+            console.log("button import ditekan");
+            e.preventDefault();
+            let url = "/modal-import";
+            $(this).prop('disabled', true)
+            $.ajax({
+                url,
+                type: "GET",
+                dataType: "HTML",
+                success: function(data) {
+                    $('#importmodal').html(data);
+                    $('#importmodal').modal('show');
+                    $('.btn-import').prop("disabled", false);
+                    $('.btn-import').html('<i class="far fa-file-excel mr-1"></i><span>Import</span>');
+                },
+                error: function(error) {
+                    console.error(error);
+                    $('.btn-import').prop('disabled', false);
+                    $('.btn-import').html('<i class="far fa-file-excel mr-1"></i><span>Import</span>');
+                }
+            })
+        })
+    </script>
+
+    <script>
+        $(document).on('submit', '#form-importuser', function(e){
+            e.preventDefault();
+            let data = new FormData(this);
+            const url = '/import-dosen';
+            $('#savefile').html("Uploading");
+            $('#savefile').prop("disabled",true);
+            console.log("berhasil ditekan");
+            $.ajax({
+                url,
+                data,
+                type: "POST",
+                dataType: "JSON",
+                cache:false,
+                processData: false,
+                contentType: false,
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Loading...',
+                        html: 'Please wait while we are uploading your file.',
+                        icon: "info",
+                        buttons: false,
+                        dangerMode: true,
+                        showConfirmButton: false
+                    });
+                },
+                success: function(data)
+                {
+                    if(data.code == 200)
+                    {
+                        Swal.fire({
+                            title: 'Success',
+                            text: data.success,
+                            icon: "success",
+                            timer: 2000
+                        });
+                        $('#savefile').prop("disabled",false);
+                        $('#savefile').html('Save');
+                        $('#importmodal').modal('hide');
+                        reloadTable();
+                    }else if(data.code == 400)
+                    {
+                        Swal.fire({
+                            title: 'Failed',
+                            icon: "error",
+                            timer: 2000
+                        });
+                        $('#savefile').prop("disabled",false);
+                        $('#savefile').html('Save');
+                        $('#customFile').val('');
+                    }
+                },
+                error: function(error)
+                {
+                    console.error(error);
+                    $('#savefile').prop("disabled",false);
+                    $('#savefile').html('Save');
+                    $('#customFile').val('');
+                }
+            })
+        })
+    </script>
+
+    <script>
         $(document).on('submit', '#editform', function(e) {
             e.preventDefault();
             let data = $('#editform').serialize();
@@ -207,11 +310,11 @@
                 dataType: "JSON",
                 success: function(data) {
                     Swal.fire({
-                            title: 'Success',
-                            text: data.success,
-                            icon: "success",
-                            timer: 2000
-                        });
+                        title: 'Success',
+                        text: data.success,
+                        icon: "success",
+                        timer: 2000
+                    });
                     $('#editmodal').modal('hide');
                     $('#saveform').prop("disabled", false);
                     reloadTable();
@@ -275,8 +378,4 @@
             })
         })
     </script>
-@endpush
-
-@push('css')
-    <link href="{{ asset('vendors/datatables/dataTables.bootstrap.min.css') }}" rel="stylesheet">
 @endpush

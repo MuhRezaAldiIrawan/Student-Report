@@ -8,7 +8,8 @@ use Yajra\DataTables\DataTables;
 use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
-use Namshi\JOSE\Signer\OpenSSL\RSA;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ImportUser;
 
 class DosenController extends Controller
 {
@@ -28,7 +29,7 @@ class DosenController extends Controller
 
 
         if ($request->ajax()) {
-            $data = User::where('role', 'dosen')->latest()->get();
+            $data = User::where('role', 'Dosen')->latest()->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
@@ -108,7 +109,7 @@ class DosenController extends Controller
 
         $detail = User::find($id);
 
-        return view('components.dosen.modal_dosen', compact('detail', 'title', 'idform'));
+        return view('components.modal.modal_dosen', compact('detail', 'title', 'idform'));
     }
 
     /**
@@ -127,7 +128,7 @@ class DosenController extends Controller
 
         $idform = "adddosen";
 
-        return view('components.dosen.modal_dosen', compact('title', 'title', 'idform'));
+        return view('components.modal.modal_dosen', compact('title', 'title', 'idform'));
     }
 
     /**
@@ -169,6 +170,40 @@ class DosenController extends Controller
     {
         DB::table('users')->where('id', $id)->delete();
         Alert::success('Success', 'Data Dosen berhasil dihapus');
+        return redirect('/dosen');
+    }
+
+    public function modalImport(Request $request)
+    {
+        if (!$request->ajax()) {
+            redirect('/dashboard');
+        }
+
+        $title = "Import Dosen";
+        return view('components.modal.modal_import_data', compact('title'));
+    }
+
+    public function downloadTamplate()
+    {
+        $filePath = storage_path('app/public/import_tamplate/tamplate_user_data.csv');
+        $fileName = 'template_user_data.csv';
+
+        if (!file_exists($filePath)) {
+            abort(404);
+        }
+
+        return response()->download($filePath, $fileName);
+    }
+
+    public function importDosen(Request $request)
+    {
+        if (!$request->ajax()) {
+            redirect('/dashboard');
+        }
+
+        Excel::import(new ImportUser, $request->file('customFile')->store('files'));
+
+        // echo json_encode($data);
         return redirect('/dosen');
     }
 }
