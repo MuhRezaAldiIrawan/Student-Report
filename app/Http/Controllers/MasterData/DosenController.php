@@ -116,7 +116,7 @@ class DosenController extends Controller
 
         $detail = User::find($id);
 
-        return view('components.modal.modal_dosen', compact('detail', 'title', 'idform'));
+        return view('components.modal.modal_add', compact('detail', 'title', 'idform'));
     }
 
     /**
@@ -135,7 +135,7 @@ class DosenController extends Controller
 
         $idform = "adddosen";
 
-        return view('components.modal.modal_dosen', compact('title', 'title', 'idform'));
+        return view('components.modal.modal_add', compact('title', 'title', 'idform'));
     }
 
     /**
@@ -187,7 +187,10 @@ class DosenController extends Controller
         }
 
         $title = "Import Dosen";
-        return view('components.modal.modal_import_data', compact('title'));
+
+        $action = "dosen.import";
+
+        return view('components.modal.modal_import_data', compact('title', 'action'));
     }
 
     public function downloadTamplate()

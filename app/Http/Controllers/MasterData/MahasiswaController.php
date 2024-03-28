@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Yajra\DataTables\DataTables;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\DB;
 
 class MahasiswaController extends Controller
 {
@@ -51,9 +53,20 @@ class MahasiswaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function show(Request $request,$id)
     {
-        //
+
+        if (!$request->ajax()) {
+            redirect('/dashboard');
+		}
+
+        $title = "Edit Mahasiswa";
+
+        $idform = "editform";
+
+        $detail = User::find($id);
+
+        return view('components.modal.modal_add', compact('detail', 'title', 'idform'));
     }
 
     /**
@@ -64,7 +77,34 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+
+            $validatedData = $request->validate([
+                'name' => 'required',
+                'email' => 'required|unique:users,email',
+                'password' => 'required|min:3',
+                'address' => 'required',
+                'phone' => 'required',
+                'role' => 'required',
+                'gender' => 'required',
+                'avatar' => 'image|file|mimes:jpeg,png,jpg,svg',
+
+            ]);
+
+            if ($request->file('avatar')) {
+                $validatedData['avatar'] = $request->file('avatar')->store('users-avatar');
+            }
+
+            User::create($validatedData);
+
+            return response()->json(['code' => 200, 'success' => 'Data berhasil diimpor!']);
+
+        } catch (\Exception $e) {
+
+            return response()->json(['code' => 400, 'error' => $e->getMessage()]);
+
+        }
+
     }
 
     /**
@@ -73,9 +113,18 @@ class MahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function modalUp(Request $request)
     {
-        //
+        if (!$request->ajax()) {
+            redirect('/dashboard');
+		}
+
+        $title = "Tambah Mahasiswa";
+
+        $idform = "addmahasiswa";
+
+
+        return view('components.modal.modal_add', compact('title', 'title', 'idform'));
     }
 
     /**
@@ -96,9 +145,26 @@ class MahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+
+        $updateuser = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required',
+            'address' => 'required|max:255',
+            'phone' => 'required|max:255',
+            'gender' => 'required',
+            'avatar' => 'image|file',
+        ]);
+
+        if ($request->file('avatar')) {
+            $updateuser['avatar'] = $request->file('avatar')->store('users-avatar');
+        }
+
+
+        User::where('id', $request->id)->update($updateuser);
+
+        return redirect('/mahasiswa');
     }
 
     /**
@@ -109,6 +175,21 @@ class MahasiswaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('users')->where('id', $id)->delete();
+        Alert::success('Success', 'Data Dosen berhasil dihapus');
+        return redirect('/dosen');
+    }
+
+    public function modalImport(Request $request)
+    {
+        if (!$request->ajax()) {
+            redirect('/dashboard');
+        }
+
+        $title = "Import Mahasiswa";
+
+        $action = "mahasiswa.import";
+
+        return view('components.modal.modal_import_data', compact('title', 'action'));
     }
 }

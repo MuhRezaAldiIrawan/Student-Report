@@ -75,7 +75,7 @@ Route::controller(DosenController::class)->group(function () {
 
     Route::get('/modal-get', 'modalAdd')->name('modal-add');
     Route::get('/modal-edit/{id}' , 'show')->name('dosen.edit');
-    Route::get('/modal-import' , 'modalImport')->name('dosen.import');
+    Route::get('/modal-import-dosen' , 'modalImport')->name('dosen.import');
     Route::get('/download-tamplate', 'downloadTamplate')->name('dosen.download-tamplate');
     Route::post('/import-dosen', 'importDosen')->name('dosen.import-dosen');
 });
@@ -83,11 +83,12 @@ Route::controller(DosenController::class)->group(function () {
 Route::controller(MahasiswaController::class)->group(function () {
 
     Route::get('/mahasiswa' , 'index')->name('mahasiswa');
-    // Route::get('/modal-get', 'modalAdd')->name('modal-add');
-    // Route::post('/mahasiswa' , 'store')->name('mahasiswa.store');
-    // Route::get('/delete-mahasiswa/{id}' , 'destroy')->name('mahasiswa.destroy');
-    // Route::get('/modal-edit/{id}' , 'show')->name('mahasiswa.edit');
-    // Route::post('/update-mahasiswa' , 'update')->name('mahasiswa.update');
+    Route::get('/modal-mahasiswa', 'modalUp')->name('mahasiswa.modal-mahasiswa');
+    Route::post('/mahasiswa' , 'store')->name('mahasiswa.store');
+    Route::get('/modal-edit-mahasiswa/{id}' , 'show')->name('mahasiswa.edit');
+    Route::post('/update-mahasiswa' , 'update')->name('mahasiswa.update');
+    Route::get('/delete-mahasiswa/{id}' , 'destroy')->name('mahasiswa.destroy');
+    Route::get('/modal-import' , 'modalImport')->name('mahasiswa.import');
 });
 
 

@@ -210,9 +210,8 @@
 
     <script>
         $(document).on('click', '.btn-import', function(e) {
-            console.log("button import ditekan");
             e.preventDefault();
-            let url = "/modal-import";
+            let url = "/modal-import-dosen";
             $(this).prop('disabled', true)
             $.ajax({
                 url,

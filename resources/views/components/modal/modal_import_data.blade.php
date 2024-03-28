@@ -5,10 +5,10 @@
             <h5 class="modal-title h4">{{$title}}</h5>
         </div>
         <div class="modal-body">
-            <form action="{{route('dosen.import')}}" method="POST" enctype="multipart/form-data" id="form-importuser">
+            <form action="{{$action}}" method="POST" enctype="multipart/form-data" id="form-importuser">
                 @csrf
                 <div class="form-group">
-                    <label for="formGroupExampleInput2">Another label</label>
+                    <label for="formGroupExampleInput2">Import Data with file</label>
                     <div class="custom-file mb-3">
                         <input type="file" class="custom-file-input" id="customFile" name="customFile">
                         <label class="custom-file-label" for="customFile">Choose file</label>

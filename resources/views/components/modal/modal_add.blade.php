@@ -48,7 +48,13 @@
                     </div>
                     <div class="form-group" hidden>
                         <label for="role">Role</label>
-                        <input type="text" class="form-control" id="role"  name="role" value="{{isset($detail) ? $detail->role : 'Dosen'}}">
+                        @if (Str::contains($idform, 'mahasiswa'))
+                            <input type="text" class="form-control" id="role"  name="role" value="{{isset($detail) ? $detail->role : 'Mahasiswa'}}">
+                        @elseif (Str::contains($idform, 'dosen'))
+                            <input type="text" class="form-control" id="role"  name="role" value="{{isset($detail) ? $detail->role : 'Dosen'}}">
+                        @elseif (Str::contains($idform, 'admin'))
+                            <input type="text" class="form-control" id="role"  name="role" value="{{isset($detail) ? $detail->role : 'Admin'}}">
+                        @endif
                     </div>
                     <button class="btn btn-default" type="reset" id="cancelbtn">Close</button>
                     <button class="btn btn-primary" id="saveform" >Simpan</button>
