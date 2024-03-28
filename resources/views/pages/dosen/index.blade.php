@@ -278,11 +278,13 @@
                         Swal.fire({
                             title: 'Failed',
                             icon: "error",
-                            timer: 2000
+                            text: data.error,
+                            showConfirmButton: true,
+                            confirmButtonText: "Ok",
+                            confirmButtonColor: "#DD6B55",
                         });
                         $('#savefile').prop("disabled",false);
                         $('#savefile').html('Save');
-                        $('#customFile').val('');
                     }
                 },
                 error: function(error)
@@ -290,7 +292,6 @@
                     console.error(error);
                     $('#savefile').prop("disabled",false);
                     $('#savefile').html('Save');
-                    $('#customFile').val('');
                 }
             })
         })
@@ -362,12 +363,16 @@
                         $('#editmodal').modal('hide');
                         reloadTable();
                     } else {
-                        swal(
-                            data.error, {
-                                icon: "error",
-                            });
-                        $('#savefile').prop("disabled", false);
-                        $('#savefile').html('Save');
+                        Swal.fire({
+                            title: 'Failed',
+                            icon: "error",
+                            text: data.error,
+                            showConfirmButton: true,
+                            confirmButtonText: "Ok",
+                            confirmButtonColor: "#DD6B55",
+                        });
+                        $('#saveform').prop("disabled", false);
+                        $('#saveform').html('Save');
                     }
                 },
                 error: function(error) {

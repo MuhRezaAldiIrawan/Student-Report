@@ -67,27 +67,34 @@ class DosenController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required|min:3',
-            'address' => 'required',
-            'phone' => 'required',
-            'role' => 'required',
-            'gender' => 'required',
-            'avatar' => 'image|file|mimes:jpeg,png,jpg,svg',
+        try {
 
-        ]);
+            $validatedData = $request->validate([
+                'name' => 'required',
+                'email' => 'required|unique:users,email',
+                'password' => 'required|min:3',
+                'address' => 'required',
+                'phone' => 'required',
+                'role' => 'required',
+                'gender' => 'required',
+                'avatar' => 'image|file|mimes:jpeg,png,jpg,svg',
 
-        if ($request->file('avatar')) {
-            $validatedData['avatar'] = $request->file('avatar')->store('users-avatar');
+            ]);
+
+            if ($request->file('avatar')) {
+                $validatedData['avatar'] = $request->file('avatar')->store('users-avatar');
+            }
+
+            User::create($validatedData);
+
+            return response()->json(['code' => 200, 'success' => 'Data berhasil diimpor!']);
+
+        } catch (\Exception $e) {
+
+            return response()->json(['code' => 400, 'error' => $e->getMessage()]);
+
         }
 
-        User::create($validatedData);
-
-        Alert::success('Success', 'Dosen berhasil ditambahkan');
-
-        return redirect('/dosen');
     }
 
     /**
@@ -201,9 +208,13 @@ class DosenController extends Controller
             redirect('/dashboard');
         }
 
-        Excel::import(new ImportUser, $request->file('customFile')->store('files'));
+        try {
+            $import = new ImportUser;
+            Excel::import($import, $request->file('customFile')->store('files'));
 
-        // echo json_encode($data);
-        return redirect('/dosen');
+            return response()->json(['code' => 200, 'success' => 'Data berhasil diimpor!']);
+        } catch (\Exception $e) {
+            return response()->json(['code' => 400, 'error' => $e->getMessage()]);
+        }
     }
 }
