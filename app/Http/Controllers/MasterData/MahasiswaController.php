@@ -26,7 +26,7 @@ class MahasiswaController extends Controller
 
 
         if ($request->ajax()) {
-            $data = User::where('role', 'Mahasiswa')->latest()->get();
+            $data = User::with('mahasiswa')->where('role', 'Mahasiswa')->latest()->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){

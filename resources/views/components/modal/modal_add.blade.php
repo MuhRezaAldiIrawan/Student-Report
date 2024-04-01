@@ -10,32 +10,39 @@
                     <input type="text" value="{{isset($detail) ? $detail->id : ''}}" name="id" hidden>
                     <div class="form-group">
                         <label for="inputAddress">Nama</label>
-                        <input type="text" class="form-control" id="name" placeholder="Nama" name="name" value="{{isset($detail) ? $detail->name : ''}}">
+                        <input type="text" class="form-control" id="nama" placeholder="Nama" name="nama" value="{{isset($detail) ? $detail->nama : ''}}">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">Email</label>
                             <input type="email" class="form-control" id="inputEmail4" placeholder="Email" name="email" value="{{isset($detail) ? $detail->email : ''}}">
                         </div>
+                        @if (Str::contains($idform, 'mahasiswa'))
                         <div class="form-group col-md-6">
-                            <label for="inputPassword4">Password</label>
-                            <input type="text" class="form-control" id="inputPassword4" placeholder="Password" name="password" value="{{isset($detail) ? $detail->password : ''}}">
+                            <label for="nim">NIM</label>
+                            <input type="text" class="form-control" id="nim"  name="nim" value="{{isset($detail) ? $detail->nim : ''}}">
                         </div>
+                        @elseif (Str::contains($title, 'Dosen'))
+                        <div class="form-group col-md-6">
+                            <label for="nim">NIDN</label>
+                            <input type="text" class="form-control" id="nidn"  name="nidn" value="{{isset($detail) ? $detail->dosen->nidn : ''}}">
+                        </div>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="inputAddress2">Alamat</label>
-                        <input type="text" class="form-control" id="inputAddress2" placeholder="rumah, apartement atau lantai tempat tinggal" name="address" value="{{isset($detail) ? $detail->email : ''}}">
+                        <input type="text" class="form-control" id="inputAddress2" placeholder="rumah, apartement atau lantai tempat tinggal" name="alamat" value="{{isset($detail) ? $detail->dosen->alamat : ''}}">
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        {{-- <div class="form-group col-md-6">
                             <label for="inputNumber">No. HP</label>
-                            <input type="text" class="form-control" id="inputNumber" name="phone" value="{{isset($detail) ? $detail->phone : ''}}">
-                        </div>
-                        <div class="form-group col-md-6">
+                            <input type="text" class="form-control" id="inputNumber" name="hp" value="{{isset($detail) ? $detail->hp : ''}}">
+                        </div> --}}
+                        <div class="form-group col-md-12">
                             <label for="inputState">Jenis Kelamin</label>
-                                <select id="inputGender" class="form-control" name="gender">
-                                    <option value="Pria" {{ isset($detail->gender) ? ($detail->gender == 'Pria' ? 'selected' : '') : '' }}>Pria</option>
-                                    <option value="Wanita" {{ isset($detail->gender) ? ($detail->gender == 'Wanita' ? 'selected' : '') : '' }}>Wanita</option>
+                                <select id="inputGender" class="form-control" name="jenis_kelamin">
+                                    <option value="Pria" {{ isset($detail->dosen->jenis_kelamin) ? ($detail->dosen->jenis_kelamin == 'Pria' ? 'selected' : '') : '' }}>Pria</option>
+                                    <option value="Wanita" {{ isset($detail->dosen->jenis_kelamin) ? ($detail->dosen->jenis_kelamin == 'Wanita' ? 'selected' : '') : '' }}>Wanita</option>
                                 </select>
                         </div>
                     </div>
@@ -48,11 +55,11 @@
                     </div>
                     <div class="form-group" hidden>
                         <label for="role">Role</label>
-                        @if (Str::contains($idform, 'mahasiswa'))
+                        @if (Str::contains($title, 'Mahasiswa'))
                             <input type="text" class="form-control" id="role"  name="role" value="{{isset($detail) ? $detail->role : 'Mahasiswa'}}">
-                        @elseif (Str::contains($idform, 'dosen'))
+                        @elseif (Str::contains($title, 'Dosen'))
                             <input type="text" class="form-control" id="role"  name="role" value="{{isset($detail) ? $detail->role : 'Dosen'}}">
-                        @elseif (Str::contains($idform, 'admin'))
+                        @elseif (Str::contains($title, 'Admin'))
                             <input type="text" class="form-control" id="role"  name="role" value="{{isset($detail) ? $detail->role : 'Admin'}}">
                         @endif
                     </div>

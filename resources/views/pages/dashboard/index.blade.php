@@ -13,7 +13,7 @@
                 @endif
             </div>
             <div class="media-body m-l-15">
-                <h4 class="m-b-0">Welcome back, {{auth()->user()->name}}</h4>
+                <h4 class="m-b-0">Welcome back, {{auth()->user()->nama}}</h4>
                 <span class="text-gray">{{auth()->user()->role ?? 'User role not set'}}</span>
             </div>
         </div>

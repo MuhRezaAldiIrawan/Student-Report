@@ -61,7 +61,7 @@ class AuthSociliateController extends Controller
 
             if (!$user) {
                 $user = User::create([
-                    'name'  => $socialUser->getName(),
+                    'nama'  => $socialUser->getName(),
                     'email' => $socialUser->getEmail()
                 ]);
             }

@@ -9,9 +9,10 @@
                     <i class="far fa-file-excel mr-1"></i>
                     <span>Import</span>
                 </button>
-                <button class="btn btn-icon btn-primary btn-tone ml-3 btn-dosen-add" id="btn-dosen-add" type="button" role="button">
+                {{-- <button class="btn btn-icon btn-primary btn-tone ml-3 btn-dosen-add" id="btn-dosen-add" type="button" role="button">
                     <i class="fas fa-user-plus"></i>
-                </button>
+                </button> --}}
+                <a href="{{ route('dosen.create-page') }}" class="btn btn-icon btn-primary btn-tone ml-3"><i class="fas fa-user-plus mt-2"></i></a>
             </div>
             <div class="m-t-25">
                 <div class="table-responsive">
@@ -20,9 +21,8 @@
                             <tr>
                                 <th scope="col" style="text-align: center">No</th>
                                 <th scope="col" style="text-align: center">Nama</th>
+                                <th scope="col" style="text-align: center">NIDN</th>
                                 <th scope="col" style="text-align: center">Email</th>
-                                <th scope="col" style="text-align: center">No HP</th>
-                                <th scope="col" style="text-align: center">Alamat</th>
                                 <th scope="col" style="width: 15%; text-align: center">Action</th>
                             </tr>
                         </thead>
@@ -90,20 +90,16 @@
                         name: 'DT_RowIndex',
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'nama',
+                        name: 'nama'
+                    },
+                    {
+                        data: 'dosen.nidn',
+                        name: 'dosen.nidn'
                     },
                     {
                         data: 'email',
                         name: 'email'
-                    },
-                    {
-                        data: 'phone',
-                        name: 'phone'
-                    },
-                    {
-                        data: 'address',
-                        name: 'address'
                     },
                     {
                         data: 'action',
@@ -327,7 +323,7 @@
         })
     </script>
 
-    <script>
+    {{-- <script>
         $(document).on('submit', '#adddosen', function(e) {
             e.preventDefault();
             let data = $(this).serialize();
@@ -381,5 +377,5 @@
                 }
             })
         })
-    </script>
+    </script> --}}
 @endpush

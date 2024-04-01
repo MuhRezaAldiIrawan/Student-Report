@@ -10,6 +10,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ImportUser;
+use App\Models\Dosen;
+use Illuminate\Support\Facades\Hash;
 
 class DosenController extends Controller
 {
@@ -29,7 +31,7 @@ class DosenController extends Controller
 
 
         if ($request->ajax()) {
-            $data = User::where('role', 'Dosen')->latest()->get();
+            $data = User::with('dosen')->where('role', 'Dosen')->latest()->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
@@ -51,43 +53,53 @@ class DosenController extends Controller
         return view('pages.dosen.index', compact('title'));
     }
 
+    public function createView(Request $request)
+    {
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+        if (!$request->ajax()) {
+            redirect('/dashboard');
+		}
+
+        $title = "Add Dosen";
+
+        $idform = "adddosen";
+
+        return view('pages.dosen.add_dosen', compact('title', 'title', 'idform'));
+
+    }
 
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         try {
 
-            $validatedData = $request->validate([
-                'name' => 'required',
+            $validatedDataUser = $request->validate([
+                'nama' => 'required',
                 'email' => 'required|unique:users,email',
-                'password' => 'required|min:3',
-                'address' => 'required',
-                'phone' => 'required',
+                'hp' => 'required',
                 'role' => 'required',
-                'gender' => 'required',
-                'avatar' => 'image|file|mimes:jpeg,png,jpg,svg',
-
+                'password' => 'required|min:3',
             ]);
 
-            if ($request->file('avatar')) {
-                $validatedData['avatar'] = $request->file('avatar')->store('users-avatar');
-            }
+            $validatedDataUser['password'] = Hash::make($validatedDataUser['password']);
 
-            User::create($validatedData);
+            $validatedDataUserDetail = $request->validate([
+                'nidn' => 'required',
+                'alamat' => 'required',
+                'jenis_kelamin' => 'required',
+                'prodi' => 'required',
+                'jurusan' => 'required',
+            ]);
+
+
+            $user = User::create($validatedDataUser);
+
+            $validatedDataUserDetail['user_id'] = $user->id;
+
+            Dosen::create($validatedDataUserDetail);
 
             return response()->json(['code' => 200, 'success' => 'Data berhasil diimpor!']);
+
 
         } catch (\Exception $e) {
 
@@ -97,12 +109,7 @@ class DosenController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Request $request,$id)
     {
 
@@ -114,65 +121,63 @@ class DosenController extends Controller
 
         $idform = "editform";
 
-        $detail = User::find($id);
+        // $detail = User::find($id);
+        $detail = User::with('dosen')->where('id', $id)->first();
 
         return view('components.modal.modal_add', compact('detail', 'title', 'idform'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function modalAdd(Request $request)
-    {
-        if (!$request->ajax()) {
-            redirect('/dashboard');
-		}
 
-        $title = "Tambah Dosen";
+    // public function modalAdd(Request $request)
+    // {
+    //     if (!$request->ajax()) {
+    //         redirect('/dashboard');
+	// 	}
 
-        $idform = "adddosen";
+    //     $title = "Tambah Dosen";
 
-        return view('components.modal.modal_add', compact('title', 'title', 'idform'));
-    }
+    //     $idform = "adddosen";
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //     return view('components.modal.modal_add', compact('title', 'title', 'idform'));
+    // }
+
+
     public function update(Request $request)
     {
 
-        $updateuser = $request->validate([
-            'name' => 'required|max:255',
+        $validatedDataUser = $request->validate([
+            'nama' => 'required',
             'email' => 'required',
-            'address' => 'required|max:255',
-            'phone' => 'required|max:255',
-            'gender' => 'required',
-            'avatar' => 'image|file',
+            'role' => 'required',
         ]);
 
-        if ($request->file('avatar')) {
-            $updateuser['avatar'] = $request->file('avatar')->store('users-avatar');
+
+        $validatedDataUserDetail = $request->validate([
+            'nidn' => 'required',
+            'alamat' => 'required',
+            'jenis_kelamin' => 'required',
+            'avatar' => 'image|mimes:jpeg,png,jpg',
+        ]);
+
+        if ($request->hasFile('avatar')) {
+            $validatedDataUserDetail['avatar'] = $request->file('avatar')->store('users-avatar');
         }
 
 
-        User::where('id', $request->id)->update($updateuser);
+        try {
+            // Update data user
+            $user = User::findOrFail($request->id);
+            $user->update($validatedDataUser);
 
-        return redirect('/dosen');
+            // Update data dosen yang terkait
+            $user->dosen()->update($validatedDataUserDetail);
+
+            return response()->json(['code' => 200, 'success' => 'Data berhasil diperbarui!']);
+        } catch (\Exception $e) {
+            return response()->json(['code' => 400, 'error' => $e->getMessage()]);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         DB::table('users')->where('id', $id)->delete();

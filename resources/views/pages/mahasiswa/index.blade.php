@@ -21,9 +21,9 @@
                             <tr>
                                 <th scope="col" style="text-align: center">No</th>
                                 <th scope="col" style="text-align: center">Nama</th>
+                                <th scope="col" style="text-align: center">NIM</th>
                                 <th scope="col" style="text-align: center">Email</th>
                                 <th scope="col" style="text-align: center">No HP</th>
-                                <th scope="col" style="text-align: center">Alamat</th>
                                 <th scope="col" style="width: 15%; text-align: center">Action</th>
                             </tr>
                         </thead>
@@ -79,25 +79,26 @@
                         buttons: ['copy', 'excel', 'pdf', 'colvis']
                     }
                 },
-                columns: [{
+                columns: [
+                    {
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'nama',
+                        name: 'nama'
+                    },
+                    {
+                        data: 'mahasiswa.nim',
+                        name: 'mahasiswa.nim'
                     },
                     {
                         data: 'email',
                         name: 'email'
                     },
                     {
-                        data: 'phone',
-                        name: 'phone'
-                    },
-                    {
-                        data: 'address',
-                        name: 'address'
+                        data: 'hp',
+                        name: 'hp'
                     },
                     {
                         data: 'action',

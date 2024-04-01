@@ -16,8 +16,8 @@
                                 <form action="{{ route('register') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
-                                        <label class="font-weight-semibold" for="name">Username:</label>
-                                        <input type="text" class="form-control" id="name" placeholder="name" name="name">
+                                        <label class="font-weight-semibold" for="nama">Username:</label>
+                                        <input type="text" class="form-control" id="nama" placeholder="nama" name="nama">
                                     </div>
                                     <div class="form-group">
                                         <label class="font-weight-semibold" for="email">Email:</label>

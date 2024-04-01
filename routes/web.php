@@ -73,6 +73,8 @@ Route::controller(DosenController::class)->group(function () {
     Route::get('/delete-dosen/{id}' , 'destroy')->name('dosen.destroy');
     Route::post('/update-dosen' , 'update')->name('dosen.update');
 
+    Route::get('/dosen-create-page', 'createView')->name('dosen.create-page');
+
     Route::get('/modal-get', 'modalAdd')->name('modal-add');
     Route::get('/modal-edit/{id}' , 'show')->name('dosen.edit');
     Route::get('/modal-import-dosen' , 'modalImport')->name('dosen.import');
