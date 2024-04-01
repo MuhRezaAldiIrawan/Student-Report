@@ -165,7 +165,7 @@ class DosenController extends Controller
 
 
         try {
-            // Update data user
+
             $user = User::findOrFail($request->id);
             $user->update($validatedDataUser);
 
