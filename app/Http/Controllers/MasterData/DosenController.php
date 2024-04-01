@@ -169,7 +169,7 @@ class DosenController extends Controller
             $user = User::findOrFail($request->id);
             $user->update($validatedDataUser);
 
-            // Update data dosen yang terkait
+
             $user->dosen()->update($validatedDataUserDetail);
 
             return response()->json(['code' => 200, 'success' => 'Data berhasil diperbarui!']);
