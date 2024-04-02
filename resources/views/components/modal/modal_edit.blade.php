@@ -17,10 +17,10 @@
                             <label for="inputEmail4">Email</label>
                             <input type="email" class="form-control" id="inputEmail4" placeholder="Email" name="email" value="{{isset($detail) ? $detail->email : ''}}">
                         </div>
-                        @if (Str::contains($idform, 'mahasiswa'))
+                        @if (Str::contains($title, 'Mahasiswa'))
                         <div class="form-group col-md-6">
                             <label for="nim">NIM</label>
-                            <input type="text" class="form-control" id="nim"  name="nim" value="{{isset($detail) ? $detail->nim : ''}}">
+                            <input type="text" class="form-control" id="nim"  name="nim" value="{{isset($detail) ? $detail->mahasiswa->nim : ''}}">
                         </div>
                         @elseif (Str::contains($title, 'Dosen'))
                         <div class="form-group col-md-6">
@@ -29,20 +29,28 @@
                         </div>
                         @endif
                     </div>
+                    @if (Str::contains($title, 'Mahasiswa'))
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="kelas">Kelas</label>
+                            <input type="text" class="form-control" id="kelas" placeholder="kelas" name="kelas" value="{{isset($detail) ? $detail->mahasiswa->kelas : ''}}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="angkatan">Angkatan</label>
+                            <input type="text" class="form-control" id="angkatan"  name="angkatan" value="{{isset($detail) ? $detail->mahasiswa->angkatan : ''}}">
+                        </div>
+                    </div>
+                    @endif
                     <div class="form-group">
                         <label for="inputAddress2">Alamat</label>
-                        <input type="text" class="form-control" id="inputAddress2" placeholder="rumah, apartement atau lantai tempat tinggal" name="alamat" value="{{isset($detail) ? $detail->dosen->alamat : ''}}">
+                        <input type="text" class="form-control" id="inputAddress2" placeholder="rumah, apartement atau lantai tempat tinggal" name="alamat" value="{{isset($detail->dosen) ? $detail->dosen->alamat : (isset($detail->mahasiswa) ? $detail->mahasiswa->alamat : '')}}">
                     </div>
                     <div class="form-row">
-                        {{-- <div class="form-group col-md-6">
-                            <label for="inputNumber">No. HP</label>
-                            <input type="text" class="form-control" id="inputNumber" name="hp" value="{{isset($detail) ? $detail->hp : ''}}">
-                        </div> --}}
                         <div class="form-group col-md-12">
                             <label for="inputState">Jenis Kelamin</label>
                                 <select id="inputGender" class="form-control" name="jenis_kelamin">
-                                    <option value="Pria" {{ isset($detail->dosen->jenis_kelamin) ? ($detail->dosen->jenis_kelamin == 'Pria' ? 'selected' : '') : '' }}>Pria</option>
-                                    <option value="Wanita" {{ isset($detail->dosen->jenis_kelamin) ? ($detail->dosen->jenis_kelamin == 'Wanita' ? 'selected' : '') : '' }}>Wanita</option>
+                                    <option value="Pria" {{ isset($detail->dosen) ? ($detail->dosen->jenis_kelamin == 'Pria' ? 'selected' : '') : (isset($detail->mahasiswa) ? ($detail->mahasiswa->jenis_kelamin == 'Pria' ? 'selected' : '') : '') }}>Pria</option>
+                                    <option value="Wanita" {{ isset($detail->dosen) ? ($detail->dosen->jenis_kelamin == 'Wanita' ? 'selected' : '') : (isset($detail->mahasiswa) ? ($detail->mahasiswa->jenis_kelamin == 'Wanita' ? 'selected' : '') : '') }}>Wanita</option>
                                 </select>
                         </div>
                     </div>

@@ -35,9 +35,15 @@
                     <div class="form-group">
                         <label class="font-weight-semibold" for="role">Role</label>
                         <select class="custom-select" id="role" name="role">
+                            @if ($idform == 'adddosen')
+                            <option value="Dosen" selected>Dosen</option>
+                            @elseif ($idform == 'addmahasiswa')
+                            <option value="Mahasiswa" selected>Mahasiswa</option>
+                            @elseif ($idform == 'addadmin')
                             <option value="Dosen">Dosen</option>
                             <option value="Mahasiswa">Mahasiswa</option>
                             <option value="Admin">Admin</option>
+                            @endif
                         </select>
                     </div>
                     <div class="form-group">
@@ -50,9 +56,26 @@
         <div class="tab-pane fade" id="product-edit-option">
             <div class="card">
                 <div class="card-body">
+                    @if ($idform == 'adddosen')
                     <div class="form-group">
                         <label class="font-weight-semibold" for="password">NIDN</label>
                         <input type="text" class="form-control" id="nidn"  name="nidn">
+                    </div>
+                    @elseif ($idform == 'addmahasiswa')
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="font-weight-semibold" for="password">NIM</label>
+                            <input type="text" class="form-control" id="nim"  name="nim">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="font-weight-semibold" for="password">Kelas</label>
+                            <input type="text" class="form-control" id="kelas"  name="kelas">
+                        </div>
+                    </div>
+                    @endif
+                    <div class="form-group">
+                        <label class="font-weight-semibold" for="role">Angkatan</label>
+                        <input type="number" class="form-control" id="angkatan" placeholder="angkatan" autocomplete="false" name="angkatan">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">

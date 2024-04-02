@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\MasterData;
 
 use App\Http\Controllers\Controller;
+use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Yajra\DataTables\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Dosen;
 
 class MahasiswaController extends Controller
 {
@@ -66,7 +69,7 @@ class MahasiswaController extends Controller
 
         $detail = User::find($id);
 
-        return view('components.modal.modal_add', compact('detail', 'title', 'idform'));
+        return view('components.modal.modal_edit', compact('detail', 'title', 'idform'));
     }
 
     /**
@@ -79,33 +82,54 @@ class MahasiswaController extends Controller
     {
         try {
 
+            if (!$request->ajax()) {
+                DB::rollBack();
+                redirect('/dashboard');
+            }
+            DB::beginTransaction();
+
             $validatedData = $request->validate([
-                'name' => 'required',
+                'nama' => 'required',
                 'email' => 'required|unique:users,email',
-                'password' => 'required|min:3',
-                'address' => 'required',
-                'phone' => 'required',
+                'hp' => 'required',
                 'role' => 'required',
-                'gender' => 'required',
-                'avatar' => 'image|file|mimes:jpeg,png,jpg,svg',
+                'password' => 'required|min:3',
 
             ]);
+            $validatedData['password'] = Hash::make($validatedData['password']);
 
-            if ($request->file('avatar')) {
-                $validatedData['avatar'] = $request->file('avatar')->store('users-avatar');
+            $validatedDataUserDetail = $request->validate([
+                'nim' => 'required',
+                'kelas' => 'required',
+                'prodi' => 'required',
+                'jurusan' => 'required',
+                'angkatan' => 'required',
+                'alamat' => 'required',
+                'jenis_kelamin' => 'required',
+                'avatar' => 'required|image|mimes:jpeg,png,jpg',
+            ]);
+
+
+            $user = User::create($validatedData);
+
+            if ($request->hasFile('avatar')) {
+                $validatedDataUserDetail['avatar'] = $request->file('avatar')->store('users-avatar');
             }
 
-            User::create($validatedData);
+            $validatedDataUserDetail['user_id'] = $user->id;
 
+            Mahasiswa::create($validatedDataUserDetail);
+
+            DB::commit();
             return response()->json(['code' => 200, 'success' => 'Data berhasil diimpor!']);
 
         } catch (\Exception $e) {
-
+            DB::rollBack();
             return response()->json(['code' => 400, 'error' => $e->getMessage()]);
-
         }
 
     }
+
 
     /**
      * Display the specified resource.
@@ -124,7 +148,7 @@ class MahasiswaController extends Controller
         $idform = "addmahasiswa";
 
 
-        return view('components.modal.modal_add', compact('title', 'title', 'idform'));
+        return view('components.modal.modal_edit', compact('title', 'title', 'idform'));
     }
 
     /**
@@ -148,23 +172,40 @@ class MahasiswaController extends Controller
     public function update(Request $request)
     {
 
-        $updateuser = $request->validate([
-            'name' => 'required|max:255',
+        $validatedDataUser = $request->validate([
+            'nama' => 'required',
             'email' => 'required',
-            'address' => 'required|max:255',
-            'phone' => 'required|max:255',
-            'gender' => 'required',
-            'avatar' => 'image|file',
+            'role' => 'required',
         ]);
 
-        if ($request->file('avatar')) {
-            $updateuser['avatar'] = $request->file('avatar')->store('users-avatar');
+
+        $validatedDataUserDetail = $request->validate([
+            'nim' => 'required',
+            'kelas' => 'required',
+            'angkatan' => 'required',
+            'alamat' => 'required',
+            'jenis_kelamin' => 'required',
+            'avatar' => 'image|mimes:jpeg,png,jpg',
+        ]);
+
+
+
+        try {
+
+
+            $user = User::findOrFail($request->id);
+            if ($request->hasFile('avatar')) {
+                $validatedDataUserDetail['avatar'] = $request->file('avatar')->store('users-avatar');
+            }
+
+            $user->update($validatedDataUser);
+
+            $user->mahasiswa()->update($validatedDataUserDetail);
+
+            return response()->json(['code' => 200, 'success' => 'Data berhasil diperbarui!']);
+        } catch (\Exception $e) {
+            return response()->json(['code' => 400, 'error' => $e->getMessage()]);
         }
-
-
-        User::where('id', $request->id)->update($updateuser);
-
-        return redirect('/mahasiswa');
     }
 
     /**
@@ -175,9 +216,31 @@ class MahasiswaController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('users')->where('id', $id)->delete();
-        Alert::success('Success', 'Data Dosen berhasil dihapus');
-        return redirect('/dosen');
+
+        try {
+            DB::beginTransaction();
+
+            $user = User::findOrFail($id);
+
+            if ($user->role == 'Dosen') {
+
+                Dosen::where('user_id', $user->id)->delete();
+            } elseif ($user->role == 'Mahasiswa') {
+
+                Mahasiswa::where('user_id', $user->id)->delete();
+            }
+
+            $user->delete();
+
+            DB::commit();
+
+            return response()->json(['code' => 200, 'message' => 'User berhasil dihapus!']);
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return response()->json(['code' => 400, 'message' => 'Gagal menghapus user: ' . $e->getMessage()]);
+        }
     }
 
     public function modalImport(Request $request)
@@ -191,5 +254,18 @@ class MahasiswaController extends Controller
         $action = "mahasiswa.import";
 
         return view('components.modal.modal_import_data', compact('title', 'action'));
+    }
+
+    public function createView(Request $request)
+    {
+        if (!$request->ajax()) {
+            redirect('/dashboard');
+        }
+
+        $title = "Add Mahasiswa";
+
+        $idform = "addmahasiswa";
+
+        return view('pages.mahasiswa.add_mahasiswa', compact('title', 'title', 'idform'));
     }
 }

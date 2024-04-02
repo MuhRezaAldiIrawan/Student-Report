@@ -9,10 +9,7 @@
                     <i class="far fa-file-excel mr-1"></i>
                     <span>Import</span>
                 </button>
-                <button class="btn btn-icon btn-primary ml-3 btn-tone btn-mahasiswa-add" id="btn-mahasiswa-add" type="button"
-                    role="button">
-                    <i class="fas fa-user-plus"></i>
-                </button>
+                <a href="{{ route('mahasiswa.create-page') }}" class="btn btn-icon btn-primary btn-tone ml-3"><i class="fas fa-user-plus mt-2"></i></a>
             </div>
             <div class="m-t-25">
                 <div class="table-responsive">
@@ -23,7 +20,6 @@
                                 <th scope="col" style="text-align: center">Nama</th>
                                 <th scope="col" style="text-align: center">NIM</th>
                                 <th scope="col" style="text-align: center">Email</th>
-                                <th scope="col" style="text-align: center">No HP</th>
                                 <th scope="col" style="width: 15%; text-align: center">Action</th>
                             </tr>
                         </thead>
@@ -95,10 +91,6 @@
                     {
                         data: 'email',
                         name: 'email'
-                    },
-                    {
-                        data: 'hp',
-                        name: 'hp'
                     },
                     {
                         data: 'action',

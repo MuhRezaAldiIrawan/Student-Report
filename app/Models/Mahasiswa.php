@@ -11,6 +11,18 @@ class Mahasiswa extends Model
 
     protected $table = 'mahasiswa';
 
+    protected $fillable = [
+        'user_id',
+        'nim',
+        'kelas',
+        'prodi',
+        'jurusan',
+        'angkatan',
+        'alamat',
+        'jenis_kelamin',
+        'avatar'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -86,6 +86,7 @@ Route::controller(MahasiswaController::class)->group(function () {
 
     Route::get('/mahasiswa' , 'index')->name('mahasiswa');
     Route::get('/modal-mahasiswa', 'modalUp')->name('mahasiswa.modal-mahasiswa');
+    Route::get('/mahasiswa-create-page', 'createView')->name('mahasiswa.create-page');
     Route::post('/mahasiswa' , 'store')->name('mahasiswa.store');
     Route::get('/modal-edit-mahasiswa/{id}' , 'show')->name('mahasiswa.edit');
     Route::post('/update-mahasiswa' , 'update')->name('mahasiswa.update');
