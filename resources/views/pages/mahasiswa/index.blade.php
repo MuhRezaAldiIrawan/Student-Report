@@ -317,7 +317,7 @@
         $(document).on('submit', '#form-importuser', function(e){
             e.preventDefault();
             let data = new FormData(this);
-            const url = '/import-dosen';
+            const url = '/import-mahasiswa';
             $('#savefile').html("Uploading");
             $('#savefile').prop("disabled",true);
             console.log("berhasil ditekan");

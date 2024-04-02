@@ -11,6 +11,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Dosen;
+use App\Imports\MahasiswaImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MahasiswaController extends Controller
 {
@@ -267,5 +269,21 @@ class MahasiswaController extends Controller
         $idform = "addmahasiswa";
 
         return view('pages.mahasiswa.add_mahasiswa', compact('title', 'title', 'idform'));
+    }
+
+    public function importMahasiswa(Request $request)
+    {
+        if (!$request->ajax()) {
+            redirect('/dashboard');
+        }
+
+        try {
+            $import = new MahasiswaImport;
+            Excel::import($import, $request->file('customFile')->store('files'));
+
+            return response()->json(['code' => 200, 'success' => 'Data berhasil diimpor!']);
+        } catch (\Exception $e) {
+            return response()->json(['code' => 400, 'error' => $e->getMessage()]);
+        }
     }
 }

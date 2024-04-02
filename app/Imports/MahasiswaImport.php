@@ -51,12 +51,14 @@ class MahasiswaImport implements ToModel
                 'password' => Hash::make($data['password']),
             ]);
 
-            $user->dosen()->create([
-                'nidn' => $detailMahasiswa['nidn'],
-                'alamat' => $detailMahasiswa['alamat'],
-                'jenis_kelamin' => $detailMahasiswa['jenis_kelamin'],
+            $user->mahasiswa()->create([
+                'nim' => $detailMahasiswa['nim'],
+                'kelas' => $detailMahasiswa['kelas'],
                 'prodi' => $detailMahasiswa['prodi'],
                 'jurusan' => $detailMahasiswa['jurusan'],
+                'angkatan' => $detailMahasiswa['angkatan'],
+                'alamat' => $detailMahasiswa['alamat'],
+                'jenis_kelamin' => $detailMahasiswa['jenis_kelamin'],
             ]);
 
             return $user;

@@ -92,6 +92,7 @@ Route::controller(MahasiswaController::class)->group(function () {
     Route::post('/update-mahasiswa' , 'update')->name('mahasiswa.update');
     Route::get('/delete-mahasiswa/{id}' , 'destroy')->name('mahasiswa.destroy');
     Route::get('/modal-import' , 'modalImport')->name('mahasiswa.import');
+    Route::get('/import-mahasiswa', 'importMahasiswa')->name('mahasiswa.import-mahasiswa');
 });
 
 
