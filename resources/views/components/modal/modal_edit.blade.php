@@ -5,7 +5,7 @@
                 <h5 class="modal-title h4">{{$title}}</h5>
             </div>
             <div class="modal-body">
-                <form id="{{$idform}}">
+                <form id="editform" enctype="multipart/form-data" method="POST">
                     @csrf
                     <input type="text" value="{{isset($detail) ? $detail->id : ''}}" name="id" hidden>
                     <div class="form-group">

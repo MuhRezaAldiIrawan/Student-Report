@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ImportUser;
 use App\Models\Dosen;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Mahasiswa;
 
 class DosenController extends Controller
 {
@@ -33,22 +34,22 @@ class DosenController extends Controller
         if ($request->ajax()) {
             $data = User::with('dosen')->where('role', 'Dosen')->latest()->get();
             return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row){
-                            $btn =
-                            '
-                            <button class="btn btn-icon btn-primary btn-dosen-edit" data-id="'.$row->id.'" type="button" role="button">
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn =
+                        '
+                            <button class="btn btn-icon btn-primary btn-dosen-edit" data-id="' . $row->id . '" type="button" role="button">
                                     <i class="far fa-edit"></i>
                             </button>
 
-                            <button class="btn btn-icon btn-danger btn-dosen-delete" data-id="'.$row->id.'" type="button" role="button">
+                            <button class="btn btn-icon btn-danger btn-dosen-delete" data-id="' . $row->id . '" type="button" role="button">
                                 <i class="far fa-trash-alt"></i>
                             </button>
                             ';
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
         return view('pages.dosen.index', compact('title'));
     }
@@ -58,20 +59,20 @@ class DosenController extends Controller
 
         if (!$request->ajax()) {
             redirect('/dashboard');
-		}
+        }
 
         $title = "Add Dosen";
 
         $idform = "adddosen";
 
         return view('pages.dosen.add_dosen', compact('title', 'title', 'idform'));
-
     }
 
 
     public function store(Request $request)
     {
         try {
+
 
             $validatedDataUser = $request->validate([
                 'nama' => 'required',
@@ -89,57 +90,41 @@ class DosenController extends Controller
                 'jenis_kelamin' => 'required',
                 'prodi' => 'required',
                 'jurusan' => 'required',
+                'avatar' => 'required|image|mimes:jpeg,png,jpg',
             ]);
 
 
             $user = User::create($validatedDataUser);
+
+            if ($request->hasFile('avatar')) {
+                $validatedDataUserDetail['avatar'] = $request->file('avatar')->store('users-avatar');
+            }
 
             $validatedDataUserDetail['user_id'] = $user->id;
 
             Dosen::create($validatedDataUserDetail);
 
             return response()->json(['code' => 200, 'success' => 'Data berhasil diimpor!']);
-
-
         } catch (\Exception $e) {
 
             return response()->json(['code' => 400, 'error' => $e->getMessage()]);
-
         }
-
     }
 
 
-    public function show(Request $request,$id)
+    public function show(Request $request, $id)
     {
 
         if (!$request->ajax()) {
             redirect('/dashboard');
-		}
+        }
 
         $title = "Edit Dosen";
 
-        $idform = "editform";
-
-        // $detail = User::find($id);
         $detail = User::with('dosen')->where('id', $id)->first();
 
-        return view('components.modal.modal_add', compact('detail', 'title', 'idform'));
+        return view('components.modal.modal_edit', compact('detail', 'title'));
     }
-
-
-    // public function modalAdd(Request $request)
-    // {
-    //     if (!$request->ajax()) {
-    //         redirect('/dashboard');
-	// 	}
-
-    //     $title = "Tambah Dosen";
-
-    //     $idform = "adddosen";
-
-    //     return view('components.modal.modal_add', compact('title', 'title', 'idform'));
-    // }
 
 
     public function update(Request $request)
@@ -159,16 +144,17 @@ class DosenController extends Controller
             'avatar' => 'image|mimes:jpeg,png,jpg',
         ]);
 
-        if ($request->hasFile('avatar')) {
-            $validatedDataUserDetail['avatar'] = $request->file('avatar')->store('users-avatar');
-        }
 
 
         try {
 
-            $user = User::findOrFail($request->id);
-            $user->update($validatedDataUser);
 
+            $user = User::findOrFail($request->id);
+            if ($request->hasFile('avatar')) {
+                $validatedDataUserDetail['avatar'] = $request->file('avatar')->store('users-avatar');
+            }
+
+            $user->update($validatedDataUser);
 
             $user->dosen()->update($validatedDataUserDetail);
 
@@ -180,9 +166,31 @@ class DosenController extends Controller
 
     public function destroy($id)
     {
-        DB::table('users')->where('id', $id)->delete();
-        Alert::success('Success', 'Data Dosen berhasil dihapus');
-        return redirect('/dosen');
+
+        try {
+            DB::beginTransaction();
+
+            $user = User::findOrFail($id);
+
+            if ($user->role == 'Dosen') {
+
+                Dosen::where('user_id', $user->id)->delete();
+            } elseif ($user->role == 'Mahasiswa') {
+
+                Mahasiswa::where('user_id', $user->id)->delete();
+            }
+
+            $user->delete();
+
+            DB::commit();
+
+            return response()->json(['code' => 200, 'message' => 'User berhasil dihapus!']);
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return response()->json(['code' => 400, 'message' => 'Gagal menghapus user: ' . $e->getMessage()]);
+        }
     }
 
     public function modalImport(Request $request)

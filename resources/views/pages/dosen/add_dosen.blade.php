@@ -10,14 +10,18 @@
 <script>
     $(document).on('submit', '#adddosen', function(e) {
         e.preventDefault();
-        let data = $(this).serialize();
+        let formData = new FormData(this);
         let url = "{{ route('dosen.store') }}";
         const home = "/dosen";
         $.ajax({
             url,
-            data,
+            data: formData,
             type: "POST",
             dataType: "JSON",
+            cache: false,
+            processData: false,
+            contentType: false,
+
             beforeSend: function() {
                 Swal.fire({
                     title: 'Loading...',

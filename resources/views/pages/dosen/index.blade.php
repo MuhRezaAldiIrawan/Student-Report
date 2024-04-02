@@ -295,15 +295,18 @@
     <script>
         $(document).on('submit', '#editform', function(e) {
             e.preventDefault();
-            let data = $('#editform').serialize();
+            let formData = new FormData(this);
             let url = "{{ route('dosen.update') }}";
             $('#saveform').prop("disabled", true);
             $('#saveform').html("Loading...");
             $.ajax({
                 url,
-                data,
+                data: formData,
                 type: "POST",
                 dataType: "JSON",
+                cache: false,
+                processData: false,
+                contentType: false,
                 success: function(data) {
                     Swal.fire({
                         title: 'Success',

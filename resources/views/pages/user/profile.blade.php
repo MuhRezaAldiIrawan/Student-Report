@@ -30,7 +30,7 @@
                             </div>
                         </div>
                         <div class="text-center text-sm-left m-v-15 p-l-30">
-                            <h2 class="m-b-5">{{auth()->user()->name}}</h2>
+                            <h2 class="m-b-5">{{auth()->user()->nama}}</h2>
                             <p class="text-opacity font-size-13">{{auth()->user()->email}}</p>
                             <p class="text-dark m-b-20">{{auth()->user()->role}}</p>
                             <button class="btn btn-primary btn-tone">Contact</button>
@@ -54,14 +54,14 @@
                                         <i class="m-r-10 text-primary anticon anticon-phone"></i>
                                         <span>Phone: </span>
                                     </p>
-                                    <p class="col font-weight-semibold">{{auth()->user()->phone}}</p>
+                                    <p class="col font-weight-semibold">{{auth()->user()->hp}}</p>
                                 </li>
                                 <li class="row">
                                     <p class="col-sm-4 col-5 font-weight-semibold text-dark m-b-5">
                                         <i class="m-r-10 text-primary anticon anticon-compass"></i>
                                         <span>Location: </span>
                                     </p>
-                                    <p class="col font-weight-semibold">{{auth()->user()->address}}</p>
+                                    <p class="col font-weight-semibold">{{auth()->user()->alamat}}</p>
                                 </li>
                             </ul>
                             <div class="d-flex font-size-22 m-t-15">

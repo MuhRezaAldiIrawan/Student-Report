@@ -1,5 +1,5 @@
 
-<form id="{{$idform}}" enctype="multipart/form-data">
+<form id="{{$idform}}" enctype="multipart/form-data" method="POST">
     @csrf
     <div class="page-header no-gutters has-tab">
         <ul class="nav nav-tabs" >
@@ -77,6 +77,13 @@
                             <input type="jurusan" class="form-control" id="jurusan" placeholder="jurusan" autocomplete="false" name="jurusan">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="inputAddress2">Avatar</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="customFile" name="avatar">
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+                        </div>
+                    </div>
                     <button class="btn btn-primary" id="saveform">
                         <i class="anticon anticon-save"></i>
                         <span>Save</span>
@@ -84,5 +91,7 @@
                 </div>
             </div>
         </div>
+
     </div>
+
 </form>

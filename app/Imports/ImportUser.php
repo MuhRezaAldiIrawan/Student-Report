@@ -26,30 +26,46 @@ class ImportUser implements ToModel,WithHeadingRow
     public function model(array $row)
     {
         $data = Validator::make($row, [
-            'name' => 'required',
+            'nama' => 'required',
             'email' => 'required|unique:users,email',
-            'phone' => 'required|numeric',
-            'address' => 'required',
-            'gender' => 'required',
             'role' => 'required',
             'password' => 'required|min:3',
         ])->validate();
 
+
+        $detailDosen = Validator::make($row, [
+            'nidn' => 'required',
+            'alamat' => 'required',
+            'jenis_kelamin' => 'required',
+            'prodi' => 'required',
+            'jurusan' => 'required',
+        ])->validate();
+
+
         try {
-            return new User([
-                'name' => $data['name'],
+            $user = User::create([
+                'nama' => $data['nama'],
                 'email' => $data['email'],
-                'phone' => $data['phone'],
-                'address' => $data['address'],
-                'gender' => $data['gender'],
                 'role' => $data['role'],
                 'password' => Hash::make($data['password']),
             ]);
+
+            $user->dosen()->create([
+                'nidn' => $detailDosen['nidn'],
+                'alamat' => $detailDosen['alamat'],
+                'jenis_kelamin' => $detailDosen['jenis_kelamin'],
+                'prodi' => $detailDosen['prodi'],
+                'jurusan' => $detailDosen['jurusan'],
+            ]);
+
+            return $user;
+
         } catch (QueryException $e) {
             $this->error = $e->getMessage();
             return null;
         }
 
     }
+
 
 }
