@@ -13,7 +13,11 @@
                         <input type="file" class="custom-file-input" id="customFile" name="customFile">
                         <label class="custom-file-label" for="customFile">Choose file</label>
                     </div>
-                    <a href="{{route('dosen.download-tamplate')}}" style="color: rgb(0, 168, 0); margin-top: 10px" >click here to download tamplate</a>
+                    @if ($title == "Import Dosen")
+                        <a href="{{route('dosen.download-tamplate')}}" style="color: rgb(0, 168, 0); margin-top: 10px" >click here to download tamplate</a>
+                    @else
+                        <a href="{{route('dosen.download-tamplate')}}" style="color: rgb(0, 168, 0); margin-top: 10px" >click here to download tamplate</a>
+                    @endif
                 </div>
                 <button class="btn btn-primary" type="submit" id="savefile">Upload</button>
             </form>

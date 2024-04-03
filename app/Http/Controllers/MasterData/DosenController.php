@@ -226,7 +226,10 @@ class DosenController extends Controller
 
         try {
             $import = new ImportUser;
-            Excel::import($import, $request->file('customFile')->store('files'));
+            $file_name = $request->file('customFile')->getClientOriginalName();
+            $file_name = "DosenImport" . '-' .date('YmdHis') . '-' . $file_name;
+            $file_path = $request->file('customFile')->storeAs('files', $file_name);
+            Excel::import($import, $file_path);
 
             return response()->json(['code' => 200, 'success' => 'Data berhasil diimpor!']);
         } catch (\Exception $e) {

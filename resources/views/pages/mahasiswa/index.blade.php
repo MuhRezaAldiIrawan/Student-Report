@@ -290,9 +290,8 @@
 
     <script>
         $(document).on('click', '.btn-import', function(e) {
-            console.log("button import ditekan");
             e.preventDefault();
-            let url = "{{route('mahasiswa.import') }}";
+            let url = "/modal-import-mahasiswa";
             $(this).prop('disabled', true)
             $.ajax({
                 url,

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('angkatan');
             $table->string('alamat');
             $table->enum('jenis_kelamin', ['Pria', 'Wanita']);
-            $table->string('avatar');
+            $table->string('avatar')->nullable()->default('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');
             $table->timestamps();
         });
     }

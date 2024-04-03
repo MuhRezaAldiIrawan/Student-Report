@@ -5,14 +5,13 @@ namespace App\Imports;
 use App\Models\User;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\WithValidation;
 use Illuminate\Database\QueryException;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 
-class MahasiswaImport implements ToModel
+class MahasiswaImport implements ToModel,WithHeadingRow
 {
     use Importable;
 

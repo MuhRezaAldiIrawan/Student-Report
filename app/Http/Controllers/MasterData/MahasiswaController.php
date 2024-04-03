@@ -245,19 +245,6 @@ class MahasiswaController extends Controller
         }
     }
 
-    public function modalImport(Request $request)
-    {
-        if (!$request->ajax()) {
-            redirect('/dashboard');
-        }
-
-        $title = "Import Mahasiswa";
-
-        $action = "mahasiswa.import";
-
-        return view('components.modal.modal_import_data', compact('title', 'action'));
-    }
-
     public function createView(Request $request)
     {
         if (!$request->ajax()) {
@@ -271,6 +258,19 @@ class MahasiswaController extends Controller
         return view('pages.mahasiswa.add_mahasiswa', compact('title', 'title', 'idform'));
     }
 
+    public function modalImport(Request $request)
+    {
+        if (!$request->ajax()) {
+            redirect('/dashboard');
+        }
+
+        $title = "Import Mahasiswa";
+
+        $action = "mahasiswa.import";
+
+        return view('components.modal.modal_import_data', compact('title', 'action'));
+    }
+
     public function importMahasiswa(Request $request)
     {
         if (!$request->ajax()) {
@@ -279,11 +279,16 @@ class MahasiswaController extends Controller
 
         try {
             $import = new MahasiswaImport;
-            Excel::import($import, $request->file('customFile')->store('files'));
+            $file_name = $request->file('customFile')->getClientOriginalName();
+            $file_name = "MahasiswaImport" . '-' .date('YmdHis') . '-' . $file_name;
+            $file_path = $request->file('customFile')->storeAs('files', $file_name);
+            Excel::import($import, $file_path);
+
 
             return response()->json(['code' => 200, 'success' => 'Data berhasil diimpor!']);
         } catch (\Exception $e) {
             return response()->json(['code' => 400, 'error' => $e->getMessage()]);
         }
     }
+
 }

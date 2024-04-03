@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthSociliateController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\MahasiswaBimbingan\BimbinganController;
 use App\Http\Controllers\MasterData\MahasiswaController;
 use App\Http\Controllers\User\UserController;
 
@@ -12,17 +13,6 @@ use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 Route::controller(AuthController::class)->group(function () {
 
     Route::get('/', 'index')->name('default');
@@ -91,9 +81,18 @@ Route::controller(MahasiswaController::class)->group(function () {
     Route::get('/modal-edit-mahasiswa/{id}' , 'show')->name('mahasiswa.edit');
     Route::post('/update-mahasiswa' , 'update')->name('mahasiswa.update');
     Route::get('/delete-mahasiswa/{id}' , 'destroy')->name('mahasiswa.destroy');
-    Route::get('/modal-import' , 'modalImport')->name('mahasiswa.import');
-    Route::get('/import-mahasiswa', 'importMahasiswa')->name('mahasiswa.import-mahasiswa');
+
+    Route::get('/modal-import-mahasiswa' , 'modalImport')->name('mahasiswa.import');
+    Route::post('/import-mahasiswa', 'importMahasiswa')->name('mahasiswa.import-mahasiswa');
+
 });
+
+Route::controller(BimbinganController::class)->group(function () {
+
+    Route::get('/bimbingan', 'index')->name('bimbingan');
+
+});
+
 
 
 

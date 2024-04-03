@@ -12,6 +12,15 @@
             </li>
 
             <li class="nav-item dropdown">
+                <a href="{{route('bimbingan')}}">
+                    <span class="icon-holder">
+                        <i class="fab fa-weixin"></i>
+                    </span>
+                    <span class="title">Mahasiswa Bimbingan</span>
+                </a>
+            </li>
+
+            <li class="nav-item dropdown">
                 <a href="/dosen">
                     <span class="icon-holder">
                         <i class="fas fa-user-tie"></i>
@@ -19,6 +28,7 @@
                     <span class="title">Dosen</span>
                 </a>
             </li>
+
 
             <li class="nav-item dropdown">
                 <a href="{{route('mahasiswa')}}">
