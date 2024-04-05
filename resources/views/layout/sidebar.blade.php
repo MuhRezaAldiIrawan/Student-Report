@@ -16,7 +16,7 @@
                     <span class="icon-holder">
                         <i class="fas fa-book"></i>
                     </span>
-                    <span class="title">Pengajuan Judul</span>
+                    <span class="title">Ajukan Judul</span>
                 </a>
             </li>
 
