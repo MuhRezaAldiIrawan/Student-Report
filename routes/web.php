@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\MahasiswaBimbingan\BimbinganController;
 use App\Http\Controllers\MasterData\MahasiswaController;
+use App\Http\Controllers\Pengajuan\PengajuanController;
 use App\Http\Controllers\User\UserController;
 
 
@@ -91,6 +92,11 @@ Route::controller(BimbinganController::class)->group(function () {
 
     Route::get('/bimbingan', 'index')->name('bimbingan');
 
+});
+
+Route::controller(PengajuanController::class)->group(function () {
+
+    Route::get('/pengajuan', 'index')->name('pengajuan');
 });
 
 

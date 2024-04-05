@@ -12,6 +12,15 @@
             </li>
 
             <li class="nav-item dropdown">
+                <a href="{{route('pengajuan')}}">
+                    <span class="icon-holder">
+                        <i class="fas fa-book"></i>
+                    </span>
+                    <span class="title">Pengajuan Judul</span>
+                </a>
+            </li>
+
+            <li class="nav-item dropdown">
                 <a href="{{route('bimbingan')}}">
                     <span class="icon-holder">
                         <i class="fab fa-weixin"></i>

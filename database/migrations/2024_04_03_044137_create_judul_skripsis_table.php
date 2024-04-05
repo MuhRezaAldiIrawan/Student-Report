@@ -13,17 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('mahasiswa', function (Blueprint $table) {
+        Schema::create('judul_skripsis', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->string('nim');
-            $table->string('kelas');
-            $table->string('prodi');
-            $table->string('jurusan');
-            $table->string('angkatan');
-            $table->string('alamat');
-            $table->enum('jenis_kelamin', ['Pria', 'Wanita']);
-            $table->string('avatar')->nullable();
+            $table->string('judul');
+            $table->text('deskripsi');
+            $table->foreignId('pbb_1_dosen_id')->constrained('dosens');
+            $table->foreignId('pbb_2_dosen_id')->constrained('dosens');
+            $table->string('file')->nullable();
+            $table->enum('status', ['Pengajuan', 'Diterima', 'Ditolak'])->default('Pengajuan');
             $table->timestamps();
         });
     }
@@ -35,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mahasiswa');
+        Schema::dropIfExists('judul_skripsis');
     }
 };
