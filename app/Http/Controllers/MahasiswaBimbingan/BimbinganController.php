@@ -17,8 +17,6 @@ class BimbinganController extends Controller
 
         $jumlahBimbingan = JudulSkripsi::where('pbb_1_dosen_id', auth()->user()->id || 'pbb_2_dosen_id', auth()->user()->id)->count();
 
-        // dd($mahasiswa);
-
         return view('pages.bimbingan.index', compact('title', 'mahasiswa', 'jumlahBimbingan'));
 
     }
