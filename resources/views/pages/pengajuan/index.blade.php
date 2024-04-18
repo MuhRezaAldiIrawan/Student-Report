@@ -1,5 +1,5 @@
 @extends('layout.main')
 
 @section('content')
-<h1>test sepuluh</h1>
+<h1>test sebelas</h1>
 @endsection
