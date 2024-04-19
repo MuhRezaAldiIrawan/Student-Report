@@ -11,7 +11,9 @@ class PengajuanController extends Controller
 {
     public function index()
     {
-        return view('pages.pengajuan.index');
+        $check = JudulSkripsi::where('user_id', auth()->user()->id)->first();
+
+        return view('pages.pengajuan.index', compact('check'));
     }
 
     public function store(Request $request)
@@ -37,5 +39,15 @@ class PengajuanController extends Controller
         } catch (\Exception $e) {
             return response()->json(['code' => 400, 'error' => $e->getMessage()]);
         }
+    }
+
+    public function statusProposal()
+    {
+        $data = JudulSkripsi::where('user_id', auth()->user()->id )->where('status', 'Pengajuan')->get();
+
+        // dd($data);
+
+
+        return view('pages.pengajuan.status', compact('data'));
     }
 }

@@ -13,6 +13,15 @@
 </div>
     <div class="card">
         <div class="card-body">
+            @if ($check && $check->user_id == auth()->user()->id && $check->status == 'Pengajuan')
+            <div class="alert alert-success" >
+                <h4 class="alert-heading">Well done!</h4>
+                <p class="m-b-0">Kamu telah selesai mengajukan judul. silahkan tunggu review dari judul yang anda telah ajukan sebelumnya. untuk melihat status judul anda dapat klik tombol dibawah</p>
+                <button class="btn btn-success mt-3" onclick="window.location.href='{{ route('status.proposal') }}'">Lihat Status</button>
+                <hr class="m-v-20">
+                <p class="m-b-0">Terima Kasih </p>
+            </div>
+            @else
             <form  method="POST" enctype="multipart/form-data" id="pengajuan">
                 @csrf
                 <input type="text" name="user_id" id="user_id" value="{{ auth()->user()->id }}" hidden>
@@ -49,6 +58,7 @@
                     </div>
                 </div>
             </form>
+            @endif
         </div>
     </div>
 @endsection

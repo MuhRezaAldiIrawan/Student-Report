@@ -98,6 +98,7 @@ Route::controller(PengajuanController::class)->group(function () {
 
     Route::get('/pengajuan', 'index')->name('pengajuan');
     Route::post('/pengajuan', 'store')->name('pengajuan.store');
+    Route::get('/status_proposal', 'statusProposal')->name('status.proposal');
 });
 
 

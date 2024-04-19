@@ -12,12 +12,26 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a href="{{route('pengajuan')}}">
+                <a class="dropdown-toggle" href="javascript:void(0);">
                     <span class="icon-holder">
                         <i class="fas fa-book"></i>
                     </span>
-                    <span class="title">Ajukan Judul</span>
+                    <span class="title">Proposal</span>
+                    <span class="arrow">
+                        <i class="arrow-icon"></i>
+                    </span>
                 </a>
+                <ul class="dropdown-menu">
+                    <li class="nav-item dropdown">
+                        <a href="{{route('pengajuan')}}">
+
+                            <span class="title">Ajukan Judul</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('status.proposal')}}">status proposal</a>
+                    </li>
+                </ul>
             </li>
 
             <li class="nav-item dropdown">

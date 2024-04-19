@@ -46,7 +46,7 @@
                                 <div class="form-group col-md-6">
                                     <label class="font-weight-semibold" for="userName">Nama</label>
                                     <input type="text" class="form-control" id="userName" placeholder="User Name"
-                                        value="{{ auth()->user()->name }}" name="name">
+                                        value="{{ auth()->user()->nama }}" name="nama">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="font-weight-semibold" for="gender">Jenis Kelamin</label>
