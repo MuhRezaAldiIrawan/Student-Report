@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class JudulSkripsi extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'judul',
+        'deskripsi',
+        'file',
+        'status',
+    ];
 }

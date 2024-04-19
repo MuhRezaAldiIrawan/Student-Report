@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->string('judul');
             $table->text('deskripsi');
-            $table->foreignId('pbb_1_dosen_id')->constrained('dosens');
-            $table->foreignId('pbb_2_dosen_id')->constrained('dosens');
+            $table->foreignId('pbb_1_dosen_id')->nullable()->constrained('dosens');
+            $table->foreignId('pbb_2_dosen_id')->nullable()->constrained('dosens');
             $table->string('file')->nullable();
             $table->enum('status', ['Pengajuan', 'Diterima', 'Ditolak'])->default('Pengajuan');
             $table->timestamps();

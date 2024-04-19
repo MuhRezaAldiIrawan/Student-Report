@@ -18,7 +18,7 @@ Route::controller(AuthController::class)->group(function () {
 
     Route::get('/', 'index')->name('default');
     Route::get('/register','register')->name('register');
-    Route::post('/register','register_action')->name('register');
+    Route::post('/register','register_action')->name('register_action');
     Route::post('/login','login_action')->name('login');
     Route::post('/logout','logout')->name('logout');
 
@@ -97,6 +97,7 @@ Route::controller(BimbinganController::class)->group(function () {
 Route::controller(PengajuanController::class)->group(function () {
 
     Route::get('/pengajuan', 'index')->name('pengajuan');
+    Route::post('/pengajuan', 'store')->name('pengajuan.store');
 });
 
 

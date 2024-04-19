@@ -13,7 +13,7 @@
                                     <img class="img-fluid" alt="" src="{{asset('images/logo/logo.png')}}">
                                     <h2 class="m-b-0">Sign In</h2>
                                 </div>
-                                <form action="{{ route('register') }}" method="POST">
+                                <form action="{{ route('register_action') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
                                         <label class="font-weight-semibold" for="nama">Username:</label>
