@@ -98,8 +98,8 @@
                                 @endif
                             </div>
                             <div class="m-l-10">
-                                <p class="m-b-0 text-dark font-weight-semibold">Marshall Nichols</p>
-                                <p class="m-b-0 opacity-07">UI/UX Desinger</p>
+                                <p class="m-b-0 text-dark font-weight-semibold">{{auth()->user()->nama}}</p>
+                                <p class="m-b-0 opacity-07">{{auth()->user()->role}}</p>
                             </div>
                         </div>
                     </div>

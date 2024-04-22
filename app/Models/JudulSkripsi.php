@@ -16,4 +16,9 @@ class JudulSkripsi extends Model
         'file',
         'status',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

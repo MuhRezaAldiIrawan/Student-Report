@@ -11,6 +11,7 @@
                 </a>
             </li>
 
+
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="javascript:void(0);">
                     <span class="icon-holder">
@@ -22,15 +23,20 @@
                     </span>
                 </a>
                 <ul class="dropdown-menu">
+                    @if (auth()->user()->role == 'Mahasiswa')
                     <li class="nav-item dropdown">
                         <a href="{{route('pengajuan')}}">
-
                             <span class="title">Ajukan Judul</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{route('status.proposal')}}">status proposal</a>
                     </li>
+                    @elseif (auth()->user()->role == 'Dosen' || auth()->user()->role == 'Admin')
+                    <li>
+                        <a href="{{route('list.pengajuan')}}">List Pengajuan</a>
+                    </li>
+                    @endif
                 </ul>
             </li>
 
@@ -43,6 +49,7 @@
                 </a>
             </li>
 
+            @if (auth()->user()->role == 'Dosen' || auth()->user()->role == 'Admin')
             <li class="nav-item dropdown">
                 <a href="/dosen">
                     <span class="icon-holder">
@@ -61,7 +68,7 @@
                     <span class="title">Mahasiswa</span>
                 </a>
             </li>
-
+            @endif
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="javascript:void(0);">
                     <span class="icon-holder">

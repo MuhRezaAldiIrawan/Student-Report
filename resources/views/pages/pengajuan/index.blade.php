@@ -46,10 +46,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row ">
+                <div class="form-group row" hidden>
                     <label for="status" class="col-sm-2 col-form-label">Status</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="status" placeholder="judul Proposal" name="status" value="Pengajuan">
+                        <input type="text" class="form-control" id="status" style="background: #6ECB63" placeholder="judul Proposal" name="status" value="Pengajuan">
                     </div>
                 </div>
                 <div class="form-group row">

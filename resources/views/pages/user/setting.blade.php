@@ -52,12 +52,14 @@
                                     <label class="font-weight-semibold" for="gender">Jenis Kelamin</label>
                                     <div class="m-b-15">
                                         <select id="inputGender" class="form-control" name="gender">
-                                            <option value="Pria"  {{ auth()->user()->gender !== 'Pria' ?: 'selected' }}>Pria</option>
-                                            <option value="Wanita"{{ auth()->user()->gender !== 'Wanita' ?: 'selected' }}>Wanita</option>
+                                            <option value="Pria"  {{ $data->dosen->jenis_kelamin !== 'Pria' ?: 'selected' }}>Pria</option>
+                                            <option value="Wanita"{{ $data->dosen->jenis_kelamin !== 'Wanita' ?: 'selected' }}>Wanita</option>
                                         </select>
                                     </div>
 
                                 </div>
+
+                                @if (auth()->user()->role == 'Admin')
                                 <div class="form-group col-md-12">
                                     <label class="font-weight-semibold" for="role">Status</label>
                                     <select id="inputStatus" class="form-control" name="role">
@@ -65,6 +67,8 @@
                                         <option value="Mahasiswa" {{ auth()->user()->role !== 'Mahasiswa' ?: 'selected' }}>Mahasiswa</option>
                                         <option value="Admin" {{ auth()->user()->role !== 'Admin' ?: 'selected' }}>Admin</option>
                                     </select>
+                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -74,19 +78,16 @@
                         </div>
                         <div class="card-body">
                             <div class="form-row">
+                                @if (auth()->user()->role == 'Mahasiswa')
                                 <div class="form-group col-md-12">
                                     <label class="font-weight-semibold" for="fullAddress">Alamat</label>
-                                    <input type="text" class="form-control" id="fullAddress" placeholder="Full Address" value="{{ auth()->user()->address }}" name="address">
+                                    <input type="text" class="form-control" id="fullAddress" placeholder="Full Address" value="{{ $data->mahasiswa->alamat }}" name="address">
                                 </div>
-                                <div class="form-group col-md-6">
+                                @endif
+                                <div class="form-group col-md-12">
                                     <label class="font-weight-semibold" for="email">Email:</label>
                                     <input type="email" class="form-control" id="email" placeholder="email"
                                         value="{{ auth()->user()->email }}" name="email">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="font-weight-semibold" for="email">Nomor HP</label>
-                                    <input type="text" class="form-control" id="phone" placeholder="+62"
-                                        value="{{ auth()->user()->phone }}" name="phone">
                                 </div>
                             </div>
                         </div>

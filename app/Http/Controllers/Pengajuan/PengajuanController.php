@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\JudulSkripsi;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use App\Models\User;
 
 class PengajuanController extends Controller
 {
@@ -45,9 +47,35 @@ class PengajuanController extends Controller
     {
         $data = JudulSkripsi::where('user_id', auth()->user()->id )->where('status', 'Pengajuan')->get();
 
-        // dd($data);
-
-
         return view('pages.pengajuan.status', compact('data'));
+    }
+
+    public function listPengajuan(Request $request)
+    {
+        $data = User::with('dosen')->where('role', 'Dosen')->latest()->get();
+
+        dd($data);
+
+        if ($request->ajax()) {
+            $data = User::with('dosen')->where('role', 'Dosen')->latest()->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn =
+                        '
+                            <button class="btn btn-icon btn-primary btn-dosen-edit" data-id="' . $row->id . '" type="button" role="button">
+                                    <i class="far fa-edit"></i>
+                            </button>
+
+                            <button class="btn btn-icon btn-danger btn-dosen-delete" data-id="' . $row->id . '" type="button" role="button">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                            ';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('pages.dosen.index', compact('title'));
     }
 }

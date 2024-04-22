@@ -13,6 +13,18 @@
                                     <img class="img-fluid" alt="" src="{{asset('images/logo/logo.png')}}">
                                     <h2 class="m-b-0">Sign In</h2>
                                 </div>
+
+                                @if (session()->has('loginError'))
+                                    <div class="alert alert-danger">
+                                        <div class="d-flex align-items-center justify-content-start">
+                                            <span class="alert-icon">
+                                                <i class="anticon anticon-close-o"></i>
+                                            </span>
+                                            <span>{{ session('loginError') }}</span>
+                                        </div>
+                                    </div>
+                                @endif
+
                                 <form action="{{ route('login') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
