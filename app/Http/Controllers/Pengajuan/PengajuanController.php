@@ -73,15 +73,14 @@ class PengajuanController extends Controller
     public function pengajuanDetail($id)
     {
         $data = JudulSkripsi::with('user')->find($id);
+
         return view('pages.pengajuan.detail', compact('data'));
     }
 
     public function downloadProposal($id)
     {
         $data = JudulSkripsi::find($id);
-
-        // $filePath = storage_path('app/public/'.$data->file);
-        $filePath = storage_path('app/public/file-judul-pengajuan/JURNAL.pdf');
+        $filePath = storage_path('app/public/' . $data->file);
 
         if (!file_exists($filePath)) {
             abort(404);
