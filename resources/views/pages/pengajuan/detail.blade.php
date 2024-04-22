@@ -19,9 +19,12 @@
                     </div>
                 </div>
                 <div class="m-t-40">
+                    <h6>Judul:</h6>
+                    <p>{{ $data->judul }}</p>
+                </div>
+                <div class="m-t-40">
                     <h6>Description:</h6>
                     <p>{{ $data->deskripsi }}</p>
-
                 </div>
                 <div class="d-md-flex m-t-30 align-items-center justify-content-between">
                     <div class="d-flex align-items-center m-t-10">
