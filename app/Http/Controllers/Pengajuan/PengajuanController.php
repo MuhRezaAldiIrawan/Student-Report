@@ -59,7 +59,9 @@ class PengajuanController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $btn =
-                        '<button class="btn btn-primary m-r-5" data-id="' . $row->id . '" type="button" role="button">Detail</button>';
+                        '<a href="/pengajuan_detail/'.$row->id.'">
+                            <button class="btn btn-primary m-r-5 btn-dosen-detail">Detail</button>
+                        </a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -67,4 +69,25 @@ class PengajuanController extends Controller
         }
         return view('pages.pengajuan.list');
     }
+
+    public function pengajuanDetail($id)
+    {
+        $data = JudulSkripsi::with('user')->find($id);
+        return view('pages.pengajuan.detail', compact('data'));
+    }
+
+    public function downloadProposal($id)
+    {
+        $data = JudulSkripsi::find($id);
+
+        // $filePath = storage_path('app/public/'.$data->file);
+        $filePath = storage_path('app/public/file-judul-pengajuan/JURNAL.pdf');
+
+        if (!file_exists($filePath)) {
+            abort(404);
+        }
+
+        return response()->download($filePath);
+    }
+
 }

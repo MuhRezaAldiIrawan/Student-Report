@@ -208,7 +208,7 @@ class DosenController extends Controller
 
     public function downloadTamplate()
     {
-        $filePath = storage_path('app/public/import_tamplate/tamplate_user_data.csv');
+        $filePath = storage_path('app/public/import_tamplate/tamplate_import_dosen.csv');
         $fileName = 'template_user_data.csv';
 
         if (!file_exists($filePath)) {
