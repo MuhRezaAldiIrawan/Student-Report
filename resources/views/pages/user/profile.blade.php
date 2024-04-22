@@ -19,8 +19,8 @@
                     <div class="d-md-flex align-items-center">
                         <div class="text-center text-sm-left ">
                             <div class="avatar avatar-image" style="width: 150px; height:150px">
-                                @if (auth()->user()->avatar)
-                                <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt=""
+                                @if ($data->dosen->avatar)
+                                <img src="{{ asset('storage/' . $data->dosen->avatar ) }}" alt=""
                                     class="mb-5 h-24 w-24 rounded-full object-cover">
                                 @else
                                     <img src="{{ asset('images/avatars/user-profile.jpeg') }}" alt=""
@@ -49,20 +49,16 @@
                                     </p>
                                     <p class="col font-weight-semibold">{{auth()->user()->email}}</p>
                                 </li>
+
                                 <li class="row">
                                     <p class="col-sm-4 col-4 font-weight-semibold text-dark m-b-5">
-                                        <i class="m-r-10 text-primary anticon anticon-phone"></i>
-                                        <span>Phone: </span>
-                                    </p>
-                                    <p class="col font-weight-semibold">{{auth()->user()->hp}}</p>
-                                </li>
-                                <li class="row">
-                                    <p class="col-sm-4 col-5 font-weight-semibold text-dark m-b-5">
                                         <i class="m-r-10 text-primary anticon anticon-compass"></i>
-                                        <span>Location: </span>
+                                        <span>Alamat</span>
                                     </p>
-                                    <p class="col font-weight-semibold">{{auth()->user()->alamat}}</p>
+                                    <p class="col font-weight-semibold">{{$data->dosen->alamat}}</p>
                                 </li>
+
+
                             </ul>
                             <div class="d-flex font-size-22 m-t-15">
                                 <a href="" class="text-gray p-r-20">

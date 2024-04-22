@@ -59,8 +59,8 @@
                         name: 'DT_RowIndex',
                     },
                     {
-                        data: 'dosen.nidn',
-                        name: 'dosen.nidn'
+                        data: 'user.nama',
+                        name: 'user.nama'
                     },
                     {
                         data: 'judul',

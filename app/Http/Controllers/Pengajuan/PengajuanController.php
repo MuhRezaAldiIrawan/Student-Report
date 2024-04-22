@@ -52,30 +52,19 @@ class PengajuanController extends Controller
 
     public function listPengajuan(Request $request)
     {
-        $data = User::with('dosen')->where('role', 'Dosen')->latest()->get();
-
-        dd($data);
 
         if ($request->ajax()) {
-            $data = User::with('dosen')->where('role', 'Dosen')->latest()->get();
+            $data = JudulSkripsi::with('user')->latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $btn =
-                        '
-                            <button class="btn btn-icon btn-primary btn-dosen-edit" data-id="' . $row->id . '" type="button" role="button">
-                                    <i class="far fa-edit"></i>
-                            </button>
-
-                            <button class="btn btn-icon btn-danger btn-dosen-delete" data-id="' . $row->id . '" type="button" role="button">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                            ';
+                        '<button class="btn btn-primary m-r-5" data-id="' . $row->id . '" type="button" role="button">Detail</button>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('pages.dosen.index', compact('title'));
+        return view('pages.pengajuan.list');
     }
 }

@@ -21,8 +21,8 @@
                         <div class="card-body">
                             <div class="media align-items-center">
                                 <div class="avatar avatar-image  m-h-10 m-r-15" style="height: 80px; width: 80px">
-                                    @if (auth()->user()->avatar)
-                                        <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt=""
+                                    @if ($data->dosen->avatar ?? $data->mahasiswa->avatar)
+                                        <img src="{{ asset('storage/' . $data->dosen->avatar ?? $data->mahasiswa->avatar) }}" alt=""
                                             class="mb-5 h-24 w-24 rounded-full object-cover">
                                     @else
                                         <img src="{{ asset('images/avatars/user-profile.jpeg') }}" alt=""
@@ -51,7 +51,7 @@
                                 <div class="form-group col-md-6">
                                     <label class="font-weight-semibold" for="gender">Jenis Kelamin</label>
                                     <div class="m-b-15">
-                                        <select id="inputGender" class="form-control" name="gender">
+                                        <select id="inputGender" class="form-control" name="jenis_kelamin">
                                             <option value="Pria"  {{ $data->dosen->jenis_kelamin !== 'Pria' ?: 'selected' }}>Pria</option>
                                             <option value="Wanita"{{ $data->dosen->jenis_kelamin !== 'Wanita' ?: 'selected' }}>Wanita</option>
                                         </select>
@@ -81,7 +81,7 @@
                                 @if (auth()->user()->role == 'Mahasiswa')
                                 <div class="form-group col-md-12">
                                     <label class="font-weight-semibold" for="fullAddress">Alamat</label>
-                                    <input type="text" class="form-control" id="fullAddress" placeholder="Full Address" value="{{ $data->mahasiswa->alamat }}" name="address">
+                                    <input type="text" class="form-control" id="fullAddress" placeholder="Full Address" value="{{ $data->mahasiswa->alamat }}" name="alamat">
                                 </div>
                                 @endif
                                 <div class="form-group col-md-12">
@@ -112,26 +112,16 @@ $( "#form-validation" ).validate({
     errorClass: 'is-invalid',
     validClass: 'is-valid',
     rules: {
-        name: {
+        nama: {
             required: true
         },
         email: {
             required: true,
             email: true
         },
-        gender: {
+        jenis_kelamin: {
             required: true
         },
-        address:{
-            required: true
-        },
-        role:{
-            required: true
-        },
-        phone:{
-            required: true
-        },
-
     }
 });
 
