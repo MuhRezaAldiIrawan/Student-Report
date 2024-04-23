@@ -20,7 +20,7 @@
                     </div>
                     <div class="m-t-40">
                         <h6>Judul:</h6>
-                        <p>{{ $data->judul }}</p>
+                        <p>{{ $data->user_id }}</p>
                     </div>
                     <div class="m-t-40">
                         <h6>Description:</h6>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pengajuan;
 
 use App\Http\Controllers\Controller;
 use App\Models\JudulSkripsi;
+use App\Models\LogApproval;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -89,12 +90,26 @@ class PengajuanController extends Controller
 
     public function approvePegajuan($id)
     {
-
         try {
 
             $data = JudulSkripsi::find($id);
+            // dd($data);
+
             $data->status = 'Diterima';
+
+
+            $data = LogApproval::create([
+                'judul_skripsi_id' => $id,
+                'user_id' => $data->user_id,
+                'action' => 'Diterima',
+                'status' => 'Diterima',
+
+
+            ]);
+
             $data->save();
+
+
             return response()->json(['code' => 200, 'success' => 'Proposal telah berhasil diterima']);
 
         } catch (\Exception $e) {

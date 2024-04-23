@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class LogApproval extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'judul_skripsi_id',
+        'user_id',
+        'action',
+        'status',
+    ];
 }
