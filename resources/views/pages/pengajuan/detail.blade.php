@@ -90,8 +90,8 @@
     <script>
         $(document).on('click', '#approve', function(e) {
             let id = $(this).data('id');
-            let url = '{{ route('pengajuan.approve', ':id') }}';
-            url = url.replace(':id', id);
+            let url = "/approve/" + id;
+            const home = "/list_pengajuan";
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -116,7 +116,7 @@
                                     showConfirmButton: true
                                 }).then((result) => {
                                     if (result.isConfirmed) {
-                                        window.location.href = '{{ route('pengajuan') }}';
+                                        window.location.href = home;
                                     }
                                 });
                             } else {

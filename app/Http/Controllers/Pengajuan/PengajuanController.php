@@ -36,8 +36,6 @@ class PengajuanController extends Controller
             JudulSkripsi::create($validateForm);
 
             return response()->json(['code' => 200, 'success' => 'Data berhasil diimpor!']);
-
-
         } catch (\Exception $e) {
             return response()->json(['code' => 400, 'error' => $e->getMessage()]);
         }
@@ -45,7 +43,7 @@ class PengajuanController extends Controller
 
     public function statusProposal()
     {
-        $data = JudulSkripsi::where('user_id', auth()->user()->id )->where('status', 'Pengajuan')->get();
+        $data = JudulSkripsi::where('user_id', auth()->user()->id)->where('status', 'Pengajuan')->get();
 
         return view('pages.pengajuan.status', compact('data'));
     }
@@ -59,7 +57,7 @@ class PengajuanController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $btn =
-                        '<a href="/pengajuan_detail/'.$row->id.'">
+                        '<a href="/pengajuan_detail/' . $row->id . '">
                             <button class="btn btn-primary m-r-5 btn-dosen-detail">Detail</button>
                         </a>';
                     return $btn;
@@ -92,12 +90,16 @@ class PengajuanController extends Controller
     public function approvePegajuan($id)
     {
 
-        dd($id);
+        try {
 
-        $data = JudulSkripsi::find($id);
-        $data->status = 'Disetujui';
-        $data->save();
+            $data = JudulSkripsi::find($id);
+            $data->status = 'Diterima';
+            $data->save();
+            return response()->json(['code' => 200, 'success' => 'Proposal telah berhasil diterima']);
 
+        } catch (\Exception $e) {
+
+            return response()->json(['code' => 400, 'error' => $e->getMessage()]);
+        }
     }
-
 }
