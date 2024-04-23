@@ -106,6 +106,8 @@ Route::controller(PengajuanController::class)->group(function () {
     Route::get('list_pengajuan', 'listPengajuan')->name('list.pengajuan');
     Route::get('/pengajuan_detail/{id}', 'pengajuanDetail')->name('pengajuan.detail');
     Route::get('/download_proposal/{id}', 'downloadProposal')->name('download.proposal');
+
+    Route::get('pengajuan_approve/{id}', 'approvePegajuan')->name('pengajuan.approve');
 });
 
 

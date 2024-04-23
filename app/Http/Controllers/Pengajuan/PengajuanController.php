@@ -89,4 +89,15 @@ class PengajuanController extends Controller
         return response()->download($filePath);
     }
 
+    public function approvePegajuan($id)
+    {
+
+        dd($id);
+
+        $data = JudulSkripsi::find($id);
+        $data->status = 'Disetujui';
+        $data->save();
+
+    }
+
 }
