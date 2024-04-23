@@ -92,7 +92,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="timeline-item">
+                                {{-- <li class="timeline-item">
                                     <div class="timeline-item-head">
                                         <div class="avatar avatar-icon avatar-sm avatar-blue">
                                             <i class="anticon anticon-link"></i>
@@ -236,7 +236,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </div>
