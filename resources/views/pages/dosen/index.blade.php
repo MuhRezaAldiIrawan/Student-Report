@@ -292,6 +292,7 @@
         })
     </script>
 
+
     <script>
         $(document).on('submit', '#editform', function(e) {
             e.preventDefault();
