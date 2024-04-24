@@ -9,7 +9,6 @@ class LogProposal extends Model
 {
     use HasFactory;
 
-    protected $table = 'log_proposal';
 
     protected $fillable = [
         'judul_skripsi_id',

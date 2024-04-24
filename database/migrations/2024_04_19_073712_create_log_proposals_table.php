@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('judul_skripsi_id')->constrained('judul_skripsis');
             $table->integer('user_id');
             $table->string('status');
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }

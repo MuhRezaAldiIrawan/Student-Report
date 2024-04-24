@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('pbb_1_dosen_id')->nullable()->constrained('dosens');
             $table->foreignId('pbb_2_dosen_id')->nullable()->constrained('dosens');
             $table->string('file')->nullable();
-            $table->enum('status', ['Pengajuan', 'Diterima', 'Ditolak'])->default('Pengajuan');
+            $table->enum('status', ['Pengajuan', 'Diterima', 'Ditolak', 'Revisi'])->default('Pengajuan');
             $table->timestamps();
         });
     }
