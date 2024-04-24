@@ -35,7 +35,16 @@ class PengajuanController extends Controller
                 $validateForm['file'] = $request->file('file')->storeAs('file-judul-pengajuan', $request->file('file')->getClientOriginalName());
             }
 
-            JudulSkripsi::create($validateForm);
+            $judul = JudulSkripsi::create($validateForm);
+
+            $logs = LogProposal::create([
+                'judul_skripsi_id' => $judul->id,
+                'user_id' => auth()->user()->id,
+                'status' => 'Pengajuan',
+
+            ]);
+
+            $logs->save();
 
             return response()->json(['code' => 200, 'success' => 'Data berhasil diimpor!']);
         } catch (\Exception $e) {
@@ -51,7 +60,6 @@ class PengajuanController extends Controller
 
         $logs = LogProposal::where('user_id', auth()->user()->id)->get();
 
-        // dd($userdata);
 
         return view('pages.pengajuan.status', compact('data', 'userdata', 'logs'));
     }
@@ -113,15 +121,38 @@ class PengajuanController extends Controller
             $data = LogProposal::create([
                 'judul_skripsi_id' => $id,
                 'user_id' => $data->user_id,
-                'action' => 'Diterima',
                 'status' => 'Diterima',
-
-
             ]);
             $data->save();
 
 
             return response()->json(['code' => 200, 'success' => 'Proposal telah berhasil diterima']);
+
+        } catch (\Exception $e) {
+
+            return response()->json(['code' => 400, 'error' => $e->getMessage()]);
+        }
+    }
+
+    public function rejectPegajuan($id)
+    {
+        try {
+
+            $data = JudulSkripsi::find($id);
+
+            $data->status = 'Ditolak';
+            $data->save();
+
+
+            $data = LogProposal::create([
+                'judul_skripsi_id' => $id,
+                'user_id' => $data->user_id,
+                'status' => 'Ditolak',
+            ]);
+            $data->save();
+
+
+            return response()->json(['code' => 200, 'success' => 'Proposal Ditolak']);
 
         } catch (\Exception $e) {
 

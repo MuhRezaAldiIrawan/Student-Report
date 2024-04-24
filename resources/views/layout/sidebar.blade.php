@@ -36,6 +36,14 @@
                     <li>
                         <a href="{{route('list.pengajuan')}}">List Pengajuan</a>
                     </li>
+
+                    <li>
+                        <a href="{{route('list.pengajuan')}}">Proposal Diterima</a>
+                    </li>
+
+                    <li>
+                        <a href="{{route('list.pengajuan')}}">Proposal Ditolak</a>
+                    </li>
                     @endif
                 </ul>
             </li>

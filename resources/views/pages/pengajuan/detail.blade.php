@@ -77,7 +77,7 @@
                                 <div class="m-l-10">
                                     <div class="media">
                                         <div class="m-l-10">
-                                            <button class="btn btn-danger btn-block btn-tone m-r-5">Tolak</button>
+                                            <button class="btn btn-danger btn-block btn-tone m-r-5" id="reject" data-id="{{ $data->id }}">Tolak</button>
                                         </div>
                                     </div>
                                 </div>
@@ -105,6 +105,57 @@
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, approve it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url,
+                        type: 'GET',
+                        dataType: 'JSON',
+                        success: function(data) {
+                            if ($.isEmptyObject(data.error)) {
+                                Swal.fire({
+                                    title: 'Success',
+                                    text: data.success,
+                                    icon: "success",
+                                    timer: 2000,
+                                    showConfirmButton: true
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = home;
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: data.error,
+                                    icon: "error",
+                                    timer: 2000,
+                                    showConfirmButton: true
+                                });
+                            }
+                        },
+                        error: function(error) {
+                            console.error(error);
+                        }
+                    });
+                }
+            });
+            // console.log('berhasil ditekan tobol approve dengan id = ',id);
+        });
+    </script>
+    <script>
+        $(document).on('click', '#reject', function(e) {
+            let id = $(this).data('id');
+            let url = "/reject/" + id;
+            const home = "/list_pengajuan";
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, reject it!'
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({

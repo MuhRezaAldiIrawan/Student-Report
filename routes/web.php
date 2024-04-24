@@ -108,6 +108,7 @@ Route::controller(PengajuanController::class)->group(function () {
     Route::get('/download_proposal/{id}', 'downloadProposal')->name('download.proposal');
 
     Route::get('/approve/{id}', 'approvePegajuan')->name('approve.pegajuan');
+    Route::get('/reject/{id}', 'rejectPegajuan')->name('approve.pegajuan');
 });
 
 
