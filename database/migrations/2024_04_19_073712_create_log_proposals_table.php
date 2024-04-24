@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('log_approvals', function (Blueprint $table) {
+        Schema::create('log_proposals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('judul_skripsi_id')->constrained('judul_skripsis');
             $table->integer('user_id');
-            $table->string('action');
             $table->string('status');
             $table->timestamps();
         });
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('log_approvals');
+        Schema::dropIfExists('log_proposals');
     }
 };

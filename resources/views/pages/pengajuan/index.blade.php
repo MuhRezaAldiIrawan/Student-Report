@@ -21,6 +21,13 @@
                 <hr class="m-v-20">
                 <p class="m-b-0">Terima Kasih </p>
             </div>
+            @elseif ($check && $check->user_id == auth()->user()->id && $check->status == 'Diterima')
+            <div class="alert alert-success" style="display: flex; flex-direction: column; align-items: center;">
+                <h4 class="alert-heading">Well done!</h4>
+                <p class="m-b-0">Judul yang kamu ajukan telah diterima!!!</p>
+                <img src="{{ asset('images/avatars/proposal-accept.jpg') }}" alt="proposal-accept" class="mt-3" style="height: 600px;">
+                <button class="btn btn-success mt-3" onclick="window.location.href='{{ route('status.proposal') }}'">Lihat Status</button>
+            </div>
             @else
             <form  method="POST" enctype="multipart/form-data" id="pengajuan">
                 @csrf

@@ -8,7 +8,11 @@
                     <div class="d-flex justify-content-between">
                         <div class="media align-items-center" style="display: flex">
                             <div class="avatar avatar-image rounded">
-                                <img src="assets/images/others/thumb-3.jpg" alt="">
+                                @if ($userdata->mahasiswa->avatar)
+                                    <img src="{{ asset('storage/' . $userdata->mahasiswa->avatar) }}" alt="">
+                                @else
+                                    <img src="assets/images/others/thumb-3.jpg" alt="">
+                                @endif
                             </div>
                             <div class="m-l-10">
                                 <h4 class="m-b-0">{{ $data->user->nama }}</h4>
@@ -20,7 +24,7 @@
                     </div>
                     <div class="m-t-40">
                         <h6>Judul:</h6>
-                        <p>{{ $data->user_id }}</p>
+                        <p>{{ $data->judul }}</p>
                     </div>
                     <div class="m-t-40">
                         <h6>Description:</h6>
@@ -56,7 +60,8 @@
                                 <div class="m-l-10">
                                     <div class="media">
                                         <div class="m-l-10">
-                                            <button class="btn btn-success btn-block btn-tone m-r-5" id="approve" data-id="{{ $data->id }}">Terima</button>
+                                            <button class="btn btn-success btn-block btn-tone m-r-5" id="approve"
+                                                data-id="{{ $data->id }}">Terima</button>
                                         </div>
                                     </div>
                                 </div>

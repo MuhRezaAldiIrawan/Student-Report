@@ -4,7 +4,7 @@
 <div class="card">
     <div class="card-body">
         <div class="d-flex align-items-center">
-            <h4 class="mr-auto">list Pengajuan Proposal</h4>
+            <h4 class="mr-auto">List Pengajuan Proposal</h4>
         </div>
         <div class="m-t-25">
             <div class="table-responsive">

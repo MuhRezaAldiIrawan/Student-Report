@@ -19,7 +19,7 @@
                             <h4 class="card-title">Basic Infomation</h4>
                         </div>
                         <div class="card-body">
-                            <div class="media align-items-center">
+                            <div class="media align-items-center" style="display: flex">
                                 <div class="avatar avatar-image  m-h-10 m-r-15" style="height: 80px; width: 80px">
                                     @if ($data->dosen->avatar ?? $data->mahasiswa->avatar)
                                         <img src="{{ asset('storage/' . $data->dosen->avatar ?? $data->mahasiswa->avatar) }}" alt=""
@@ -52,8 +52,8 @@
                                     <label class="font-weight-semibold" for="gender">Jenis Kelamin</label>
                                     <div class="m-b-15">
                                         <select id="inputGender" class="form-control" name="jenis_kelamin">
-                                            <option value="Pria"  {{ $data->dosen->jenis_kelamin !== 'Pria' ?: 'selected' }}>Pria</option>
-                                            <option value="Wanita"{{ $data->dosen->jenis_kelamin !== 'Wanita' ?: 'selected' }}>Wanita</option>
+                                            <option value="Pria"  {{ $data->dosen->jenis_kelamin ?? $data->mahasiswa->jenis_kelamin == 'Pria' ? 'selected' : '' }}>Pria</option>
+                                            <option value="Wanita"{{ $data->dosen->jenis_kelamin ?? $data->mahasiswa->jenis_kelamin == 'Wanita' ? 'selected' : '' }}>Wanita</option>
                                         </select>
                                     </div>
 

@@ -21,4 +21,14 @@ class JudulSkripsi extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function dosen()
+    {
+        return $this->hasOne(Dosen::class);
+    }
+
+    public function mahasiswa()
+    {
+        return $this->hasOne(Mahasiswa::class);
+    }
 }

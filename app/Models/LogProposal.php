@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LogApproval extends Model
+class LogProposal extends Model
 {
     use HasFactory;
+
+    protected $table = 'log_proposal';
 
     protected $fillable = [
         'judul_skripsi_id',

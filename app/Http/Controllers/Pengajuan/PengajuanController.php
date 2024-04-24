@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pengajuan;
 use App\Http\Controllers\Controller;
 use App\Models\JudulSkripsi;
 use App\Models\LogApproval;
+use App\Models\LogProposal;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -44,16 +45,22 @@ class PengajuanController extends Controller
 
     public function statusProposal()
     {
-        $data = JudulSkripsi::where('user_id', auth()->user()->id)->where('status', 'Pengajuan')->get();
+        $data = JudulSkripsi::where('user_id', auth()->user()->id)->get();
 
-        return view('pages.pengajuan.status', compact('data'));
+        $userdata = User::with('mahasiswa')->find(auth()->user()->id);
+
+        $logs = LogProposal::where('user_id', auth()->user()->id)->get();
+
+        // dd($userdata);
+
+        return view('pages.pengajuan.status', compact('data', 'userdata', 'logs'));
     }
 
     public function listPengajuan(Request $request)
     {
 
         if ($request->ajax()) {
-            $data = JudulSkripsi::with('user')->latest()->get();
+            $data = JudulSkripsi::with('user')->where('status', 'Pengajuan')->latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -73,7 +80,11 @@ class PengajuanController extends Controller
     {
         $data = JudulSkripsi::with('user')->find($id);
 
-        return view('pages.pengajuan.detail', compact('data'));
+        $userdata = User::with('mahasiswa')->find($data->user_id);
+
+        // dd($userdata);
+
+        return view('pages.pengajuan.detail', compact('data', 'userdata'));
     }
 
     public function downloadProposal($id)
@@ -96,9 +107,10 @@ class PengajuanController extends Controller
             // dd($data);
 
             $data->status = 'Diterima';
+            $data->save();
 
 
-            $data = LogApproval::create([
+            $data = LogProposal::create([
                 'judul_skripsi_id' => $id,
                 'user_id' => $data->user_id,
                 'action' => 'Diterima',
@@ -106,7 +118,6 @@ class PengajuanController extends Controller
 
 
             ]);
-
             $data->save();
 
 

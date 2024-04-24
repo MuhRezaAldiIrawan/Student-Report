@@ -19,13 +19,17 @@
                     <div class="d-md-flex align-items-center">
                         <div class="text-center text-sm-left ">
                             <div class="avatar avatar-image" style="width: 150px; height:150px">
-                                @if ($data->dosen->avatar)
-                                <img src="{{ asset('storage/' . $data->dosen->avatar ) }}" alt=""
+                                @if (!empty($data->dosen->avatar))
+                                <img src="{{ asset('storage/' . $data->dosen->avatar) }}" alt=""
                                     class="mb-5 h-24 w-24 rounded-full object-cover">
+                                @elseif($data->mahasiswa->avatar)
+                                    <img src="{{ asset('storage/' . $data->mahasiswa->avatar) }}" alt=""
+                                        class="mb-5 h-24 w-24 rounded-full object-cover">
                                 @else
                                     <img src="{{ asset('images/avatars/user-profile.jpeg') }}" alt=""
                                         class="mb-5 h-24 w-24 rounded-full object-cover">
                                 @endif
+
 
                             </div>
                         </div>
@@ -55,7 +59,7 @@
                                         <i class="m-r-10 text-primary anticon anticon-compass"></i>
                                         <span>Alamat</span>
                                     </p>
-                                    <p class="col font-weight-semibold">{{$data->dosen->alamat}}</p>
+                                    <p class="col font-weight-semibold">{{$data->dosen->alamat ?? $data->mahasiswa->alamat}}</p>
                                 </li>
 
 

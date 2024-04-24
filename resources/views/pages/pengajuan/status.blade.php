@@ -7,16 +7,29 @@
             @foreach ($data as $d)
             <div class="card-body">
                 <div class="d-flex justify-content-between">
-                    <div class="media align-items-center">
+                    <div class="media align-items-center" style="display: flex">
                         <div class="avatar avatar-image rounded">
-                            <img src="assets/images/others/thumb-3.jpg" alt="">
+                            @if ($userdata->mahasiswa->avatar)
+                                <img src="{{ asset('storage/' . $userdata->mahasiswa->avatar) }}" alt="">
+                            @else
+                                <img src="assets/images/others/thumb-3.jpg" alt="">
+                            @endif
                         </div>
                         <div class="m-l-10">
                             <h4 class="m-b-0">{{auth()->user()->nama}}</h4>
                         </div>
                     </div>
                     <div>
-                        <span class="badge badge-pill badge-blue">{{$d->status}}</span>
+                        @switch($d->status)
+                            @case('Pengajuan')
+                                <span class="badge badge-pill badge-warning">Menunggu Review</span>
+                                @break
+                            @case('Diterima')
+                                <span class="badge badge-pill badge-success">Diterima</span>
+                                @break
+                            @default
+                                <span class="badge badge-pill badge-danger">Ditolak</span>
+                        @endswitch
                     </div>
                 </div>
                 <div class="m-t-40">
@@ -63,180 +76,39 @@
                         </div>
                         <div class="card-body">
                             <ul class="timeline timeline-sm">
-                                <li class="timeline-item">
-                                    <div class="timeline-item-head">
-                                        <div class="avatar avatar-icon avatar-sm avatar-cyan">
-                                            <i class="anticon anticon-check"></i>
-                                        </div>
-                                    </div>
-                                    <div class="timeline-item-content">
-                                        <div class="m-l-10">
-                                            <div class="media align-items-center">
-                                                <div class="avatar avatar-image">
-                                                    <img src="assets/images/avatars/thumb-4.jpg" alt="">
-                                                </div>
-                                                <div class="m-l-10">
-                                                    <h6 class="m-b-0">Virgil Gonzales</h6>
-                                                    <span class="text-muted font-size-13">
-                                                        <i class="anticon anticon-clock-circle"></i>
-                                                        <span class="m-l-5">10:44 PM</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="m-t-20">
-                                                <p class="m-l-20">
-                                                    <span class="text-dark font-weight-semibold">Complete task </span>
-                                                    <span class="m-l-5"> Prototype Design</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                {{-- <li class="timeline-item">
-                                    <div class="timeline-item-head">
-                                        <div class="avatar avatar-icon avatar-sm avatar-blue">
-                                            <i class="anticon anticon-link"></i>
-                                        </div>
-                                    </div>
-                                    <div class="timeline-item-content">
-                                        <div class="m-l-10">
-                                            <div class="media align-items-center">
-                                                <div class="avatar avatar-image">
-                                                    <img src="assets/images/avatars/thumb-8.jpg" alt="">
-                                                </div>
-                                                <div class="m-l-10">
-                                                    <h6 class="m-b-0">Lilian Stone</h6>
-                                                    <span class="text-muted font-size-13">
-                                                        <i class="anticon anticon-clock-circle"></i>
-                                                        <span class="m-l-5">8:34 PM</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="m-t-20">
-                                                <p class="m-l-20">
-                                                    <span class="text-dark font-weight-semibold">Attached file </span>
-                                                    <span class="m-l-5"> Mockup Zip</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="timeline-item">
-                                    <div class="timeline-item-head">
-                                        <div class="avatar avatar-icon avatar-sm avatar-purple">
-                                            <i class="anticon anticon-message"></i>
-                                        </div>
-                                    </div>
-                                    <div class="timeline-item-content">
-                                        <div class="m-l-10">
-                                            <div class="media align-items-center">
-                                                <div class="avatar avatar-image">
-                                                    <img src="assets/images/avatars/thumb-1.jpg" alt="">
-                                                </div>
-                                                <div class="m-l-10">
-                                                    <h6 class="m-b-0">Erin Gonzales</h6>
-                                                    <span class="text-muted font-size-13">
-                                                        <i class="anticon anticon-clock-circle"></i>
-                                                        <span class="m-l-5">8:34 PM</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="m-t-20">
-                                                <p class="m-l-20">
-                                                    <span class="text-dark font-weight-semibold">Commented  </span>
-                                                    <span class="m-l-5"> 'This is not our work!'</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="timeline-item">
-                                    <div class="timeline-item-head">
-                                        <div class="avatar avatar-icon avatar-sm avatar-purple">
-                                            <i class="anticon anticon-message"></i>
-                                        </div>
-                                    </div>
-                                    <div class="timeline-item-content">
-                                        <div class="m-l-10">
-                                            <div class="media align-items-center">
-                                                <div class="avatar avatar-image">
-                                                    <img src="assets/images/avatars/thumb-6.jpg" alt="">
-                                                </div>
-                                                <div class="m-l-10">
-                                                    <h6 class="m-b-0">Riley Newman</h6>
-                                                    <span class="text-muted font-size-13">
-                                                        <i class="anticon anticon-clock-circle"></i>
-                                                        <span class="m-l-5">8:34 PM</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="m-t-20">
-                                                <p class="m-l-20">
-                                                    <span class="text-dark font-weight-semibold">Commented  </span>
-                                                    <span class="m-l-5"> 'Hi, please done this before tommorow'</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="timeline-item">
-                                    <div class="timeline-item-head">
-                                        <div class="avatar avatar-icon avatar-sm avatar-red">
-                                            <i class="anticon anticon-delete"></i>
-                                        </div>
-                                    </div>
-                                    <div class="timeline-item-content">
-                                        <div class="m-l-10">
-                                            <div class="media align-items-center">
-                                                <div class="avatar avatar-image">
-                                                    <img src="assets/images/avatars/thumb-7.jpg" alt="">
-                                                </div>
-                                                <div class="m-l-10">
-                                                    <h6 class="m-b-0">Pamela Wanda</h6>
-                                                    <span class="text-muted font-size-13">
-                                                        <i class="anticon anticon-clock-circle"></i>
-                                                        <span class="m-l-5">8:34 PM</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="m-t-20">
-                                                <p class="m-l-20">
-                                                    <span class="text-dark font-weight-semibold">Removed  </span>
-                                                    <span class="m-l-5"> a file</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
+
+                                @foreach ($logs as $l)
+                                @switch($l->status)
+                                    @case(1)
+
+                                        @break
+                                    @case(2)
+
+                                        @break
+                                    @default
+
+                                @endswitch
                                 <li class="timeline-item">
                                     <div class="timeline-item-head">
                                         <div class="avatar avatar-icon avatar-sm avatar-gold">
-                                            <i class="anticon anticon-file-add"></i>
+                                            <i class="anticon anticon-arrow-right"></i>
                                         </div>
                                     </div>
                                     <div class="timeline-item-content">
                                         <div class="m-l-10">
-                                            <div class="media align-items-center">
-                                                <div class="avatar avatar-image">
-                                                    <img src="assets/images/avatars/thumb-3.jpg" alt="">
-                                                </div>
+                                            <div class="media align-items-center" style="display: flex">
                                                 <div class="m-l-10">
-                                                    <h6 class="m-b-0">Marshall Nichols</h6>
+                                                    <h6 class="m-b-0">{{$d->status}}</h6>
                                                     <span class="text-muted font-size-13">
                                                         <i class="anticon anticon-clock-circle"></i>
-                                                        <span class="m-l-5">5:21 PM</span>
+                                                        <span class="m-l-5">{{ $d->created_at }}</span>
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="m-t-20">
-                                                <p class="m-l-20">
-                                                    <span class="text-dark font-weight-semibold">Create  </span>
-                                                    <span class="m-l-5"> this project</span>
-                                                </p>
-                                            </div>
                                         </div>
                                     </div>
-                                </li> --}}
+                                </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
