@@ -159,4 +159,46 @@ class PengajuanController extends Controller
             return response()->json(['code' => 400, 'error' => $e->getMessage()]);
         }
     }
+
+    public function listProposalDiterima(Request $request)
+    {
+        $title = "Proposal Diterima";
+
+        if ($request->ajax()) {
+            $data = JudulSkripsi::with('user')->where('status', 'Diterima')->latest()->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn =
+                        '<a href="/pengajuan_detail/' . $row->id . '">
+                            <button class="btn btn-primary m-r-5 btn-dosen-detail">Detail</button>
+                        </a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('pages.pengajuan.diterima',compact('title'));
+    }
+
+    public function listProposalDitolak(Request $request)
+    {
+        $title = "Proposal Ditolak";
+
+        if ($request->ajax()) {
+            $data = JudulSkripsi::with('user')->where('status', 'Ditolak')->latest()->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn =
+                        '<a href="/pengajuan_detail/' . $row->id . '">
+                            <button class="btn btn-primary m-r-5 btn-dosen-detail">Detail</button>
+                        </a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('pages.pengajuan.ditolak', compact('title'));
+    }
 }

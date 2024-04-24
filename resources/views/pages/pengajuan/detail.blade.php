@@ -11,7 +11,7 @@
                                 @if ($userdata->mahasiswa->avatar)
                                     <img src="{{ asset('storage/' . $userdata->mahasiswa->avatar) }}" alt="">
                                 @else
-                                    <img src="assets/images/others/thumb-3.jpg" alt="">
+                                    <img src="{{ asset('images/avatars/user-profile.jpeg') }}" alt="">
                                 @endif
                             </div>
                             <div class="m-l-10">
@@ -19,7 +19,22 @@
                             </div>
                         </div>
                         <div>
-                            <span class="badge badge-pill badge-warning">Diajukan</span>
+                            @switch($data->status)
+                                @case('Pengajuan')
+                                    <span class="badge badge-pill badge-warning">Menunggu Review</span>
+                                @break
+
+                                @case('Diterima')
+                                    <span class="badge badge-pill badge-success">Diterima</span>
+                                @break
+
+                                @case('Ditolak')
+                                    <span class="badge badge-pill badge-danger">Ditolak</span>
+                                @break
+
+                                @default
+                                    <span class="badge badge-pill badge-danger">Belum Mengajukan</span>
+                            @endswitch
                         </div>
                     </div>
                     <div class="m-t-40">
@@ -50,9 +65,27 @@
                 </div>
                 <div class="card-body">
                     <ul class="timeline timeline-sm">
+                        @if ($data->status == 'Diterima')
+                            <li class="timeline-item">
+                                <div class="timeline-item-head">
+                                    <div class="avatar avatar-icon avatar-sm avatar-cyan">
+                                        <i class="anticon anticon-check"></i>
+                                    </div>
+                                </div>
+                                <div class="timeline-item-content">
+                                    <div class="m-l-10">
+                                        <div class="media">
+                                            <div class="m-l-10">
+                                                <button class="btn btn-success btn-block btn-tone m-r-5">Proposal Diterima</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        @elseif ($data->status == 'Ditolak')
                         <li class="timeline-item">
                             <div class="timeline-item-head">
-                                <div class="avatar avatar-icon avatar-sm avatar-cyan">
+                                <div class="avatar avatar-icon avatar-sm avatar-red">
                                     <i class="anticon anticon-check"></i>
                                 </div>
                             </div>
@@ -60,29 +93,49 @@
                                 <div class="m-l-10">
                                     <div class="media">
                                         <div class="m-l-10">
-                                            <button class="btn btn-success btn-block btn-tone m-r-5" id="approve"
-                                                data-id="{{ $data->id }}">Terima</button>
+                                            <button class="btn btn-danger btn-block btn-tone m-r-5">Proposal Ditolak</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </li>
-                        <li class="timeline-item">
-                            <div class="timeline-item-head">
-                                <div class="avatar avatar-icon avatar-sm avatar-red">
-                                    <i class="anticon anticon-close"></i>
+                        @else
+                            <li class="timeline-item">
+                                <div class="timeline-item-head">
+                                    <div class="avatar avatar-icon avatar-sm avatar-cyan">
+                                        <i class="anticon anticon-check"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="timeline-item-content">
-                                <div class="m-l-10">
-                                    <div class="media">
-                                        <div class="m-l-10">
-                                            <button class="btn btn-danger btn-block btn-tone m-r-5" id="reject" data-id="{{ $data->id }}">Tolak</button>
+                                <div class="timeline-item-content">
+                                    <div class="m-l-10">
+                                        <div class="media">
+                                            <div class="m-l-10">
+                                                <button class="btn btn-success btn-block btn-tone m-r-5" id="approve"
+                                                    data-id="{{ $data->id }}">Terima</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
+                            <li class="timeline-item">
+                                <div class="timeline-item-head">
+                                    <div class="avatar avatar-icon avatar-sm avatar-red">
+                                        <i class="anticon anticon-close"></i>
+                                    </div>
+                                </div>
+                                <div class="timeline-item-content">
+                                    <div class="m-l-10">
+                                        <div class="media">
+                                            <div class="m-l-10">
+                                                <button class="btn btn-danger btn-block btn-tone m-r-5" id="reject"
+                                                    data-id="{{ $data->id }}">Tolak</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        @endif
+
                     </ul>
                 </div>
             </div>

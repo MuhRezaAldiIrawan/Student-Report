@@ -38,11 +38,11 @@
                     </li>
 
                     <li>
-                        <a href="{{route('list.pengajuan')}}">Proposal Diterima</a>
+                        <a href="{{route('list.pengajuan.diterima')}}">Proposal Diterima</a>
                     </li>
 
                     <li>
-                        <a href="{{route('list.pengajuan')}}">Proposal Ditolak</a>
+                        <a href="{{route('list.pengajuan.ditolak')}}">Proposal Ditolak</a>
                     </li>
                     @endif
                 </ul>

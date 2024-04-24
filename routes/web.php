@@ -104,6 +104,8 @@ Route::controller(PengajuanController::class)->group(function () {
     Route::post('/pengajuan', 'store')->name('pengajuan.store');
     Route::get('/status_proposal', 'statusProposal')->name('status.proposal');
     Route::get('/list_pengajuan', 'listPengajuan')->name('list.pengajuan');
+    Route::get('/list_proposal_diterima', 'listProposalDiterima')->name('list.pengajuan.diterima');
+    Route::get('/list_proposal_ditolak', 'listProposalDitolak')->name('list.pengajuan.ditolak');
     Route::get('/pengajuan_detail/{id}', 'pengajuanDetail')->name('pengajuan.detail');
     Route::get('/download_proposal/{id}', 'downloadProposal')->name('download.proposal');
 

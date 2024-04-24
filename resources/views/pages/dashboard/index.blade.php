@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-header no-gutters">
     <div class="d-md-flex align-items-md-center justify-content-between">
-        <div class="media m-v-10 align-items-center">
+        <div class="media m-v-10 align-items-center" style="display: flex">
             <div class="avatar avatar-image avatar-lg">
                 @if (auth()->user()->avatar)
                     <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="" class="mb-5 h-24 w-24 rounded-full object-cover">
