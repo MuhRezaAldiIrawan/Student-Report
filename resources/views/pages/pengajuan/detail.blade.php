@@ -139,7 +139,89 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Pembimbing</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="timeline timeline-sm">
+                        @if ($data->status == 'Diterima')
+                            <li class="timeline-item">
+                                <div class="timeline-item-head">
+                                    <div class="avatar avatar-icon avatar-sm avatar-cyan">
+                                        <i class="anticon anticon-check"></i>
+                                    </div>
+                                </div>
+                                <div class="timeline-item-content">
+                                    <div class="m-l-10">
+                                        <div class="media">
+                                            <div class="m-l-10">
+                                                <button class="btn btn-success btn-block btn-tone m-r-5">Proposal Diterima</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        @elseif ($data->status == 'Ditolak')
+                        <li class="timeline-item">
+                            <div class="timeline-item-head">
+                                <div class="avatar avatar-icon avatar-sm avatar-red">
+                                    <i class="anticon anticon-check"></i>
+                                </div>
+                            </div>
+                            <div class="timeline-item-content">
+                                <div class="m-l-10">
+                                    <div class="media">
+                                        <div class="m-l-10">
+                                            <button class="btn btn-danger btn-block btn-tone m-r-5">Proposal Ditolak</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @else
+                            <li class="timeline-item">
+                                <div class="timeline-item-head">
+                                    <div class="avatar avatar-icon avatar-sm avatar-cyan">
+                                        <i class="anticon anticon-check"></i>
+                                    </div>
+                                </div>
+                                <div class="timeline-item-content">
+                                    <div class="m-l-10">
+                                        <div class="media">
+                                            <div class="m-l-10">
+                                                <button class="btn btn-success btn-block btn-tone m-r-5" id="approve"
+                                                    data-id="{{ $data->id }}">Terima</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <div class="timeline-item-head">
+                                    <div class="avatar avatar-icon avatar-sm avatar-red">
+                                        <i class="anticon anticon-close"></i>
+                                    </div>
+                                </div>
+                                <div class="timeline-item-content">
+                                    <div class="m-l-10">
+                                        <div class="media">
+                                            <div class="m-l-10">
+                                                <button class="btn btn-danger btn-block btn-tone m-r-5" id="reject"
+                                                    data-id="{{ $data->id }}">Tolak</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        @endif
+
+                    </ul>
+                </div>
+            </div>
         </div>
+
     </div>
 @endsection
 
