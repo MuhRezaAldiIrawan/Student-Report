@@ -166,22 +166,29 @@
                             </li>
                             @elseif ($data->status == 'Diterima' && $data->pbb_1_dosen_id != null && $data->pbb_2_dosen_id != null)
                             @foreach ($dosenDetail as $d)
-                                <li class="timeline-item">
-                                    <div class="timeline-item-head">
-                                        <div class="avatar avatar-icon avatar-sm avatar-blue">
-                                            <i class="anticon anticon-check"></i>
-                                        </div>
+                            <li class="timeline-item">
+                                <div class="timeline-item-head">
+                                    <div class="avatar avatar-icon avatar-sm avatar-cyan">
+                                        <i class="anticon anticon-check"></i>
                                     </div>
-                                    <div class="timeline-item-content">
-                                        <div class="m-l-10">
-                                            <div class="media">
-                                                <div class="m-l-10">
-                                                    {{$d->user->nama}}
-                                                </div>
+                                </div>
+                                <div class="timeline-item-content">
+                                    <div class="m-l-10">
+                                        <div class="media align-items-center" style="display: flex">
+                                            <div class="avatar avatar-image">
+                                                <img src="assets/images/avatars/thumb-4.jpg" alt="">
+                                            </div>
+                                            <div class="m-l-10">
+                                                <h6 class="m-b-0">{{$d->user->nama}}</h6>
+                                                <span class="text-muted font-size-13">
+                                                    <i class="anticon anticon-mail"></i>
+                                                    <span class="m-l-5">{{$d->user->email}}</span>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
-                                </li>
+                                </div>
+                            </li>
                             @endforeach
                         @endif
                     </ul>
