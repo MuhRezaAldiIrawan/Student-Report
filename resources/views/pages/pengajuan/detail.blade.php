@@ -176,7 +176,13 @@
                                     <div class="m-l-10">
                                         <div class="media align-items-center" style="display: flex">
                                             <div class="avatar avatar-image">
-                                                <img src="assets/images/avatars/thumb-4.jpg" alt="">
+                                                @if ($d->avatar)
+                                                <img src="{{ asset('storage/' . $d->avatar) }}" alt=""
+                                                    class="mb-5 h-24 w-24 rounded-full object-cover">
+                                                @else
+                                                    <img src="{{ asset('images/avatars/user-profile.jpeg') }}" alt=""
+                                                        class="mb-5 h-24 w-24 rounded-full object-cover">
+                                                @endif
                                             </div>
                                             <div class="m-l-10">
                                                 <h6 class="m-b-0">{{$d->user->nama}}</h6>
