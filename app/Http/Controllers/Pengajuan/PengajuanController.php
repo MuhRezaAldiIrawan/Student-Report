@@ -201,4 +201,19 @@ class PengajuanController extends Controller
         }
         return view('pages.pengajuan.ditolak', compact('title'));
     }
+
+    public function assignPembimbing(Request $request, $id)
+    {
+
+        if (!$request->ajax()) {
+            redirect('/dashboard');
+        }
+
+        $data = JudulSkripsi::find($id);
+        $dataDosen = User::where('role', 'Dosen')->get();
+
+
+
+        return view('components.modal.assign', compact('data', 'dataDosen'));
+    }
 }

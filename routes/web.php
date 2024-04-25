@@ -111,6 +111,8 @@ Route::controller(PengajuanController::class)->group(function () {
 
     Route::get('/approve/{id}', 'approvePegajuan')->name('approve.pegajuan');
     Route::get('/reject/{id}', 'rejectPegajuan')->name('approve.pegajuan');
+
+    Route::get('/modal-assign/{id}', 'assignPembimbing')->name('assign.pembimbing');
 });
 
 

@@ -149,7 +149,7 @@
                         @if ($data->status == 'Diterima')
                             <li class="timeline-item">
                                 <div class="timeline-item-head">
-                                    <div class="avatar avatar-icon avatar-sm avatar-cyan">
+                                    <div class="avatar avatar-icon avatar-sm avatar-blue">
                                         <i class="anticon anticon-check"></i>
                                     </div>
                                 </div>
@@ -157,75 +157,58 @@
                                     <div class="m-l-10">
                                         <div class="media">
                                             <div class="m-l-10">
-                                                <button class="btn btn-success btn-block btn-tone m-r-5">Proposal Diterima</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        @elseif ($data->status == 'Ditolak')
-                        <li class="timeline-item">
-                            <div class="timeline-item-head">
-                                <div class="avatar avatar-icon avatar-sm avatar-red">
-                                    <i class="anticon anticon-check"></i>
-                                </div>
-                            </div>
-                            <div class="timeline-item-content">
-                                <div class="m-l-10">
-                                    <div class="media">
-                                        <div class="m-l-10">
-                                            <button class="btn btn-danger btn-block btn-tone m-r-5">Proposal Ditolak</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        @else
-                            <li class="timeline-item">
-                                <div class="timeline-item-head">
-                                    <div class="avatar avatar-icon avatar-sm avatar-cyan">
-                                        <i class="anticon anticon-check"></i>
-                                    </div>
-                                </div>
-                                <div class="timeline-item-content">
-                                    <div class="m-l-10">
-                                        <div class="media">
-                                            <div class="m-l-10">
-                                                <button class="btn btn-success btn-block btn-tone m-r-5" id="approve"
-                                                    data-id="{{ $data->id }}">Terima</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="timeline-item">
-                                <div class="timeline-item-head">
-                                    <div class="avatar avatar-icon avatar-sm avatar-red">
-                                        <i class="anticon anticon-close"></i>
-                                    </div>
-                                </div>
-                                <div class="timeline-item-content">
-                                    <div class="m-l-10">
-                                        <div class="media">
-                                            <div class="m-l-10">
-                                                <button class="btn btn-danger btn-block btn-tone m-r-5" id="reject"
-                                                    data-id="{{ $data->id }}">Tolak</button>
+                                                <button class="btn btn-info btn-block btn-tone m-r-5 btn-assign"
+                                                    data-id="{{ $data->id }}">Berikan Pembimbing</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </li>
                         @endif
-
                     </ul>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-edit" style="display: none;" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true"></div>
+
+    <div class="col">
+        <label for="inputState">Pembimbing 1</label>
+        <select id="inputState" class="form-control select1">
+            <option selected>Choose...</option>
+            <option>...</option>
+        </select>
 
     </div>
+
+
+    <div class="col">
+        <label for="inputState">Pembimbing 2</label>
+        <select id="inputState" class="form-control select2">
+            <option selected>Choose...</option>
+            <option>...</option>
+        </select>
+
+    </div>
+
 @endsection
 
+@push('css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endpush
 @push('js')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.select2').select2();
+    })
+</script>
+<script>
+    $(document).ready(function() {
+        $('.select1').select2();
+    })
+</script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).on('click', '#approve', function(e) {
@@ -329,4 +312,52 @@
             // console.log('berhasil ditekan tobol approve dengan id = ',id);
         });
     </script>
+
+    <script>
+        $(document).on('click', '.btn-assign', function(e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            let url = "/modal-assign/" + id;
+            $(this).prop('disabled', true);
+            $.ajax({
+                url,
+                data: {
+                    id
+                },
+                type: "GET",
+                dataType: "HTML",
+                success: function(data) {
+                    $('#editmodal').html(data);
+                    $('#editmodal').modal('show');
+                    $('.btn-assign').prop("disabled", false);
+                },
+                error: function(error) {
+                    console.error(error);
+                    $('.btn-assign').prop('disabled', false);
+                }
+            })
+        })
+    </script>
+
+    <script>
+        $(document).on('click', '#cancelbtn', function(e) {
+            console.log('button ditekan');
+            e.preventDefault();
+            $('#editmodal').modal('hide');
+        })
+    </script>
 @endpush
+
+
+{{-- @push('css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endpush
+@push('js')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.select2').select2();
+
+    })
+</script>
+@endpush --}}
