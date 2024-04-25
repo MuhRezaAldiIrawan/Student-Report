@@ -145,9 +145,7 @@ class DosenController extends Controller
         ]);
 
 
-
         try {
-
 
             $user = User::findOrFail($request->id);
             if ($request->hasFile('avatar')) {

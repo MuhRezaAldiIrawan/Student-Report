@@ -173,42 +173,10 @@
 
     <div class="modal fade bd-example-modal-edit" style="display: none;" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true"></div>
 
-    <div class="col">
-        <label for="inputState">Pembimbing 1</label>
-        <select id="inputState" class="form-control select1">
-            <option selected>Choose...</option>
-            <option>...</option>
-        </select>
-
-    </div>
-
-
-    <div class="col">
-        <label for="inputState">Pembimbing 2</label>
-        <select id="inputState" class="form-control select2">
-            <option selected>Choose...</option>
-            <option>...</option>
-        </select>
-
-    </div>
 
 @endsection
 
-@push('css')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-@endpush
 @push('js')
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.select2').select2();
-    })
-</script>
-<script>
-    $(document).ready(function() {
-        $('.select1').select2();
-    })
-</script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).on('click', '#approve', function(e) {
@@ -346,18 +314,43 @@
             $('#editmodal').modal('hide');
         })
     </script>
+
+    <script>
+        $(document).on('submit', '#formassign', function(e) {
+
+            console.log('form di submit');
+            e.preventDefault();
+            let formData = new FormData(this);
+            let url = "{{ route('update.pembimbing') }}";
+            $('#saveform').prop("disabled", true);
+            $('#saveform').html("Loading...");
+            $.ajax({
+                url,
+                data: formData,
+                type: "POST",
+                dataType: "JSON",
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    Swal.fire({
+                        title: 'Success',
+                        text: data.success,
+                        icon: "success",
+                        timer: 2000
+                    });
+                    $('#editmodal').modal('hide');
+                    $('#saveform').prop("disabled", false);
+                    location.reload();
+                },
+                error: function(error) {
+                    console.error(error);
+                    $('#saveform').prop("disabled", false);
+                }
+            })
+        })
+    </script>
 @endpush
 
 
-{{-- @push('css')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-@endpush
-@push('js')
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.select2').select2();
 
-    })
-</script>
-@endpush --}}

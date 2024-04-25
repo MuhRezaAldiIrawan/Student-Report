@@ -212,8 +212,32 @@ class PengajuanController extends Controller
         $data = JudulSkripsi::find($id);
         $dataDosen = User::where('role', 'Dosen')->get();
 
-
-
         return view('components.modal.assign', compact('data', 'dataDosen'));
     }
+
+    public function updatePembimbing(Request $request)
+    {
+
+        if (!$request->ajax()) {
+            redirect('/dashboard');
+        }
+
+        try {
+
+            $data = JudulSkripsi::find($request->id);
+
+            $data->pbb_1_dosen_id = $request->pbb1;
+            $data->pbb_2_dosen_id = $request->pbb2;
+            $data->save();
+
+            return response()->json(['code' => 200, 'success' => 'Data berhasil diperbarui!']);
+
+        } catch (\Throwable $th) {
+
+            return response()->json(['code' => 400, 'error' => $th->getMessage()]);
+
+        }
+
+    }
+
 }
