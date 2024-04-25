@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pengajuan;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dosen;
 use App\Models\JudulSkripsi;
 use App\Models\LogApproval;
 use App\Models\LogProposal;
@@ -90,9 +91,9 @@ class PengajuanController extends Controller
 
         $userdata = User::with('mahasiswa')->find($data->user_id);
 
-        // dd($userdata);
+        $dosenDetail = Dosen::with('user')->where('user_id', $data->pbb_1_dosen_id)->orWhere('user_id', $data->pbb_2_dosen_id)->get();
 
-        return view('pages.pengajuan.detail', compact('data', 'userdata'));
+        return view('pages.pengajuan.detail', compact('data', 'userdata', 'dosenDetail'));
     }
 
     public function downloadProposal($id)

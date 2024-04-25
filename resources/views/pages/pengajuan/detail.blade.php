@@ -146,7 +146,7 @@
                 </div>
                 <div class="card-body">
                     <ul class="timeline timeline-sm">
-                        @if ($data->status == 'Diterima')
+                        @if ($data->status == 'Diterima' && $data->pbb_1_dosen_id == null && $data->pbb_2_dosen_id == null)
                             <li class="timeline-item">
                                 <div class="timeline-item-head">
                                     <div class="avatar avatar-icon avatar-sm avatar-blue">
@@ -164,6 +164,25 @@
                                     </div>
                                 </div>
                             </li>
+                            @elseif ($data->status == 'Diterima' && $data->pbb_1_dosen_id != null && $data->pbb_2_dosen_id != null)
+                            @foreach ($dosenDetail as $d)
+                                <li class="timeline-item">
+                                    <div class="timeline-item-head">
+                                        <div class="avatar avatar-icon avatar-sm avatar-blue">
+                                            <i class="anticon anticon-check"></i>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item-content">
+                                        <div class="m-l-10">
+                                            <div class="media">
+                                                <div class="m-l-10">
+                                                    {{$d->user->nama}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
                         @endif
                     </ul>
                 </div>
