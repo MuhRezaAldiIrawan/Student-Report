@@ -172,7 +172,6 @@
                                         <i class="anticon anticon-check"></i>
                                     </div>
                                 </div>
-
                                 <div class="timeline-item-content">
                                     <div class="m-l-10">
                                         <div class="media align-items-center" style="display: flex">
